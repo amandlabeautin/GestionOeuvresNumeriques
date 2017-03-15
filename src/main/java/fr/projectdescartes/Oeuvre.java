@@ -13,14 +13,14 @@ public class Oeuvre {
     long id;
     String titre;
     Date dateDeParution;
-    String résumé;
+    String resume;
 	
-    public Oeuvre(long id, String titre, Date dateDeParution, String résumé) {
+    public Oeuvre(long id, String titre, Date dateDeParution, String resume) {
 		super();
 		this.id = id;
 		this.titre = titre;
 		this.dateDeParution = dateDeParution;
-		this.résumé = résumé;
+		this.resume = resume;
 	}
 
 	@Id
@@ -49,14 +49,12 @@ public class Oeuvre {
 		this.dateDeParution = dateDeParution;
 	}
 
-	public String getRésumé() {
-		return résumé;
+	public String getResume() {
+		return resume;
 	}
 
-	public void setRésumé(String résumé) {
-		this.résumé = résumé;
+	public void setResume(String resume) {
+		this.resume = resume;
 	}
     
-    
-
 }

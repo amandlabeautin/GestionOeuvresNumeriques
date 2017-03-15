@@ -13,13 +13,13 @@ import javax.persistence.Id;
 public class Films extends Oeuvre {
 
 	Long id;
-	Long durée;
+	Long duree;
 	String bandeAnnonce;
 	
-	public Films(long id, String titre, Date dateDeParution, String résumé, Long id2, Long durée, String bandeAnnonce) {
-		super(id, titre, dateDeParution, résumé);
+	public Films(long id, String titre, Date dateDeParution, String resume, Long id2, Long duree, String bandeAnnonce) {
+		super(id, titre, dateDeParution, resume);
 		id = id2;
-		this.durée = durée;
+		this.duree = duree;
 		this.bandeAnnonce = bandeAnnonce;
 	}
 
@@ -33,11 +33,11 @@ public class Films extends Oeuvre {
 		this.id = id;
 	}
 	
-	public long getDurée() {
-		return durée;
+	public long getDuree() {
+		return duree;
 	}
-	public void setDurée(Long durée) {
-		this.durée = durée;
+	public void setDuree(Long duree) {
+		this.duree = duree;
 	}
 	public String getBandeAnnonce() {
 		return bandeAnnonce;
