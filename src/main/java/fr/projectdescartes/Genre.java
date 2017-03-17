@@ -1,6 +1,5 @@
 package fr.projectdescartes;
 
-import java.util.*;
 import javax.persistence.Entity ; 
 import javax.persistence.Id ; 
 import javax.persistence.GeneratedValue ; 
@@ -10,8 +9,8 @@ import javax.persistence.GenerationType ;
 @Entity
 public class Genre {
 
-	long idGenre;
-	String nomGenre;
+	private long idGenre;
+	private String nomGenre;
 	
 	public Genre(long idGenre, String nomGenre) {
 		super();

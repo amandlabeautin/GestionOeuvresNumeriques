@@ -2,7 +2,8 @@ package fr.projectdescartes;
 
 import java.util.*;
 import javax.persistence.Entity ; 
-import javax.persistence.Id ; 
+import javax.persistence.Id ;
+import javax.persistence.ManyToMany;
 import javax.persistence.GeneratedValue ; 
 import javax.persistence.GenerationType ;
 /**
@@ -12,8 +13,11 @@ import javax.persistence.GenerationType ;
 @Entity
 public class Acteur {
 
-	Long idActeur;
-	String nomAuteur;
+	private Long idActeur;
+	private String nomAuteur;
+	
+	@ManyToMany(mappedBy="acteurs")
+	private Collection<Oeuvre> oeuvres;
 	
 	public Acteur(Long idActeur, String nomAuteur) {
 		super();

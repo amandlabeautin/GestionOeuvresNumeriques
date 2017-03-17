@@ -10,8 +10,8 @@ import javax.persistence.GenerationType ;
 @Entity
 public class Auteur {
 
-	Long idAuteur;
-	String nomAuteur;
+	private Long idAuteur;
+	private String nomAuteur;
     
     public Auteur(Long idAuteur, String nomAuteur) {
 		super();

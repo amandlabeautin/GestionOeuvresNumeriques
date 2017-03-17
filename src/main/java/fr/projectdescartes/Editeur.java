@@ -1,6 +1,5 @@
 package fr.projectdescartes;
 
-import java.util.*;
 import javax.persistence.Entity ; 
 import javax.persistence.Id ; 
 import javax.persistence.GeneratedValue ; 
@@ -11,8 +10,8 @@ import javax.persistence.GenerationType ;
 @Entity
 public class Editeur {
 
-	long id;
-	String nomEditeur;
+	private long id;
+	private String nomEditeur;
 	
 	public Editeur(long id, String nomEditeur) {
 		super();

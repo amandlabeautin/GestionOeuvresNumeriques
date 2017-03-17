@@ -12,8 +12,8 @@ import javax.persistence.Id;
 @Entity
 public class Livre extends Oeuvre {
 
-	Long id;
-    Integer nbreDePages;
+	private Long id;
+    private Integer nbreDePages;
 	
     public Livre(long id, String titre, Date dateDeParution, String r√, Long id2, Integer nbreDePages) {
 		super(id, titre, dateDeParution, r√);

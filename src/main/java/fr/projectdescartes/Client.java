@@ -1,5 +1,7 @@
 package fr.projectdescartes;
 
+import java.util.Collection;
+
 import javax.persistence.Entity ; 
 import javax.persistence.Id ; 
 import javax.persistence.GeneratedValue ; 
@@ -10,17 +12,21 @@ import javax.persistence.GenerationType ;
 @Entity
 public class Client {
 
-	long idClient;
-	String nomClient;
-	String adresseMailClient;
+	private long idClient;
+	private String nomClient;
+	private String adresseMailClient;
+	private Collection<Telechargement> telechargements;
 	
-	public Client(long idClient, String nomClient, String adresseMailClient) {
+	
+	public Client(long idClient, String nomClient, String adresseMailClient,
+			Collection<Telechargement> telechargements) {
 		super();
 		this.idClient = idClient;
 		this.nomClient = nomClient;
 		this.adresseMailClient = adresseMailClient;
+		this.telechargements = telechargements;
 	}
-	
+
 	@Id
     @GeneratedValue(strategy=GenerationType.AUTO)
 	public long getIdClient() {
@@ -44,6 +50,14 @@ public class Client {
 	}
 	public void setAdresseMailClient(String adresseMailClient) {
 		this.adresseMailClient = adresseMailClient;
+	}
+
+	public Collection<Telechargement> getTelechargements() {
+		return telechargements;
+	}
+
+	public void setTelechargements(Collection<Telechargement> telechargements) {
+		this.telechargements = telechargements;
 	}
 
 }

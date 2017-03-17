@@ -10,12 +10,11 @@ import javax.persistence.GenerationType ;
 @Entity
 public class Telechargement {
 
-	long id;
-	Date dateDeTelechargement;
+	private long id;
+	private Date dateDeTelechargement;
 
 	public Telechargement() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 	
 	public Telechargement(long id, Date dateDeTelechargement) {
