@@ -1,6 +1,5 @@
 package fr.projectdescartes;
 
-import java.util.Date;
 
 import javax.persistence.Entity ;
 import javax.persistence.GeneratedValue;
@@ -15,9 +14,9 @@ public class Livre extends Oeuvre {
 	private Long id;
     private Integer nbreDePages;
 	
-    public Livre(long id, String titre, Date dateDeParution, String r√, Long id2, Integer nbreDePages) {
-		super(id, titre, dateDeParution, r√);
-		id = id2;
+	public Livre(Long id, Integer nbreDePages) {
+		super();
+		this.id = id;
 		this.nbreDePages = nbreDePages;
 	}
 	
@@ -34,8 +33,6 @@ public class Livre extends Oeuvre {
 	}
 	public void setNbreDePages(Integer nbreDePages) {
 		this.nbreDePages = nbreDePages;
-	}
-    
-    
+	} 
 
 }
