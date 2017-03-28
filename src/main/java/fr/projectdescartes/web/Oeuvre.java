@@ -1,4 +1,4 @@
-package fr.projectdescartes;
+package fr.projectdescartes.web;
 
 import java.util.*;
 import javax.persistence.Entity ; 
@@ -9,7 +9,7 @@ import javax.persistence.GenerationType ;
 
 
 @Entity
-public class Oeuvre {
+public abstract class Oeuvre {
 
     private long id;
     private String titre;

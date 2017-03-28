@@ -1,19 +1,14 @@
-package fr.projectdescartes;
+package fr.projectdescartes.web;
 
 import java.util.Date;
 
 import javax.persistence.Entity ;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id; 
 /**
  * 
  */
 @Entity
 public class Films extends Oeuvre {
 
-	
-	private Long id;
 	private Long duree;
 	private String bandeAnnonce;
 	
@@ -22,17 +17,7 @@ public class Films extends Oeuvre {
 		this.duree = duree;
 		this.bandeAnnonce = bandeAnnonce;
 	}
-	
-	@Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-	public long getId() {
-		return id;
-	}
 
-	public void setId(Long id) {
-		this.id = id;
-	}
-	
 	public long getDuree() {
 		return duree;
 	}
