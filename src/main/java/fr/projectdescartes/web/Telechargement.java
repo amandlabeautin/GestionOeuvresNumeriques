@@ -1,4 +1,4 @@
-package fr.projectdescartes;
+package fr.projectdescartes.web;
 
 import java.util.*;
 import javax.persistence.Entity ; 

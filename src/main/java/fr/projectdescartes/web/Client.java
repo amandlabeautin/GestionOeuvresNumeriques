@@ -1,4 +1,4 @@
-package fr.projectdescartes;
+package fr.projectdescartes.web;
 
 import java.util.Collection;
 

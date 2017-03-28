@@ -30,10 +30,10 @@ public class GestionOeuvresNumeriquesWebService {
 		System.out.println("modifierLivre: " + livre);
 	}
 	
-	@RequestMapping(value = "/livre/{immatriculation}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/livre/{numLivre}", method = RequestMethod.DELETE)
 	@ResponseStatus(HttpStatus.OK)
-	public void supprimerVoiture(@PathVariable(value="immatriculation") String immat){
-		System.out.println("supprimerLivre: " + immat);
+	public void supprimerLivre(@PathVariable(value="numLivre") String numLivre){
+		System.out.println("supprimerLivre: " + numLivre);
 	}
 	
 	@RequestMapping(value = "/livre/{titre}", method = RequestMethod.GET)
