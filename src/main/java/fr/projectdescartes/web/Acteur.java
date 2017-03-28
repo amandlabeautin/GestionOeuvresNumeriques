@@ -6,10 +6,8 @@ import javax.persistence.Id ;
 import javax.persistence.ManyToMany;
 import javax.persistence.GeneratedValue ; 
 import javax.persistence.GenerationType ;
-/**
-/**
- * 
- */
+
+
 @Entity
 public class Acteur {
 

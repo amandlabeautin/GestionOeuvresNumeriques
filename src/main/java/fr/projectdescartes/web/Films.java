@@ -3,12 +3,16 @@ package fr.projectdescartes.web;
 import java.util.Date;
 
 import javax.persistence.Entity ;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 /**
  * 
  */
 @Entity
 public class Films extends Oeuvre {
 
+	private Long idOeuvre;
 	private Long duree;
 	private String bandeAnnonce;
 	
@@ -29,6 +33,16 @@ public class Films extends Oeuvre {
 	}
 	public void setBandeAnnonce(String bandeAnnonce) {
 		this.bandeAnnonce = bandeAnnonce;
+	}
+
+	@Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
+	public Long getIdOeuvre() {
+		return idOeuvre;
+	}
+
+	public void setIdOeuvre(Long idOeuvre) {
+		this.idOeuvre = idOeuvre;
 	}
 
 }

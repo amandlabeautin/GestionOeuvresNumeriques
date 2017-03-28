@@ -32,8 +32,8 @@ public class GestionOeuvresNumeriquesWebService {
 	
 	@RequestMapping(value = "/livre/{numLivre}", method = RequestMethod.DELETE)
 	@ResponseStatus(HttpStatus.OK)
-	public void supprimerLivre(@PathVariable(value="numLivre") String numLivre){
-		System.out.println("supprimerLivre: " + numLivre);
+	public void supprimerLivre(@PathVariable(value="numLivre") String titre){
+		System.out.println("supprimerLivre: " + titre);
 	}
 	
 	@RequestMapping(value = "/livre/{titre}", method = RequestMethod.GET)

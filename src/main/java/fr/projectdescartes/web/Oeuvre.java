@@ -4,6 +4,8 @@ import java.util.*;
 import javax.persistence.Entity ; 
 import javax.persistence.Id ;
 import javax.persistence.ManyToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.GeneratedValue ; 
 import javax.persistence.GenerationType ;
 
@@ -11,9 +13,11 @@ import javax.persistence.GenerationType ;
 @Entity
 public abstract class Oeuvre {
 
-    private long id;
-    private String titre;
+	@Temporal(TemporalType.DATE)
     private Date dateDeParution;
+    
+	private long id;
+    private String titre;
     private String resume;
 	
     @ManyToMany

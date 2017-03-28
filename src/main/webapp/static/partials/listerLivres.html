@@ -1,0 +1,11 @@
+<div>
+	Choisir livre :
+	<select ng-options="livre.titre for livre in listeLivres" ng-model="selected">
+	</select><br>
+	<input type="submit" ng-click="choisirLivre(selected)" >
+	
+	Liste livres :<br>
+	{{listeLivres | json}}
+	
+	<br>Livre selectionnees : {{selected}}  
+</div>
