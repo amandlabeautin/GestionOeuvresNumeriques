@@ -21,7 +21,7 @@ http://www.springframework.org/schema/security/spring-security.xsd">
 
 <context:annotation-config/>
 
-<bean id="siteController" class="fr.descartes.web.GestionOeuvresNumeriquesWebService">
+<bean id="siteController" class="fr.projectdescartes.web.GestionOeuvresNumeriquesWebService">
 </bean>
 
 

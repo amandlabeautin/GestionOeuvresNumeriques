@@ -1,27 +1,22 @@
 package fr.projectdescartes.web;
 
-import java.util.*;
-import javax.persistence.Entity ; 
-import javax.persistence.Id ;
-import javax.persistence.ManyToMany;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.persistence.GeneratedValue ; 
-import javax.persistence.GenerationType ;
+import java.util.Date;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 @Entity
 public abstract class Oeuvre {
 
-	@Temporal(TemporalType.DATE)
-    private Date dateDeParution;
+    Date dateDeParution;
     
-	private long id;
-    private String titre;
-    private String resume;
+    long idOeuvre;
+    String titre;
+    String resume;
 	
-    @ManyToMany
-    private Collection<Acteur> acteurs;
+
     
     public Oeuvre() {
 		super();
@@ -37,19 +32,19 @@ public abstract class Oeuvre {
 
     public Oeuvre(long id, String titre, Date dateDeParution) {
 		super();
-		this.id = id;
+		this.idOeuvre = id;
 		this.titre = titre;
 		this.dateDeParution = dateDeParution;
 	}
-    
+
 	@Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-	public long getId() {
-		return id;
+	public long getIdOeuvre() {
+		return idOeuvre;
 	}
 
-	public void setId(long id) {
-		this.id = id;
+	public void setIdOeuvre(long id) {
+		this.idOeuvre = id;
 	}
 
 	public String getTitre() {
@@ -67,8 +62,6 @@ public abstract class Oeuvre {
 	public void setDateDeParution(Date dateDeParution) {
 		this.dateDeParution = dateDeParution;
 	}
-
-	
 
 	public String getResume() {
 		return resume;

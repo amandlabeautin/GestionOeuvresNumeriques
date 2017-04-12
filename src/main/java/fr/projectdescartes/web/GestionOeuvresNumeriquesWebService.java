@@ -1,5 +1,6 @@
 package fr.projectdescartes.web;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -27,12 +28,12 @@ public class GestionOeuvresNumeriquesWebService {
 	@RequestMapping(value = "/livre", method = RequestMethod.PUT)
 	@ResponseStatus(HttpStatus.OK)
 	public void modifierLivre(@RequestBody Livre livre){
-		System.out.println("modifierLivre: " + livre);
+		System.out.println("modifier Livre: " + livre);
 	}
 	
-	@RequestMapping(value = "/livre/{numLivre}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/livre/{titre}", method = RequestMethod.DELETE)
 	@ResponseStatus(HttpStatus.OK)
-	public void supprimerLivre(@PathVariable(value="numLivre") String titre){
+	public void supprimerLivre(@PathVariable(value="titre") String titre){
 		System.out.println("supprimerLivre: " + titre);
 	}
 	
@@ -40,17 +41,18 @@ public class GestionOeuvresNumeriquesWebService {
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
 	public Livre obtenirUnLivre(@PathVariable(value="titre") String titre) throws ParseException{
-		Date dateParution = new SimpleDateFormat("dd/MM/yyyy").parse("01/02/2014");
-		return new Livre("50 nuances de Grey", dateParution, "Anastasia Steele, étudiante en littérature, a accepté la proposition de son amie journaliste de prendre sa place pour interviewer Christian Grey", 560); 
+		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		Date dateParution = dateFormat.parse("01/02/2014");
+		return new Livre("50nuancesdeGrey", dateParution, "Anastasia Steele, étudiante en littérature, a accepté la proposition de son amie journaliste de prendre sa place pour interviewer Christian Grey", 560); 
 	}
 	
 	@RequestMapping(value = "/livre", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public List<Livre> obtenirUneListeDeVoitures() throws ParseException{
+	public List<Livre> obtenirUneListeDeLivres() throws ParseException{
 		List<Livre> listes  = new  ArrayList<Livre>();
-		listes.add(new Livre("50 nuances de sombres", new SimpleDateFormat("dd/MM/yyyy").parse("01/02/2015"), "Anastasia Steele, étudiante en littérature, a accepté la proposition de son amie journaliste de prendre sa place pour interviewer Christian Grey", 560));
-		listes.add(new Livre("50 nuances de claires", new SimpleDateFormat("dd/MM/yyyy").parse("01/02/2016"), "Anastasia Steele, étudiante en littérature, a accepté la proposition de son amie journaliste de prendre sa place pour interviewer Christian Grey", 560));
+		listes.add(new Livre("50 nuances de sombres", new SimpleDateFormat("dd/MM/yyyy").parse("01/02/2015"), "Anastasia Steele, étudiante en littérature, a accepté la proposition de son amie journaliste de prendre sa place pour interviewer Christian Grey", 500));
+		listes.add(new Livre("50 nuances de claires", new SimpleDateFormat("dd/MM/yyyy").parse("01/02/2016"), "Anastasia Steele, étudiante en littérature, a accepté la proposition de son amie journaliste de prendre sa place pour interviewer Christian Grey", 460));
 		return listes;
 	}
 }

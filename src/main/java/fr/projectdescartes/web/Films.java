@@ -1,5 +1,6 @@
 package fr.projectdescartes.web;
 
+import java.util.Collection;
 import java.util.Date;
 
 import javax.persistence.Entity ;
@@ -12,9 +13,11 @@ import javax.persistence.Id;
 @Entity
 public class Films extends Oeuvre {
 
-	private Long idOeuvre;
+	private Long idFilms;
 	private Long duree;
 	private String bandeAnnonce;
+	
+    Collection<Acteur> acteurs;
 	
 	public Films(String titre, Date dateDeParution, String resume, Long duree, String bandeAnnonce) {
 		super(titre, dateDeParution, resume);
@@ -37,12 +40,12 @@ public class Films extends Oeuvre {
 
 	@Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-	public Long getIdOeuvre() {
-		return idOeuvre;
+	public long getIdFilms() {
+		return idFilms;
 	}
 
-	public void setIdOeuvre(Long idOeuvre) {
-		this.idOeuvre = idOeuvre;
+	public void setIdFilms(Long idFilms) {
+		this.idFilms = idFilms;
 	}
 
 }
