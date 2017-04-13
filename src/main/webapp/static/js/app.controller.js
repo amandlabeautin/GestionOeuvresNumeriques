@@ -22,9 +22,9 @@ rentControllers.controller("rentController", function($scope,$http,$routeParams)
 });
 
 rentControllers.controller("modifierController", function($scope,$http,$routeParams) {
-	$http.get('http://localhost:8080/livre/50nuancesdeGrey').
-	  then(function(data, status, headers, config) {
-		  $scope.livre = data;
+	$http.get('http://localhost:8080/livre/50 nuances de sombres').
+	  then(function(response) {
+		  $scope.livre = response.data;
 	  });
 	
 	$scope.modifierLivre = function(livre) {
