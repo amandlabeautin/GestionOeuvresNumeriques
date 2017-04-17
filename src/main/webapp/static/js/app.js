@@ -18,6 +18,14 @@ app.config(['$routeProvider',  '$locationProvider',
 				templateUrl: 'partials/modifierLivre.html',
 				controller: 'modifierController'
 			}).
+			when('/gestionOeuvresNumeriques/listeFilms', {
+				templateUrl: 'partials/listerFilms.view.html',
+				controller: 'rentControllerFilm'
+			}).
+			when('/gestionOeuvresNumeriques/modifierFilm', {
+				templateUrl: 'partials/modifierFilm.html',
+				controller: 'modifierControllerFilm'
+			}).
 			otherwise({
 				redirectTo: '/gestionOeuvresNumeriques'
 			});

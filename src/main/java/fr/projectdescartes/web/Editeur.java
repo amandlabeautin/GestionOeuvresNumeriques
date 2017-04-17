@@ -1,5 +1,6 @@
 package fr.projectdescartes.web;
 
+import javax.persistence.Column;
 import javax.persistence.Entity ; 
 import javax.persistence.Id ; 
 import javax.persistence.GeneratedValue ; 
@@ -11,7 +12,12 @@ import javax.persistence.GenerationType ;
 public class Editeur {
 
 	private long id;
+	
+	@Column(name="NOM_EDITEUR")
 	private String nomEditeur;
+	
+	public Editeur() {	
+	}
 	
 	public Editeur(long id, String nomEditeur) {
 		super();
@@ -34,5 +40,4 @@ public class Editeur {
 		this.nomEditeur = nomEditeur;
 	}
 	
-
 }

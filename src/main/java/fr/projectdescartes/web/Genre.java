@@ -1,5 +1,6 @@
 package fr.projectdescartes.web;
 
+import javax.persistence.Column;
 import javax.persistence.Entity ; 
 import javax.persistence.Id ; 
 import javax.persistence.GeneratedValue ; 
@@ -10,7 +11,13 @@ import javax.persistence.GenerationType ;
 public class Genre {
 
 	private long idGenre;
+	
+	@Column(name="NOM_GENRE")
 	private String nomGenre;
+	
+	public Genre() {
+		
+	}
 	
 	public Genre(long idGenre, String nomGenre) {
 		super();

@@ -1,26 +1,38 @@
 package fr.projectdescartes.web;
 
+import java.util.Collection;
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 public abstract class Oeuvre {
 
-    Date dateDeParution;
-    
-    long idOeuvre;
-    String titre;
-    String resume;
+	@Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
+	Long idOeuvre;
 	
-
+	@Column(name = "DATE_DE_PARUTION")
+	@Temporal(TemporalType.TIMESTAMP)
+    Date dateDeParution;
+	
+	@Column(name="TITRE_OEUVRE")
+    String titre;
+	
+	@Column(name="RESUME_OEUVRE")
+    String resume;
     
+    @ManyToMany
+    private Collection<Acteur> acteurs ;
+	
     public Oeuvre() {
-		super();
-		// TODO Auto-generated constructor stub
 	}
     
     public Oeuvre(String titre, Date dateDeParution, String resume) {
@@ -30,16 +42,14 @@ public abstract class Oeuvre {
 		this.resume = resume;
 	}
 
-    public Oeuvre(long id, String titre, Date dateDeParution) {
+    public Oeuvre(Long id, String titre, Date dateDeParution) {
 		super();
 		this.idOeuvre = id;
 		this.titre = titre;
 		this.dateDeParution = dateDeParution;
 	}
 
-	@Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-	public long getIdOeuvre() {
+	public Long getIdOeuvre() {
 		return idOeuvre;
 	}
 
@@ -69,6 +79,20 @@ public abstract class Oeuvre {
 
 	public void setResume(String resume) {
 		this.resume = resume;
+	}
+
+	/**
+	 * @return the acteurs
+	 */
+	public Collection<Acteur> getActeurs() {
+		return acteurs;
+	}
+
+	/**
+	 * @param acteurs the acteurs to set
+	 */
+	public void setActeurs(Collection<Acteur> acteurs) {
+		this.acteurs = acteurs;
 	}
     
 }

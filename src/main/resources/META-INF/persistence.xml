@@ -2,14 +2,14 @@
     xmlns="http://java.sun.com/xml/ns/persistence" 
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
     xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd">
-    <persistence-unit name="GestionOeuvres" transaction-type="RESOURCE_LOCAL">
+    <persistence-unit name="manager1" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     
     <class>fr.projectdescartes.web.Client</class>
     <class>fr.projectdescartes.web.Telechargement</class>
     <class>fr.projectdescartes.web.Genre</class>
     <class>fr.projectdescartes.web.Oeuvre</class>
-    <class>fr.projectdescartes.web.Films</class>
+    <class>fr.projectdescartes.web.Film</class>
     <class>fr.projectdescartes.web.Auteur</class>
     <class>fr.projectdescartes.web.Editeur</class>
     <class>fr.projectdescartes.web.Livre</class>

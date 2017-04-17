@@ -2,15 +2,15 @@
     <div ng-include = "'partials/header.view.html'"></div>
 </div>
 <div>
-	<h2>Choisir livre :</h2>
-	<select ng-options="livre.titre for livre in listeLivres" ng-model="selected">
+	<h2>Choisir film :</h2>
+	<select ng-options="film.titre for film in listeFilms" ng-model="selected">
 	</select>
-	<input type="submit" ng-click="choisirLivre(selected)" ><br>
+	<input type="submit" ng-click="choisirFilm(selected)" ><br><br>
 	
-	<h3>Liste livres :</h3><br>
-	{{listeLivres | json}}
-	
-	<br><h2>Livre selectionnees : </h2><br>
+	<h3>Liste film :</h3><br>
+	{{listeFilms | json}}
+	<br>
+	<br><h2>Films s&eacute;lectionn&eacute;es : </h2><br>
 	<dl>
 	  <dt>Date de parution</dt>
 	  	<dd>{{selected.dateDeParution}}</dd>
@@ -18,8 +18,8 @@
 	  	<dd>{{selected.titre}}</dd>
 	  <dt>R&eacute;sum&eacute;</dt>
 	  	<dd>{{selected.resume}}</dd>
-	  <dt>Nombre de page</dt>
-	  	<dd>{{selected.nbreDePages}}</dd>
+	  <dt>dur&eacute;e</dt>
+	  	<dd>{{selected.duree}}</dd>
 	</dl>
 </div>
 

@@ -1,5 +1,6 @@
 package fr.projectdescartes.web;
 
+import javax.persistence.Column;
 import javax.persistence.Entity ; 
 import javax.persistence.Id ; 
 import javax.persistence.GeneratedValue ; 
@@ -11,6 +12,8 @@ import javax.persistence.GenerationType ;
 public class Auteur {
 
 	private Long idAuteur;
+	
+	@Column(name="NOM_AUTEUR")
 	private String nomAuteur;
     
     public Auteur(Long idAuteur, String nomAuteur) {
@@ -19,7 +22,9 @@ public class Auteur {
 		this.nomAuteur = nomAuteur;
 	}
 
-
+    public Auteur() {
+	}
+    
 	@Id
     @GeneratedValue(strategy=GenerationType.AUTO)
 	public Long getIdAuteur() {

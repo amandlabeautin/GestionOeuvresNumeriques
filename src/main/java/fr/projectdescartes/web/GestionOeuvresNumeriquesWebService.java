@@ -55,4 +55,40 @@ public class GestionOeuvresNumeriquesWebService {
 		listes.add(new Livre("50 nuances de claires", new SimpleDateFormat("dd/MM/yyyy").parse("01/02/2016"), "Anastasia Steele, étudiante en littérature, a accepté la proposition de son amie journaliste de prendre sa place pour interviewer Christian Grey", 460));
 		return listes;
 	}
+	@RequestMapping(value = "/film", method = RequestMethod.POST)
+	@ResponseStatus(HttpStatus.OK)
+	public void creerFilm(@RequestBody Film film) {
+		System.out.println("creerLivre: " + film);
+	}
+	
+	@RequestMapping(value = "/film", method = RequestMethod.PUT)
+	@ResponseStatus(HttpStatus.OK)
+	public void modifierFilm(@RequestBody Film film){
+		System.out.println("modifier Film: " + film);
+	}
+	
+	@RequestMapping(value = "/film/{titre}", method = RequestMethod.DELETE)
+	@ResponseStatus(HttpStatus.OK)
+	public void supprimerFilm(@PathVariable(value="titre") String titre){
+		System.out.println("supprimerFilm: " + titre);
+	}
+	
+	@RequestMapping(value = "/film/{titre}", method = RequestMethod.GET)
+	@ResponseStatus(HttpStatus.OK)
+	@ResponseBody
+	public Film obtenirUnFilm(@PathVariable(value="titre") String titre) throws ParseException{
+		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		Date dateParution = dateFormat.parse("17/03/2017");
+		return new Film("La belle et la bete", dateParution, "Une nouvelle adaptation live du conte \"La Belle et la Bête\". Belle, jeune fille rêveuse et passionnée de littérature, vit avec son père, un vieil inventeur farfelu. S'étant perdu une nuit dans la fôret, ce dernier se réfugie au château de la Bête, qui la jette au cachot. Ne pouvant supporter de voir son père emprisonné, Belle accepte alors de prendre sa place, ignorant que sous le masque du monstre se cache un Prince Charmant tremblant d'amour pour elle, mais victime d'une terrible malédiction.\n", "2h 9m", null);
+	}
+	
+	@RequestMapping(value = "/film", method = RequestMethod.GET)
+	@ResponseStatus(HttpStatus.OK)
+	@ResponseBody
+	public List<Film> obtenirUneListeDeFilms() throws ParseException{
+		List<Film> listes  = new  ArrayList<Film>();
+		listes.add(new Film("La belle et la bete", new SimpleDateFormat("dd/MM/yyyy").parse("17/03/2017"), "Une nouvelle adaptation live du conte \"La Belle et la Bête\". Belle, jeune fille rêveuse et passionnée de littérature, vit avec son père, un vieil inventeur farfelu. S'étant perdu une nuit dans la fôret, ce dernier se réfugie au château de la Bête, qui la jette au cachot. Ne pouvant supporter de voir son père emprisonné, Belle accepte alors de prendre sa place, ignorant que sous le masque du monstre se cache un Prince Charmant tremblant d'amour pour elle, mais victime d'une terrible malédiction.\n", "2h 9m", null));
+		listes.add(new Film("Rogue One - A Star Wars Story", new SimpleDateFormat("dd/MM/yyyy").parse("14/12/2016"), "Situé entre les épisodes III et IV de la saga Star Wars, le film nous entraîne aux côtés d’individus ordinaires qui, pour rester fidèles à leurs valeurs, vont tenter l’impossible au péril de leur vie. Ils n’avaient pas prévu de devenir des héros, mais dans une époque de plus en plus sombre, ils vont devoir dérober les plans de l’Étoile de la Mort, l’arme de destruction ultime de l’Empire.", "2h 13m", null));
+		return listes;
+	}
 }
