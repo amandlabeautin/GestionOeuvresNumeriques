@@ -69,3 +69,14 @@ rentControllers.controller("modifierControllerFilm", function($scope,$http,$rout
 		});
 	};
 }); 
+
+rentControllers.controller('homeCtrl', function($scope,$http,$routeParams){
+	$http.get('http://localhost:8080/film').
+		then(function(response) {
+		  	$scope.listeFilms = response.data;
+		});
+	$http.get('http://localhost:8080/livre').
+		  then(function(response) {
+		  	$scope.listeLivres = response.data;
+		  });
+});

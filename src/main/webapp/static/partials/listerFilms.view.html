@@ -6,21 +6,40 @@
 	<select ng-options="film.titre for film in listeFilms" ng-model="selected">
 	</select>
 	<input type="submit" ng-click="choisirFilm(selected)" ><br><br>
-	
-	<h3>Liste film :</h3><br>
-	{{listeFilms | json}}
+
 	<br>
 	<br><h2>Films s&eacute;lectionn&eacute;es : </h2><br>
-	<dl>
-	  <dt>Date de parution</dt>
-	  	<dd>{{selected.dateDeParution}}</dd>
-	  <dt>Titre</dt>
-	  	<dd>{{selected.titre}}</dd>
-	  <dt>R&eacute;sum&eacute;</dt>
-	  	<dd>{{selected.resume}}</dd>
-	  <dt>dur&eacute;e</dt>
-	  	<dd>{{selected.duree}}</dd>
-	</dl>
+	<div class="row">
+	  <div class="col-md-5">
+	  	<img src={{selected.image}} class="img-responsive" alt="Responsive image">
+	  </div>
+	  	<div class="col-md-7">
+	  		<dl>
+			  <dt>Date de parution</dt>
+			  	<dd>{{selected.dateDeParution}}</dd><br>
+			  <dt>Titre</dt>
+			  	<dd>{{selected.titre}}</dd><br>
+			  <dt>R&eacute;sum&eacute;</dt>
+			  	<dd>{{selected.resume}}</dd><br>
+			  <dt>dur&eacute;e</dt>
+			  	<dd>{{selected.duree}}</dd><br>
+			  	<dt>Acteurs</dt>
+			  	<dd>
+			  		<div class="row" >
+			  			<div class="col-md-6">
+			  				<img src={{selected.acteurs[0].photoActeur}} width="100" alt="Acteurs" class="img-circle"><br>
+				  			{{selected.acteurs[0].nomActeur}}
+			  			</div>
+  						<div class="col-md-6">
+  							<img src={{selected.acteurs[1].photoActeur}} width="100" alt="Acteurs" class="img-circle"><br>
+				  			{{selected.acteurs[1].nomActeur}}<br>
+  						</div>
+			  		</div>
+			  	</dd>
+			</dl>
+	  </div>
+	</div>
+	
 </div>
 
 <!-- Clé API themoviedb : 'cec47d35f2ffc64da009727fe1741a6d' -->

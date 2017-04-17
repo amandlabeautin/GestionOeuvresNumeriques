@@ -1,0 +1,11 @@
+body{
+	background-color: black;
+}
+h1, h2, h3, dl, p {
+	color : white;
+}
+
+.gallery_product
+{
+    margin-bottom: 30px;
+}

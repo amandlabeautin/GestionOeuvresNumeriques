@@ -8,7 +8,8 @@ app.config(['$routeProvider',  '$locationProvider',
 		$locationProvider.hashPrefix('');	
 		$routeProvider.
 			when('/gestionOeuvresNumeriques', {
-				templateUrl: 'partials/menu.html'
+				templateUrl: 'partials/menu.html',
+				controller: 'homeCtrl'
 			}).
 			when('/gestionOeuvresNumeriques/listeLivres', {
 				templateUrl: 'partials/listerLivres.html',

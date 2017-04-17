@@ -5,11 +5,13 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity ;
+import javax.persistence.ManyToMany;
 /**
  * 
  */
 @Entity
 public class Film extends Oeuvre {
+
 
 	@Column(name="DUREE_OEUVRE")
 	private String duree;
@@ -17,17 +19,32 @@ public class Film extends Oeuvre {
 	@Column(name="BANDE_ANNONCE")
 	private String bandeAnnonce;
 	
+	@ManyToMany
     private Collection<Acteur> acteurs;
 	
 	public Film() {
 		
 	}
 	
-    public Film(String titre, Date dateDeParution, String resume, String duree, String bandeAnnonce) {
-		super(titre, dateDeParution, resume);
+	/**
+	 * @param idOeuvre
+	 * @param dateDeParution
+	 * @param titre
+	 * @param resume
+	 * @param image
+	 * @param acteurs
+	 * @param duree
+	 * @param bandeAnnonce
+	 * @param acteurs2
+	 */
+	public Film(Date dateDeParution, String titre, String resume, String image,
+			Collection<Acteur> acteurs, String duree, String bandeAnnonce) {
+		super(dateDeParution, titre, resume, image);
 		this.duree = duree;
 		this.bandeAnnonce = bandeAnnonce;
+		this.acteurs = acteurs;
 	}
+	
 
 	public String getDuree() {
 		return duree;

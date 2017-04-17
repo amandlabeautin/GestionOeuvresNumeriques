@@ -7,3 +7,25 @@
 	<a href="#/gestionOeuvresNumeriques/listeFilms">Lister films</a><br>
 	<a href="#/gestionOeuvresNumeriques/modifierFilm">Modifier film</a><br>
 </div>
+<div ng-controller="homeCtrl">
+{{list | json}}
+	<div class="row">
+		<h2>FILMS</h2>
+		<div ng-repeat="film in listeFilms ">
+			<div class="gallery_product col-lg-4 col-md-4 col-sm-4 col-xs-6 filter hdpe">
+				<a href="#/livre/"{{film.titre}}>
+	            	<img src={{film.image}} class="img-responsive" width="200">
+	            </a>
+	        </div>
+		</div>
+	</div>
+	<div class="row">
+		<H2>LIVRES</H2>
+		<div ng-repeat="livre in listeLivres ">
+			<div class="gallery_product col-lg-4 col-md-4 col-sm-4 col-xs-6 filter hdpe">
+	            <img src={{livre.image}} class="img-responsive" width="200">
+	        </div>
+		</div>
+	</div>
+</div>
+	

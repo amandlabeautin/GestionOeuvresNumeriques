@@ -15,10 +15,13 @@ public class Acteur {
 
 	@Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-	private Long idActeur;
+	Long idActeur;
 	
 	@Column(name="NOM_ACTEUR")
 	private String nomActeur;
+
+	@Column(name="PHOTO_ACTEUR")
+	private String photoActeur;
 	
 	@ManyToMany(mappedBy="acteurs")
 	private Collection<Oeuvre> oeuvres;
@@ -26,10 +29,10 @@ public class Acteur {
 	public Acteur() {
 	}
 	
-	public Acteur(Long idActeur, String nomAuteur) {
+	public Acteur(String nomActeur, String photoActeur) {
 		super();
-		this.idActeur = idActeur;
-		this.nomActeur = nomAuteur;
+		this.nomActeur = nomActeur;
+		this.photoActeur = photoActeur;
 	}
     
 	public Long getIdActeur() {
@@ -43,6 +46,20 @@ public class Acteur {
 	}
 	public void setNomActeur(String nomActeur) {
 		this.nomActeur = nomActeur;
+	}
+
+	/**
+	 * @return the photoActeur
+	 */
+	public String getPhotoActeur() {
+		return photoActeur;
+	}
+
+	/**
+	 * @param photoActeur the photoActeur to set
+	 */
+	public void setPhotoActeur(String photoActeur) {
+		this.photoActeur = photoActeur;
 	}
 
 	/**

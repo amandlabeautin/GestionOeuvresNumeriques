@@ -1,6 +1,5 @@
 package fr.projectdescartes.web;
 
-import java.util.Collection;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -8,7 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -28,25 +26,18 @@ public abstract class Oeuvre {
 	
 	@Column(name="RESUME_OEUVRE")
     String resume;
-    
-    @ManyToMany
-    private Collection<Acteur> acteurs ;
+	
+	@Column(name="IMAGE_OEUVRE")
+	String image;
 	
     public Oeuvre() {
 	}
     
-    public Oeuvre(String titre, Date dateDeParution, String resume) {
-		super();
-		this.titre = titre;
+	public Oeuvre(Date dateDeParution, String titre, String resume, String image) {
 		this.dateDeParution = dateDeParution;
+		this.titre = titre;
 		this.resume = resume;
-	}
-
-    public Oeuvre(Long id, String titre, Date dateDeParution) {
-		super();
-		this.idOeuvre = id;
-		this.titre = titre;
-		this.dateDeParution = dateDeParution;
+		this.image = image;
 	}
 
 	public Long getIdOeuvre() {
@@ -82,17 +73,17 @@ public abstract class Oeuvre {
 	}
 
 	/**
-	 * @return the acteurs
+	 * @return the image
 	 */
-	public Collection<Acteur> getActeurs() {
-		return acteurs;
+	public String getImage() {
+		return image;
 	}
 
 	/**
-	 * @param acteurs the acteurs to set
+	 * @param image the image to set
 	 */
-	public void setActeurs(Collection<Acteur> acteurs) {
-		this.acteurs = acteurs;
+	public void setImage(String image) {
+		this.image = image;
 	}
     
 }

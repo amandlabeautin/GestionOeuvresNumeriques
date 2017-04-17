@@ -1,8 +1,11 @@
 package fr.projectdescartes.web;
 
+import java.util.Collection;
+
 import javax.persistence.Column;
 import javax.persistence.Entity ; 
-import javax.persistence.Id ; 
+import javax.persistence.Id ;
+import javax.persistence.OneToMany;
 import javax.persistence.GeneratedValue ; 
 import javax.persistence.GenerationType ;
 /**
@@ -15,14 +18,16 @@ public class Auteur {
 	
 	@Column(name="NOM_AUTEUR")
 	private String nomAuteur;
+	
+	@OneToMany
+    private Collection<Livre> livres;
     
-    public Auteur(Long idAuteur, String nomAuteur) {
-		super();
-		this.idAuteur = idAuteur;
+    public Auteur(String nomAuteur, Collection<Livre> livres) {
 		this.nomAuteur = nomAuteur;
+		this.livres = livres;
 	}
 
-    public Auteur() {
+	public Auteur() {
 	}
     
 	@Id
@@ -41,5 +46,19 @@ public class Auteur {
 
 	public void setNomAuteur(String nomAuteur) {
 		this.nomAuteur = nomAuteur;
+	}
+
+	/**
+	 * @return the livres
+	 */
+	public Collection<Livre> getLivres() {
+		return livres;
+	}
+
+	/**
+	 * @param livres the livres to set
+	 */
+	public void setLivres(Collection<Livre> livres) {
+		this.livres = livres;
 	}
 }
