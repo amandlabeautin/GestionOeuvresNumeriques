@@ -18,7 +18,17 @@ rentControllers.controller("rentController", function($scope,$http,$routeParams)
 		    data: selected,
 		    headers: {'Content-Type': 'application/json'}
 		});
-	};     
+	};  
+	
+	$scope.convertDate = function(dateParution){
+		dateParution = new Date(dateParution);
+	    var d = dateParution.getDate().toString();
+	    var dd = (d.length === 2) ? d : "0"+d;
+	    var m = (dateParution.getMonth()+1).toString();
+	    var mm = (m.length === 2) ? m : "0"+m;     
+	    
+	    return(dd+"/"+mm+ "/" + (dateParution.getFullYear()).toString());
+	};
 });
 
 rentControllers.controller("modifierController", function($scope,$http,$routeParams) {
@@ -51,6 +61,16 @@ rentControllers.controller("rentControllerFilm", function($scope,$http,$routePar
 		    data: selected,
 		    headers: {'Content-Type': 'application/json'}
 		});
+	};
+
+	$scope.convertDate = function(dateParution){
+		dateParution = new Date(dateParution);
+	    var d = dateParution.getDate().toString();
+	    var dd = (d.length === 2) ? d : "0"+d;
+	    var m = (dateParution.getMonth()+1).toString();
+	    var mm = (m.length === 2) ? m : "0"+m;     
+	    
+	    return(dd+"/"+mm+ "/" + (dateParution.getFullYear()).toString());
 	};  
 }); 
 

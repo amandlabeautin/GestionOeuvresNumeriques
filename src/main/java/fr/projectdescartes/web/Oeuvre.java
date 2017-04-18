@@ -18,7 +18,7 @@ public abstract class Oeuvre {
 	Long idOeuvre;
 	
 	@Column(name = "DATE_DE_PARUTION")
-	@Temporal(TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.DATE)
     Date dateDeParution;
 	
 	@Column(name="TITRE_OEUVRE")
