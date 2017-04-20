@@ -1,25 +1,26 @@
-package fr.projectdescartes.web;
+package fr.projectdescartes.domain;
 
 import java.util.Collection;
 
-import javax.persistence.Column;
-import javax.persistence.Entity ; 
-import javax.persistence.Id ;
-import javax.persistence.OneToMany;
-import javax.persistence.GeneratedValue ; 
-import javax.persistence.GenerationType ;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 /**
  * 
  */
 @Entity
+@Table(name="editeur")
 public class Editeur {
 
+	@Id
+	@Column(name="id")
+    @GeneratedValue(strategy=GenerationType.AUTO)
 	private long id;
 	
-	@Column(name="NOM_EDITEUR")
+	@NotNull
+	@Column(name="editeur_nom")
 	private String nomEditeur;
 	
-	@OneToMany
+	@OneToMany(mappedBy = "editeur", cascade = CascadeType.ALL)
     private Collection<Livre> livres;
 	
 	public Editeur() {	
@@ -30,8 +31,6 @@ public class Editeur {
 		this.livres = livres;
 	}
 	
-	@Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
 	public long getId() {
 		return id;
 	}

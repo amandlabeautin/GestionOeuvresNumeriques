@@ -1,54 +1,55 @@
-package fr.projectdescartes.web;
+package fr.projectdescartes.domain;
 
 import java.util.Collection;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity ; 
 import javax.persistence.Id ;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.persistence.GeneratedValue ; 
 import javax.persistence.GenerationType ;
 /**
  * 
  */
 @Entity
-public class Client {
+@Table(name="user")
+public class User {
 
+	@Id
+	@Column(name="id")
+    @GeneratedValue(strategy=GenerationType.AUTO)
 	private long idClient;
 	
-	@Column(name="NOM_USER")
+	@NotNull
+	@Column(name="user_login")
 	private String nomClient;
 	
-	@Column(name="MAIL_USER")
+	@NotNull
+	@Column(name="user_mail")
 	private String adresseMailClient;
 	
-	@Column(name="PASSWORD_USER")
+	@NotNull
+	@Column(name="user_password")
 	transient private String password;
 	
-	private Collection<Telechargement> telechargements;
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	private Collection<Telechargement> downloads;
 	
 	
-	public Client(long idClient, String nomClient, String adresseMailClient,
+	public User(String nomClient, String adresseMailClient, String password,
 			Collection<Telechargement> telechargements) {
 		super();
-		this.idClient = idClient;
 		this.nomClient = nomClient;
+		this.password = password;
 		this.adresseMailClient = adresseMailClient;
-		this.telechargements = telechargements;
+		this.downloads = telechargements;
 	}
 
-	public Client() {
+	public User() {
 		
-	}
-	
-	@Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-	public long getIdClient() {
-		return idClient;
-	}
-	
-	public void setIdClient(long idClient) {
-		this.idClient = idClient;
 	}
 	
 	public String getNomClient() {
@@ -82,11 +83,11 @@ public class Client {
 
 	@OneToMany(mappedBy="Client")
 	public Collection<Telechargement> getTelechargements() {
-		return telechargements;
+		return downloads;
 	}
 
 	public void setTelechargements(Collection<Telechargement> telechargements) {
-		this.telechargements = telechargements;
+		this.downloads = telechargements;
 	}
 
 }

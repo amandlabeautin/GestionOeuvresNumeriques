@@ -5,23 +5,23 @@
     <persistence-unit name="manager1" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     
-    <class>fr.projectdescartes.web.Client</class>
-    <class>fr.projectdescartes.web.Telechargement</class>
-    <class>fr.projectdescartes.web.Genre</class>
-    <class>fr.projectdescartes.web.Oeuvre</class>
-    <class>fr.projectdescartes.web.Film</class>
-    <class>fr.projectdescartes.web.Auteur</class>
-    <class>fr.projectdescartes.web.Editeur</class>
-    <class>fr.projectdescartes.web.Livre</class>
-    <class>fr.projectdescartes.web.Acteur</class>
+    <class>fr.projectdescartes.domain.Client</class>
+    <class>fr.projectdescartes.domain.Telechargement</class>
+    <class>fr.projectdescartes.domain.Genre</class>
+    <class>fr.projectdescartes.domain.Oeuvre</class>
+    <class>fr.projectdescartes.domain.Film</class>
+    <class>fr.projectdescartes.domain.Auteur</class>
+    <class>fr.projectdescartes.domain.Editeur</class>
+    <class>fr.projectdescartes.domain.Livre</class>
+    <class>fr.projectdescartes.domain.Acteur</class>
     
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     
     <properties>
-       	<property name="javax.persistence.jdbc.url" value="jdbc:hsqldb:hsql://localhost/"/>
-       	<property name="javax.persistence.jdbc.driver" value="org.hsqldb.jdbcDriver"/>
-    	<property name="javax.persistence.jdbc.user" value="sa"/>
-    	<property name="javax.persistence.jdbc.password" value=""/>
+    	<property name="javax.persistence.jdbc.url" value="jdbc:mysql:/localhost:8889/gestionOeuvresNumeriques"/>
+       	<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+       	  <property name="javax.persistence.jdbc.user" value="root"/>
+    	<property name="javax.persistence.jdbc.password" value="root"/>
     	<property name="eclipselink.ddl-generation" value="create-or-extend-tables"/>
 		<property name="eclipselink.ddl-generation.output-mode" value="database"/>
 		<property name="eclipselink.logging.level" value="FINE"/>
