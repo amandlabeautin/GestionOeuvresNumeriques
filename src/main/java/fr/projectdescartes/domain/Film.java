@@ -3,15 +3,20 @@ package fr.projectdescartes.domain;
 import java.util.Collection;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity ;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 /**
  * 
  */
 @Entity
-@Table(name="film")
+@DiscriminatorValue(value="F")
 public class Film extends Oeuvre {
 
 
@@ -21,7 +26,9 @@ public class Film extends Oeuvre {
 	@Column(name="film_annonce")
 	private String bandeAnnonce;
 	
-	@ManyToMany(mappedBy="films")
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JsonIgnore
+    @JoinTable(name = "acteur_oeuvre", joinColumns = @JoinColumn(name = "oeuvre_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "acteur_id", referencedColumnName = "id"))
     private Collection<Acteur> acteurs;
 	
 	public Film() {

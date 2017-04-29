@@ -6,8 +6,18 @@ import java.util.Date;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Table(name="oeuvre")
+@DiscriminatorColumn
+(
+ name="Discriminator",
+ discriminatorType=DiscriminatorType.STRING
+)
+@DiscriminatorValue(value="O")
 public abstract class Oeuvre {
 
 	@Id
@@ -23,7 +33,7 @@ public abstract class Oeuvre {
 	@Column(name="titre")
     String titre;
 	
-	@Column(name="resume")
+	@Column(name="resume", length=2000, columnDefinition="LONGTEXT")
     String resume;
 	
 	@Column(name="image")
@@ -31,10 +41,12 @@ public abstract class Oeuvre {
 	
 	@ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "genre_oeuvre", joinColumns = @JoinColumn(name = "oeuvre_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "genre_id", referencedColumnName = "id"))
+	@JsonBackReference("oeuvre_genre") 
 	Collection<Genre> genres;
 	
 	@ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "oeuvre_download", joinColumns = @JoinColumn(name = "oeuvre_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "download_id", referencedColumnName = "id"))
+	@JsonManagedReference
 	Collection<Telechargement> downloads;
 	
     public Oeuvre() {
@@ -47,15 +59,6 @@ public abstract class Oeuvre {
 		this.image = image;
 		this.genres = genres;
 		this.downloads = downloads;
-	}
-
-
-	public Long getIdOeuvre() {
-		return idOeuvre;
-	}
-
-	public void setIdOeuvre(long id) {
-		this.idOeuvre = id;
 	}
 
 	public String getTitre() {
@@ -99,6 +102,7 @@ public abstract class Oeuvre {
 	/**
 	 * @return the genres
 	 */
+	
 	public Collection<Genre> getGenres() {
 		return genres;
 	}
@@ -117,6 +121,37 @@ public abstract class Oeuvre {
 	 */
 	public boolean add(Genre e) {
 		return genres.add(e);
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((idOeuvre == null) ? 0 : idOeuvre.hashCode());
+		return result;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Oeuvre other = (Oeuvre) obj;
+		if (idOeuvre == null) {
+			if (other.idOeuvre != null)
+				return false;
+		} else if (!idOeuvre.equals(other.idOeuvre))
+			return false;
+		return true;
 	}
     
 }

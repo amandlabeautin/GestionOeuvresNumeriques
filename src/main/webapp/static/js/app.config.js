@@ -1,11 +1,7 @@
-'use strict';
-
-var app = angular.module('GestionOeuvresNumeriques', [
-	'ngRoute','rentControllers']);
-
-app.config(['$routeProvider',  '$locationProvider',
-	function($routeProvider, $locationProvider) {
-		$locationProvider.hashPrefix('');	
+angular
+    .module('GestionOeuvresNumeriques')
+	.config(function($routeProvider, $locationProvider) {
+		$locationProvider.hashPrefix('');
 		$routeProvider.
 			when('/gestionOeuvresNumeriques', {
 				templateUrl: 'partials/menu.html',
@@ -27,7 +23,19 @@ app.config(['$routeProvider',  '$locationProvider',
 				templateUrl: 'partials/modifierFilm.html',
 				controller: 'modifierControllerFilm'
 			}).
+			when('/gestionOeuvresNumeriques/inscription', {
+				templateUrl: 'partials/inscription.html',
+				controller: 'inscriptionController'
+			}).
+			when('/gestionOeuvresNumeriques/ajouter-film', {
+				templateUrl: 'partials/addFilm.html',
+				controller: 'filmController'
+			}).
+			when('/gestionOeuvresNumeriques/add-book', {
+				templateUrl: 'partials/ajouterLivre.html',
+				controller: 'livreController'
+			}).
 			otherwise({
 				redirectTo: '/gestionOeuvresNumeriques'
 			});
-}]);
+	});

@@ -4,6 +4,8 @@ import java.util.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 
 @Entity
 @Table(name="download")
@@ -25,6 +27,7 @@ public class Telechargement {
 
 	@NotNull
 	@ManyToMany(mappedBy = "downloads")
+	@JsonBackReference
 	private Collection<Oeuvre> oeuvres;
 	
 	

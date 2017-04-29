@@ -10,20 +10,34 @@
 <div ng-controller="homeCtrl">
 {{list | json}}
 	<div class="row">
-		<h2>FILMS</h2>
+		<div class="col-xs-12 col-sm-6 col-md-8"><h2>FILMS</h2></div>
+  		<div class="col-xs-6 col-md-4">
+  			<a class="btn btn-default" href="#/gestionOeuvresNumeriques/ajouter-film" role="button">
+  				<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Ajouter un film
+  			</a>
+  		</div>
+	</div>
+	<div class="row">	
 		<div ng-repeat="film in listeFilms ">
 			<div class="gallery_product col-lg-4 col-md-4 col-sm-4 col-xs-6 filter hdpe">
-				<a href="#/livre/"{{film.titre}}>
-	            	<img src={{film.image}} class="img-responsive" width="200">
+				<a href="#/film/"{{film.titre}}>
+	            	<img src={{decode(film.image)}} class="img-responsive" width="200">
 	            </a>
 	        </div>
 		</div>
 	</div>
 	<div class="row">
-		<H2>LIVRES</H2>
+		<div class="col-xs-12 col-sm-6 col-md-8"><h2>LIVRES</h2></div>
+  		<div class="col-xs-6 col-md-4">
+  			<a class="btn btn-default" href="#/gestionOeuvresNumeriques/add-book" role="button">
+  			<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Ajouter un livre
+  			</a>
+  		</div>
+	</div>
+	<div class="row">	
 		<div ng-repeat="livre in listeLivres ">
 			<div class="gallery_product col-lg-4 col-md-4 col-sm-4 col-xs-6 filter hdpe">
-	            <img src={{livre.image}} class="img-responsive" width="200">
+	            <img src={{decode(livre.image)}} class="img-responsive" width="200">
 	        </div>
 		</div>
 	</div>

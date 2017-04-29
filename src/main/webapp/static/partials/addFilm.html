@@ -1,0 +1,86 @@
+<div class="container">
+    <div ng-include = "'partials/header.view.html'"></div>
+</div>
+<div class="container">
+  	<form name="addFilmForm" class="well form-horizontal">
+  	<fieldset>
+	  <div class="form-group">
+	    <label for="exampleInputEmail1" class="col-sm-4 control-label">Titre</label>
+	    <div class="col-sm-4">
+	    	<div class="input-group">
+			    <span class="input-group-addon"><i class="glyphicon glyphicon-film"></i></span>
+			    <input type="text" class="form-control" id="titre" placeholder="Entrer le titre du film" ng-model="$movie.titre" required>
+			    <div class="has-error" ng-show="addFilmForm.$dirty">
+	                <span ng-show="addFilmForm.nameUser.$error.required">This is a required field</span>
+              </div>
+          	</div>
+        </div>
+	  </div>
+	  <div class="form-group">
+	    <label for="exampleInputEmail1" class="col-sm-4 control-label">Résumé</label>
+	    <div class="col-sm-4">
+		    <div class="input-group">
+			    <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+			    <textarea class="form-control" rows="5" id="summary" placeholder="Entrer le synopsis du film" ng-model="$movie.summary"></textarea>
+		    </div>
+	    </div>
+	  </div>
+	  <div class="form-group">
+	    <label for="exampleInputEmail1" class="col-sm-4 control-label">Date de parution</label>
+	    <div class="col-sm-4">
+		    <div class="input-group">
+			    <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+			    <input type="text" class="form-control" id="DateDeParution" uib-datepicker-popup="{{format}}" placeholder="Entrer la date de parution du film" ng-model="$movie.dateDeParution">
+		    </div>
+	    </div>
+	  </div>
+	  <div class="form-group">
+	    <label for="exampleInputEmail1" class="col-sm-4 control-label">Durée du film</label>
+	    <div class="col-sm-4">
+		    <div class="input-group">
+			    <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+			    <input type="text" class="form-control" id="duree" placeholder="Entrer la durée du film, par exemple 2h 05 min" ng-model="$movie.duree">
+		    </div>
+	    </div>
+	  </div>
+	  <div class="form-group">
+	    <label for="exampleInputEmail1" class="col-sm-4 control-label">Lien image officiel</label>
+	    <div class="col-sm-4">
+	    	<div class="input-group">
+			    <span class="input-group-addon"><i class="glyphicon glyphicon-picture"></i></span>
+			    <input type="url" name="imageMovie" class="form-control" id="image" placeholder="Entrer un lien url vers une image du film" ng-model="$movie.image">
+		    </div>
+	    </div>
+	  </div>
+	  <div class="form-group">
+	    <label for="exampleInputEmail1" class="col-sm-4 control-label">Lien Bande-annonce</label>
+	    <div class="col-sm-4">
+	    	<div class="input-group">
+			    <span class="input-group-addon"><i class="glyphicon glyphicon-facetime-video"></i></span>
+			    <input type="url" class="form-control" id="annonce" placeholder="Entrer un lien url vers une vidéo du film" ng-model="$movie.bandeAnnonce" >
+		    </div>
+	    </div>
+	  </div>
+	  <div class="form-group">
+	    <label for="exampleInputEmail1" class="col-sm-4 control-label">Acteurs</label>
+	    <div class="col-sm-4">
+	    	<div class="input-group">
+			    <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
+			    <select multiple class="form-control" placeholder="Entrer un ou plusieurs genres auquelles le film appartient" ng-options="acteur.nomComplet for acteur in listeActeur" ng-model="$movie.acteurSelected"></select>
+		    </div>
+	    </div>
+	  </div>
+	  <div class="form-group">
+	    <label for="exampleInputEmail1" class="col-sm-4 control-label">Genre</label>
+	    <div class="col-sm-4">
+	    	<div class="input-group">
+			    <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
+			    <select multiple class="form-control" placeholder="Entrer un ou plusieurs genres auquelles le film appartient" ng-options="genre.nomGenre for genre in listeGenre" ng-model="$movie.genreSelected"></select>
+		    </div>
+	    </div>
+	  </div>
+
+	  <button type="submit" ng-click="createMovie($movie)" class="btn btn-default">Envoyer</button>
+	  </fieldset>
+	</form>
+</div>

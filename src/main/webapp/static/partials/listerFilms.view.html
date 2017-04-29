@@ -3,27 +3,27 @@
 </div>
 <div>
 	<h2>Choisir film :</h2>
-	<select ng-options="film.titre for film in listeFilms" ng-model="selected">
+	<select ng-options="film.titre for film in listeFilms" ng-model="selectedFilm">
 	</select>
-	<input type="submit" ng-click="choisirFilm(selected)" ><br><br>
+	<input type="submit" ng-click="choisirFilm(selectedFilm)" ><br><br>
 
 	<br>
 	<br><h2>Films s&eacute;lectionn&eacute;es : </h2><br>
 	<div class="row">
 	  <div class="col-md-5">
-	  	<img src={{selected.image}} class="img-responsive" alt="Responsive image">
+	  	<img ng-src={{decode(selectedFilm.image)}} class="img-responsive" alt="Responsive image">
 	  </div>
 	  	<div class="col-md-7">
 	  		<dl>
 			  <dt>Date de parution</dt>
-			  	<dd>{{convertDate(selected.dateDeParution)}}</dd><br>
+			  	<dd>{{convertDate(selectedFilm.dateDeParution)}}</dd><br>
 			  <dt>Titre</dt>
-			  	<dd>{{selected.titre}}</dd><br>
+			  	<dd>{{selectedFilm.titre}}</dd><br>
 			  <dt>R&eacute;sum&eacute;</dt>
-			  	<dd>{{selected.resume}}</dd><br>
+			  	<dd>{{selectedFilm.resume}}</dd><br>
 			  <dt>dur&eacute;e</dt>
-			  	<dd>{{selected.duree}}</dd><br>
-			  	<dt>Acteurs</dt>
+			  	<dd>{{selectedFilm.duree}}</dd><br>
+			  	<!-- <dt>Acteurs</dt>
 			  	<dd>
 			  		<div class="row" >
 			  			<div class="col-md-6">
@@ -35,7 +35,7 @@
 				  			{{selected.acteurs[1].nomActeur}}<br>
   						</div>
 			  		</div>
-			  	</dd>
+			  	</dd> -->
 			</dl>
 	  </div>
 	</div>

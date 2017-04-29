@@ -5,8 +5,11 @@ import java.util.Collection;
 import javax.persistence.Column;
 import javax.persistence.Entity ; 
 import javax.persistence.Id ;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 import javax.validation.constraints.NotNull;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.GeneratedValue ; 
 import javax.persistence.GenerationType ;
 /**
@@ -22,22 +25,18 @@ public class Auteur {
 	
 	@NotNull
 	@Column(name="auteur_nom")
-	private String nom;
+	private String nomComplet;
 	
-	@NotNull
-	@Column(name="auteur_prenom")
-	private String prenom;
-	
-	@OneToMany
-    private Collection<Livre> livres;
+	@ManyToMany(mappedBy = "auteurs")
+	@JsonBackReference
+    private Collection<Livre> oeuvres;
 	
 	
 	public Auteur() {}
     
-    public Auteur(String nom, String prenom, Collection<Livre> livres) {
-		this.nom = nom;
-		this.prenom = prenom;
-		this.livres = livres;
+    public Auteur(String nom,  Collection<Livre> livres) {
+		this.nomComplet = nom;
+		this.oeuvres = livres;
 	}
 
 	
@@ -50,54 +49,39 @@ public class Auteur {
 	}
 
 	/**
+	 * @return the nomComplet
+	 */
+	public String getNomComplet() {
+		return nomComplet;
+	}
+
+	/**
+	 * @param nomComplet the nomComplet to set
+	 */
+	public void setNomComplet(String nomComplet) {
+		this.nomComplet = nomComplet;
+	}
+
+	/**
+	 * @return the oeuvres
+	 */
+	public Collection<Livre> getOeuvres() {
+		return oeuvres;
+	}
+
+	/**
+	 * @param oeuvres the oeuvres to set
+	 */
+	public void setOeuvres(Collection<Livre> oeuvres) {
+		this.oeuvres = oeuvres;
+	}
+
+	/**
 	 * @param e
 	 * @return
 	 * @see java.util.Collection#add(java.lang.Object)
 	 */
-
-	/**
-	 * @return the nom
-	 */
-	public String getNom() {
-		return nom;
-	}
-
-	/**
-	 * @param nom the nom to set
-	 */
-	public void setNom(String nom) {
-		this.nom = nom;
-	}
-
-	/**
-	 * @return the prenom
-	 */
-	public String getPrenom() {
-		return prenom;
-	}
-
-	/**
-	 * @param prenom the prenom to set
-	 */
-	public void setPrenom(String prenom) {
-		this.prenom = prenom;
-	}
-
-	/**
-	 * @return the livres
-	 */
-	public Collection<Livre> getLivres() {
-		return livres;
-	}
-
-	/**
-	 * @param livres the livres to set
-	 */
-	public void setLivres(Collection<Livre> livres) {
-		this.livres = livres;
-	}
-	
 	public boolean add(Livre e) {
-		return livres.add(e);
+		return oeuvres.add(e);
 	}
 }

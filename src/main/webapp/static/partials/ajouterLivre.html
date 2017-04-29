@@ -1,0 +1,86 @@
+<div class="container">
+    <div ng-include = "'partials/header.view.html'"></div>
+</div>
+<div class="container">
+  	<form name="addBookForm" class="well form-horizontal">
+  	<fieldset>
+	  <div class="form-group">
+	    <label for="exampleInputEmail1" class="col-sm-4 control-label">Titre</label>
+	    <div class="col-sm-4">
+	    	<div class="input-group">
+			    <span class="input-group-addon"><i class="glyphicon glyphicon-film"></i></span>
+			    <input type="text" class="form-control" id="titre" placeholder="Entrer le titre du livre" ng-model="$book.titre" required>
+			    <div class="has-error" ng-show="addBookForm.$dirty">
+	                <span ng-show="addBookForm.nameUser.$error.required">This is a required field</span>
+              </div>
+          	</div>
+        </div>
+	  </div>
+	  <div class="form-group">
+	    <label for="exampleInputEmail1" class="col-sm-4 control-label">Résumé</label>
+	    <div class="col-sm-4">
+		    <div class="input-group">
+			    <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+			    <textarea class="form-control" rows="5" id="summary" placeholder="Entrer le synopsis du film" ng-model="$book.summary"></textarea>
+		    </div>
+	    </div>
+	  </div>
+	  <div class="form-group">
+	    <label for="exampleInputEmail1" class="col-sm-4 control-label">Date de parution</label>
+	    <div class="col-sm-4">
+		    <div class="input-group">
+			    <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+			    <input type="text" class="form-control" id="DateDeParution" uib-datepicker-popup="{{format}}" placeholder="Entrer la date de parution du livre" ng-model="$book.dateDeParution">
+		    </div>
+	    </div>
+	  </div>
+	  <div class="form-group">
+	    <label for="exampleInputEmail1" class="col-sm-4 control-label">Nombre de page</label>
+	    <div class="col-sm-4">
+		    <div class="input-group">
+			    <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+			    <input type="text" class="form-control" id="duree" placeholder="Entrer la durée du film, par exemple 2h 05 min" ng-model="$book.nbreDePages">
+		    </div>
+	    </div>
+	  </div>
+	  <div class="form-group">
+	    <label for="exampleInputEmail1" class="col-sm-4 control-label">Lien image officiel</label>
+	    <div class="col-sm-4">
+	    	<div class="input-group">
+			    <span class="input-group-addon"><i class="glyphicon glyphicon-picture"></i></span>
+			    <input type="url" name="imageMovie" class="form-control" id="image" placeholder="Entrer un lien url vers une image du film" ng-model="$book.image">
+		    </div>
+	    </div>
+	  </div>
+	  	  <div class="form-group">
+	    <label for="exampleInputEmail1" class="col-sm-4 control-label">Editeur</label>
+	    <div class="col-sm-4">
+		    <div class="input-group">
+			    <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+			    <select class="form-control" placeholder="Entrer un editeur" ng-options="editeur.nomEditeur for editeur in listeEditeur" ng-model="$book.editeurSelected"></select>
+		    </div>
+	    </div>
+	  </div>
+	  <div class="form-group">
+	    <label for="exampleInputEmail1" class="col-sm-4 control-label">Auteurs</label>
+	    <div class="col-sm-4">
+	    	<div class="input-group">
+			    <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
+			    <select multiple class="form-control" placeholder="Entrer un ou plusieurs genres auquelles le film appartient" ng-options="auteur.nomComplet for auteur in listeAuteur" ng-model="$book.auteurSelected"></select>
+		    </div>
+	    </div>
+	  </div>
+	  <div class="form-group">
+	    <label for="exampleInputEmail1" class="col-sm-4 control-label">Genre</label>
+	    <div class="col-sm-4">
+	    	<div class="input-group">
+			    <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
+			    <select multiple class="form-control" placeholder="Entrer un ou plusieurs genres auquelles le film appartient" ng-options="genre.nomGenre for genre in listeGenre" ng-model="$book.genreSelected"></select>
+		    </div>
+	    </div>
+	  </div>
+
+	  <button type="submit" ng-click="createBook($book)" class="btn btn-default">Envoyer</button>
+	  </fieldset>
+	</form>
+</div>

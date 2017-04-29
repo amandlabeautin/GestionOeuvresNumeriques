@@ -17,26 +17,20 @@ public class Acteur {
 	
 	@NotNull
 	@Column(name="acteur_nom")
-	private String nomActeur;
-	
-	@NotNull
-	@Column(name="acteur_prenom")
-	private String prenomActeur;
+	private String nomComplet;
 
 	@Column(name="acteur_photo")
 	private String photoActeur;
 	
-	@ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "acteur_film", joinColumns = @JoinColumn(name = "acteur_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "film_id", referencedColumnName = "id"))
+	@ManyToMany(mappedBy = "acteurs")
 	private Collection<Film> films;
 	
 	public Acteur() {
 	}
 	
-	public Acteur(String nomActeur, String prenomActeur, String photoActeur, Collection<Film> films) {
+	public Acteur(String nomActeur, String photoActeur, Collection<Film> films) {
 		super();
-		this.nomActeur = nomActeur;
-		this.prenomActeur = prenomActeur;
+		this.nomComplet = nomActeur;
 		this.photoActeur = photoActeur;
 		this.films = films;
 	}
@@ -47,25 +41,19 @@ public class Acteur {
 	public void setIdActeur(Long id) {
 		this.idActeur = id;
 	}
-	public String getNomActeur() {
-		return nomActeur;
-	}
-	public void setNomActeur(String nomActeur) {
-		this.nomActeur = nomActeur;
+
+	/**
+	 * @return the nomComplet
+	 */
+	public String getNomComplet() {
+		return nomComplet;
 	}
 
 	/**
-	 * @return the prenomActeur
+	 * @param nomComplet the nomComplet to set
 	 */
-	public String getPrenomActeur() {
-		return prenomActeur;
-	}
-
-	/**
-	 * @param prenomActeur the prenomActeur to set
-	 */
-	public void setPrenomActeur(String prenomActeur) {
-		this.prenomActeur = prenomActeur;
+	public void setNomComplet(String nomComplet) {
+		this.nomComplet = nomComplet;
 	}
 
 	/**
@@ -102,6 +90,4 @@ public class Acteur {
 	public void setOeuvres(Collection<Film> films) {
 		this.films = films;
 	}
-	
-	
 }

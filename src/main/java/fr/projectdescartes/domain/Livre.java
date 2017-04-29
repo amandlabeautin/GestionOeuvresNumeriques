@@ -5,16 +5,18 @@ import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
-@Table(name="livre")
+@DiscriminatorValue(value="L")
 public class Livre extends Oeuvre {
 
 	@Column(name="livre_nbreDePages")
@@ -22,11 +24,12 @@ public class Livre extends Oeuvre {
 	
 	@ManyToOne
 	@JoinColumn(name = "editeur_id")
+	@JsonBackReference("oeuvre_editeur") 
 	Editeur editeur;
 	
 	@NotNull
 	@ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "auteur_livre", joinColumns = @JoinColumn(name = "livre_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "auteur_id", referencedColumnName = "id"))
+    @JoinTable(name = "auteur_oeuvre", joinColumns = @JoinColumn(name = "oeuvre_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "auteur_id", referencedColumnName = "id"))
 	Collection<Auteur> auteurs;
 
 	public Livre() {

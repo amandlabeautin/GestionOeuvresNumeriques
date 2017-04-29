@@ -24,15 +24,14 @@ public class auteurController {
 	private AuteurRepository auteurRepository;
 
 	@GetMapping(path="/auteur") // Map ONLY GET Requests
-	public @ResponseBody String addNewUser (@RequestParam String name, @RequestParam String prenom,@RequestParam Collection<Livre> livres) {
+	public @ResponseBody String addNewAuteur (@RequestParam String name,@RequestParam Collection<Livre> livres) {
 		// @ResponseBody means the returned String is the response, not a view name
 		// @RequestParam means it is a parameter from the GET or POST request
 
 		Auteur a = new Auteur();
 		
-		a.setNom(name);
-		a.setPrenom(prenom);
-		a.setLivres(livres);
+		a.setNomComplet(name);
+		a.setOeuvres(livres);
 
 		auteurRepository.save(a);
 		
@@ -40,7 +39,7 @@ public class auteurController {
 	}
 	
 	@GetMapping(path="/all")
-	public @ResponseBody Iterable<Auteur> getAllUsers() {
+	public @ResponseBody Iterable<Auteur> getAllAuteur() {
 		// This returns a JSON or XML with the users
 		return auteurRepository.findAll();
 	}

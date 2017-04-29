@@ -9,3 +9,19 @@ h1, h2, h3, dl, p {
 {
     margin-bottom: 30px;
 }
+
+nav.navbar.navbar-default{
+	background-color : #fecc00;
+}
+
+.navbar-nav>li.active{
+	background-color : #fecc00;
+}
+
+li.active{
+	background-color : #fecc00;
+}
+
+form label{
+	color : #fecc00;
+}

@@ -28,23 +28,18 @@ public class User {
 	private String nomClient;
 	
 	@NotNull
-	@Column(name="user_mail")
-	private String adresseMailClient;
-	
-	@NotNull
 	@Column(name="user_password")
-	transient private String password;
+	private String password;
 	
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private Collection<Telechargement> downloads;
 	
 	
-	public User(String nomClient, String adresseMailClient, String password,
+	public User(String nomClient, String password,
 			Collection<Telechargement> telechargements) {
 		super();
 		this.nomClient = nomClient;
 		this.password = password;
-		this.adresseMailClient = adresseMailClient;
 		this.downloads = telechargements;
 	}
 
@@ -58,13 +53,6 @@ public class User {
 	
 	public void setNomClient(String nomClient) {
 		this.nomClient = nomClient;
-	}
-	
-	public String getAdresseMailClient() {
-		return adresseMailClient;
-	}
-	public void setAdresseMailClient(String adresseMailClient) {
-		this.adresseMailClient = adresseMailClient;
 	}
 
 	/**
@@ -88,6 +76,15 @@ public class User {
 
 	public void setTelechargements(Collection<Telechargement> telechargements) {
 		this.downloads = telechargements;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return super.toString();
 	}
 
 }
