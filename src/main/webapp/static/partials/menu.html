@@ -1,45 +1,30 @@
 <div class="container">
     <div ng-include = "'partials/header.view.html'"></div>
 </div>
-<div>
-	<a href="#/gestionOeuvresNumeriques/listeLivres">Lister livres</a><br>
-	<a href="#/gestionOeuvresNumeriques/modifierLivre">Modifier livre</a><br>
-	<a href="#/gestionOeuvresNumeriques/listeFilms">Lister films</a><br>
-	<a href="#/gestionOeuvresNumeriques/modifierFilm">Modifier film</a><br>
-</div>
+
 <div ng-controller="homeCtrl">
-{{list | json}}
-	<div class="row">
-		<div class="col-xs-12 col-sm-6 col-md-8"><h2>FILMS</h2></div>
-  		<div class="col-xs-6 col-md-4">
-  			<a class="btn btn-default" href="#/gestionOeuvresNumeriques/ajouter-film" role="button">
-  				<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Ajouter un film
-  			</a>
-  		</div>
-	</div>
+	<h2>FILMS</h2>
 	<div class="row">	
 		<div ng-repeat="film in listeFilms ">
-			<div class="gallery_product col-lg-4 col-md-4 col-sm-4 col-xs-6 filter hdpe">
-				<a href="#/film/"{{film.titre}}>
-	            	<img src={{decode(film.image)}} class="img-responsive" width="200">
-	            </a>
+			<div class="gallery_product col-lg-3 col-md-3 col-sm-3 col-xs-5 filter hdpe">
+	            <img src={{decode(film.image)}} class="img-responsive" width="200">
 	        </div>
 		</div>
+		<a href="#/gestionOeuvresNumeriques/select-Film">voir plus</a>
 	</div>
-	<div class="row">
-		<div class="col-xs-12 col-sm-6 col-md-8"><h2>LIVRES</h2></div>
-  		<div class="col-xs-6 col-md-4">
-  			<a class="btn btn-default" href="#/gestionOeuvresNumeriques/add-book" role="button">
-  			<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Ajouter un livre
-  			</a>
-  		</div>
-	</div>
+	<br>
+	<br>
+	<h2>LIVRES</h2>
 	<div class="row">	
 		<div ng-repeat="livre in listeLivres ">
-			<div class="gallery_product col-lg-4 col-md-4 col-sm-4 col-xs-6 filter hdpe">
+			<div class="gallery_product col-lg-3 col-md-3 col-sm-3 col-xs-5 filter hdpe">
 	            <img src={{decode(livre.image)}} class="img-responsive" width="200">
 	        </div>
 		</div>
+		<a href="#/gestionOeuvresNumeriques/select-Book">voir plus</a>
 	</div>
 </div>
 	
+<div class="container">
+    <div ng-include = "'partials/footer.html'"></div>
+</div>

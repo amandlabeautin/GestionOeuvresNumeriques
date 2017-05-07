@@ -1,80 +1,33 @@
-'use strict';
- 
 angular
     .module('GestionOeuvresNumeriques')
-    .factory('UserService', ['$http', '$q', function($http, $q){
- 
-	    var REST_SERVICE_URI = 'http://localhost:8080/user/';
-	 
-	    var factory = {
-	        fetchAllUsers: fetchAllUsers,
-	        createUser: createUser,
-	        updateUser:updateUser,
-	        deleteUser:deleteUser
-	    };
- 
-    	return factory;
- 
-	    function fetchAllUsers() {
-	        var deferred = $q.defer();
-	        $http.get(REST_SERVICE_URI)
-	            .then(
-	            function (response) {
-	                deferred.resolve(response.data);
-	            },
-	            function(errResponse){
-	                console.error('Error while fetching Users');
-	                deferred.reject(errResponse);
-	            }
-	        );
-	        return deferred.promise;
-	    }
-	 
-	    function createUser(user) {
-	        var deferred = $q.defer();
-	        $http.post(REST_SERVICE_URI, user)
-	            .then(
-	            function (response) {
-	                deferred.resolve(response.data);
-	            },
-	            function(errResponse){
-	                console.error('Error while creating User');
-	                deferred.reject(errResponse);
-	            }
-	        );
-	        return deferred.promise;
-	    }
-	 
-	 
-	    function updateUser(user, id) {
-	        var deferred = $q.defer();
-	        $http.put(REST_SERVICE_URI+id, user)
-	            .then(
-	            function (response) {
-	                deferred.resolve(response.data);
-	            },
-	            function(errResponse){
-	                console.error('Error while updating User');
-	                deferred.reject(errResponse);
-	            }
-	        );
-	        return deferred.promise;
-	    }
-	 
-	    function deleteUser(id) {
-	        var deferred = $q.defer();
-	        $http.delete(REST_SERVICE_URI+id)
-	            .then(
-	            function (response) {
-	                deferred.resolve(response.data);
-	            },
-	            function(errResponse){
-	                console.error('Error while deleting User');
-	                deferred.reject(errResponse);
-	            }
-	        );
-	        return deferred.promise;
-	    }
- 
-	}
-]);
+    .factory('responseObserver', responseObserver);
+
+
+function responseObserver($q, $window, $rootScope) {
+	
+	return {
+        request: function (config) {
+            return config || $q.when(config);
+        },
+        requestError: function(request){
+            return $q.reject(request);
+        },
+        response: function (response) {
+            return response || $q.when(response);
+        },
+        responseError: function (response) {
+            if (response && response.status === 412) {
+            	var message = {type: 'error', 'msg':'Problem in processing your request.'};
+            	$rootScope.$emit('NotificationEvent', message);
+            	$rootScope.logout();
+            }
+            if (response && response.status === 401) {
+            	var message = {type: 'error', 'msg':'Invalid Login Credentials or Session Expired.'};
+            	$rootScope.$emit('NotificationEvent', message);
+            	$rootScope.logout();
+            }
+            return $q.reject(response);
+        }
+    };
+    
+};

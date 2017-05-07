@@ -2,6 +2,8 @@
     <div ng-include = "'partials/header.view.html'"></div>
 </div>
 <div class="container">
+	<h2>Ajouter un livre</h2>
+<br>
   	<form name="addBookForm" class="well form-horizontal">
   	<fieldset>
 	  <div class="form-group">
@@ -66,7 +68,7 @@
 	    <div class="col-sm-4">
 	    	<div class="input-group">
 			    <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
-			    <select multiple class="form-control" placeholder="Entrer un ou plusieurs genres auquelles le film appartient" ng-options="auteur.nomComplet for auteur in listeAuteur" ng-model="$book.auteurSelected"></select>
+			    <select multiple class="form-control" placeholder="Entrer un ou plusieurs genres auquelles le film appartient" ng-options="auteur.name for auteur in listeAuteur" ng-model="$book.auteurSelected"></select>
 		    </div>
 	    </div>
 	  </div>
@@ -75,7 +77,7 @@
 	    <div class="col-sm-4">
 	    	<div class="input-group">
 			    <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
-			    <select multiple class="form-control" placeholder="Entrer un ou plusieurs genres auquelles le film appartient" ng-options="genre.nomGenre for genre in listeGenre" ng-model="$book.genreSelected"></select>
+			    <select multiple class="form-control" placeholder="Entrer un ou plusieurs genres auquelles le film appartient" ng-options="genre.name for genre in listeGenre" ng-model="$book.genreSelected"></select>
 		    </div>
 	    </div>
 	  </div>
@@ -83,4 +85,8 @@
 	  <button type="submit" ng-click="createBook($book)" class="btn btn-default">Envoyer</button>
 	  </fieldset>
 	</form>
+</div>
+
+<div class="container">
+    <div ng-include = "'partials/footer.html'"></div>
 </div>

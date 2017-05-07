@@ -1,0 +1,32 @@
+	<h3><center>Inscription</center></h3>
+
+	<form name="inscriptionForm">
+
+	  	<div class="form-group" ng-class="{'has-error' : inscriptionForm.login.$invalid && !inscriptionForm.login.$pristine }">
+		    <label for="exampleInputEmail1">Login</label>
+		    <input type="text" class="form-control" name="login" id="login" placeholder="Entrer votre identifiant" ng-model="user.login" required ng-minlength="4">
+		    <p ng-show="inscriptionForm.login.$error.minlength" class="help-block">Doit contenir au minimum 4 caractères</p>
+		    <p ng-show="inscriptionForm.login.$invalid && !inscriptionForm.login.$pristine" class="help-block">Ce champ est obligatoire.</p>
+	  	</div>
+
+	  	<div class="form-group" ng-class="{'has-error' : inscriptionForm.password.$invalid && !inscriptionForm.password.$pristine }">
+		    <label for="exampleInputPassword1">Mot de passe</label>
+		    <input type="password" name="password" class="form-control" id="password" placeholder="Minimun 4 caract&egrave;res" ng-model="user.password" required ng-minlength="4">
+		    <p ng-show="inscriptionForm.password.$invalid && !inscriptionForm.password.$pristine" class="help-block">Ce champ est obligatoire</p>
+		    <p ng-show="inscriptionForm.password.$error.minlength" class="help-block">Doit contenir au minimum 4 caractères</p>
+	  	</div>
+
+	  	<div class="form-group" ng-class="{'has-error' : inscriptionForm.checkPassword.$invalid && !inscriptionForm.checkPassword.$pristine }">
+		    <label for="exampleInputPassword1">V&eacute;rification du mot de passe</label>
+		    <input type="password" name="checkPassword" class="form-control" id="checkPassword" placeholder="Retapez votre mot de passe" ng-model="user.checkPassword" data-equalsTo="inscriptionForm.password" required>
+		    <p ng-show="inscriptionForm.checkPassword.$invalid && !inscriptionForm.checkPassword.$pristine" class="help-block">Ce champ est obligatoire</p>
+		    <p ng-show="!!inscriptionForm.password.$error.noMatch">Passwords don't match.</span>
+	  	</div>
+
+	  <br>
+	  <br>
+
+	  	<button type="submit" ng-click="createUser(user)" class="btn btn-warning" ng-disabled="inscriptionForm.$invalid">Envoyer</button>
+	  	<p ng-show="inscriptionForm.$error.userExist" class="help-block">Le login est déjà utilisé.</span>
+
+	</form>

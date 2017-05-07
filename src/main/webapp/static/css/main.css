@@ -1,8 +1,17 @@
+:root {
+  --gestionoeuvresnumeriques-yellow-color: #fecc00;
+}
+
 body{
 	background-color: black;
 }
 h1, h2, h3, dl, p {
 	color : white;
+	font-family: 'Century Gothic', CenturyGothic, AppleGothic, sans-serif;
+}
+
+form {
+	width: 80%;
 }
 
 .gallery_product
@@ -11,17 +20,39 @@ h1, h2, h3, dl, p {
 }
 
 nav.navbar.navbar-default{
-	background-color : #fecc00;
+	background-color : var(--gestionoeuvresnumeriques-yellow-color);
+}
+
+nav.navbar.navbar-default a{
+	color : white;
+	font-weight: bold; 
+}
+
+nav.navbar.navbar-default li.active{
+	color : white;
+	font-weight: bold; 
 }
 
 .navbar-nav>li.active{
-	background-color : #fecc00;
+	background-color : var(--gestionoeuvresnumeriques-yellow-color);
 }
 
 li.active{
-	background-color : #fecc00;
+	background-color : var(--gestionoeuvresnumeriques-yellow-color);
 }
 
 form label{
-	color : #fecc00;
+	color : var(--gestionoeuvresnumeriques-yellow-color);
+}
+
+#adminPage .admin a {
+	color: var(--gestionoeuvresnumeriques-yellow-color);
+}
+
+#adminPage thead {
+	color: var(--gestionoeuvresnumeriques-yellow-color);
+}
+
+#adminPage .tab-content, tbody {
+	color: white;
 }

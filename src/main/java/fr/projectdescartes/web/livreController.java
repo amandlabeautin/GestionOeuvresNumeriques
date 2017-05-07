@@ -15,7 +15,7 @@ import fr.projectdescartes.domain.Auteur;
 import fr.projectdescartes.domain.Editeur;
 import fr.projectdescartes.domain.Genre;
 import fr.projectdescartes.domain.Livre;
-import fr.projectdescartes.domain.LivreRepository;
+import fr.projectdescartes.repository.LivreRepository;
 
 
 @Component

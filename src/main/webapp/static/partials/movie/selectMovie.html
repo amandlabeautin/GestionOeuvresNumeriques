@@ -1,0 +1,50 @@
+<div class="container">
+    <div ng-include = "'partials/header.view.html'"></div>
+</div>
+<div ng-controller="selectMovieController">
+	<div class="row">
+		<div class="col-xs-12 col-sm-6 col-md-8"><h2>FILMS</h2></div>
+		<div>
+			<button type="button" class="btn btn-default">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Ajouter au panier
+             </button>
+		</div>
+	</div>
+	<div class="row">	
+		<form>
+			<div ng-repeat="film in listeFilms ">
+				<div class="gallery_product col-lg-3 col-md-3 col-sm-3 col-xs-5 filter hdpe">
+		            <img src={{decode(film.image)}} class="img-responsive" width="200" ng-click="showDetailsMovie(film)">
+		            <div show-when-connected>
+			            <div class="checkbox">
+						    <label>
+						      <input type="checkbox"> Ajouter au panier
+						    </label>
+					  	</div>
+					</div>
+		        </div>
+			</div>
+		</form>
+	</div>
+
+	<div class="row">
+	  	<div uib-collapse=="detailsMovie" ng-repeat="selectedFilm in selectedFilm">
+	  		<dl>
+			  <dt>Date de parution</dt>
+			  	<dd>{{convertDate(selectedFilm.dateDeParution)}}</dd><br>
+			  <dt>Titre</dt>
+			  	<dd>{{selectedFilm.titre}}</dd><br>
+			  <dt>R&eacute;sum&eacute;</dt>
+			  	<dd>{{selectedFilm.resume}}</dd><br>
+			  <dt>dur&eacute;e</dt>
+			  	<dd>{{selectedFilm.duree}}</dd><br>
+			  <dt>bande annonce</dt>
+			  	<dd>
+			  		<div class="embed-responsive embed-responsive-16by9">
+			  			<iframe class="embed-responsive-item" ng-src={{decode(selectedFilm.bandeAnnonce)}}></iframe>
+			  		</div>
+			  	</dd><br>
+			</dl>
+	  </div>
+	</div>
+</div>

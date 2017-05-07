@@ -26,7 +26,7 @@ public class Genre {
 	
 	@NotNull
 	@Column(name="genre_nom")
-	private String nomGenre;
+	private String name;
 
 	@ManyToMany(mappedBy = "genres")
 	@JsonManagedReference("oeuvre_genre")
@@ -36,10 +36,10 @@ public class Genre {
 		
 	}
 	
-	public Genre(long idGenre, String nomGenre, Collection<Oeuvre> oeuvres) {
+	public Genre(long idGenre, String name, Collection<Oeuvre> oeuvres) {
 		super();
 		this.idGenre = idGenre;
-		this.nomGenre = nomGenre;
+		this.name = name;
 		this.oeuvres = oeuvres;
 	}
 	
@@ -51,12 +51,12 @@ public class Genre {
 		this.idGenre = idGenre;
 	}
 	
-	public String getNomGenre() {
-		return nomGenre;
+	public String getName() {
+		return name;
 	}
 	
-	public void setNomGenre(String nomGenre) {
-		this.nomGenre = nomGenre;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	/**
@@ -78,7 +78,7 @@ public class Genre {
 	 */
 	@Override
 	public String toString() {
-		return "Genre [idGenre=" + idGenre + ", nomGenre=" + nomGenre + ", oeuvres=" + oeuvres + "]";
+		return "Genre [idGenre=" + idGenre + ", nomGenre=" + name + ", oeuvres=" + oeuvres + "]";
 	}
 
 	/* (non-Javadoc)

@@ -3,6 +3,7 @@ package fr.projectdescartes.web;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,12 +12,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import fr.projectdescartes.domain.Auteur;
-import fr.projectdescartes.domain.AuteurRepository;
+import fr.projectdescartes.repository.AuteurRepository;
 import fr.projectdescartes.domain.Livre;
 
 @Component
 @Controller
-@RequestMapping(path="/auteur")
+@RequestMapping(path="/auteurs")
 public class auteurController {
 	
 	@Autowired // This means to get the bean called userRepository
@@ -30,7 +31,7 @@ public class auteurController {
 
 		Auteur a = new Auteur();
 		
-		a.setNomComplet(name);
+		a.setName(name);
 		a.setOeuvres(livres);
 
 		auteurRepository.save(a);
@@ -41,7 +42,7 @@ public class auteurController {
 	@GetMapping(path="/all")
 	public @ResponseBody Iterable<Auteur> getAllAuteur() {
 		// This returns a JSON or XML with the users
-		return auteurRepository.findAll();
+		return auteurRepository.findAll(new Sort(Sort.Direction.ASC, "name"));
 	}
 	
 }

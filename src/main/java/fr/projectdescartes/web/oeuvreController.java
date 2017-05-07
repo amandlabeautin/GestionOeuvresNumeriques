@@ -4,12 +4,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.http.HttpStatus;
 
 import fr.projectdescartes.domain.Oeuvre;
-import fr.projectdescartes.domain.OeuvreRepository;
+import fr.projectdescartes.repository.OeuvreRepository;
 
 @Component
 @Controller
@@ -30,6 +34,18 @@ public class oeuvreController {
 	public @ResponseBody Iterable<Oeuvre> findByType(@RequestParam String typeValue) {
 	// This returns a JSON or XML with the users
 		return oeuvreRepository.findByType(typeValue);
+	}
+
+	@GetMapping(path="/searchByTitre")
+	public @ResponseBody Iterable<Oeuvre> findByTitre(@RequestParam String titre) {
+	// This returns a JSON or XML with the users
+		return oeuvreRepository.findByTitre(titre);
+	};
+	
+	@RequestMapping(value = "/search",method = {RequestMethod.PUT})
+	@ResponseStatus(HttpStatus.OK)
+	public void modifierOeuvre(@RequestBody Oeuvre oeuvre){
+		System.out.println("modifierVoiture: " + oeuvre);
 	}
 	
 }

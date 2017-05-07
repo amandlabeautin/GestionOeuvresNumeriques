@@ -17,10 +17,10 @@ public class Acteur {
 	
 	@NotNull
 	@Column(name="acteur_nom")
-	private String nomComplet;
+	private String name;
 
 	@Column(name="acteur_photo")
-	private String photoActeur;
+	private String photo;
 	
 	@ManyToMany(mappedBy = "acteurs")
 	private Collection<Film> films;
@@ -28,10 +28,10 @@ public class Acteur {
 	public Acteur() {
 	}
 	
-	public Acteur(String nomActeur, String photoActeur, Collection<Film> films) {
+	public Acteur(String name, String photo, Collection<Film> films) {
 		super();
-		this.nomComplet = nomActeur;
-		this.photoActeur = photoActeur;
+		this.name = name;
+		this.photo = photo;
 		this.films = films;
 	}
     
@@ -45,15 +45,15 @@ public class Acteur {
 	/**
 	 * @return the nomComplet
 	 */
-	public String getNomComplet() {
-		return nomComplet;
+	public String getName() {
+		return name;
 	}
 
 	/**
 	 * @param nomComplet the nomComplet to set
 	 */
-	public void setNomComplet(String nomComplet) {
-		this.nomComplet = nomComplet;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	/**
@@ -66,15 +66,15 @@ public class Acteur {
 	/**
 	 * @return the photoActeur
 	 */
-	public String getPhotoActeur() {
-		return photoActeur;
+	public String getPhoto() {
+		return photo;
 	}
 
 	/**
 	 * @param photoActeur the photoActeur to set
 	 */
-	public void setPhotoActeur(String photoActeur) {
-		this.photoActeur = photoActeur;
+	public void setPhotoActeur(String photo) {
+		this.photo = photo;
 	}
 
 	/**

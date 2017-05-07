@@ -2,6 +2,7 @@ package fr.projectdescartes.web;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,11 +11,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import fr.projectdescartes.domain.Genre;
-import fr.projectdescartes.domain.GenreRepository;
+import fr.projectdescartes.repository.GenreRepository;
 
 @Component
 @Controller
-@RequestMapping(path="/genre")
+@RequestMapping(path="/genres")
 public class genreController {
 	
 	@Autowired 
@@ -25,7 +26,7 @@ public class genreController {
 
 		Genre g = new Genre();
 		
-		g.setNomGenre(name);
+		g.setName(name);
 		
 		genreRepository.save(g);
 		
@@ -35,7 +36,7 @@ public class genreController {
 	@GetMapping(path="/all")
 	public @ResponseBody Iterable<Genre> getAllGenre() {
 		// This returns a JSON or XML with the books
-		return genreRepository.findAll();
+		return genreRepository.findAll(new Sort(Sort.Direction.ASC, "name"));
 	}
 	
 }

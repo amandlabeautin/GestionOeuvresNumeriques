@@ -25,7 +25,7 @@ public class Auteur {
 	
 	@NotNull
 	@Column(name="auteur_nom")
-	private String nomComplet;
+	private String name;
 	
 	@ManyToMany(mappedBy = "auteurs")
 	@JsonBackReference
@@ -34,8 +34,8 @@ public class Auteur {
 	
 	public Auteur() {}
     
-    public Auteur(String nom,  Collection<Livre> livres) {
-		this.nomComplet = nom;
+    public Auteur(String name,  Collection<Livre> livres) {
+		this.name = name;
 		this.oeuvres = livres;
 	}
 
@@ -51,15 +51,15 @@ public class Auteur {
 	/**
 	 * @return the nomComplet
 	 */
-	public String getNomComplet() {
-		return nomComplet;
+	public String getName() {
+		return name;
 	}
 
 	/**
-	 * @param nomComplet the nomComplet to set
+	 * @param nomComplet the name to set
 	 */
-	public void setNomComplet(String nomComplet) {
-		this.nomComplet = nomComplet;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	/**

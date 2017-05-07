@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import fr.projectdescartes.domain.Acteur;
 import fr.projectdescartes.domain.Film;
-import fr.projectdescartes.domain.FilmRepository;
+import fr.projectdescartes.repository.FilmRepository;
 import fr.projectdescartes.domain.Genre;
 
 
@@ -63,6 +63,5 @@ public class filmController {
 	// This returns a JSON or XML with the users
 		return filmRepository.findAll();
 	}
-	
 	
 }

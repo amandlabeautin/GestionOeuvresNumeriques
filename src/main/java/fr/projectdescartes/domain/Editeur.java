@@ -21,7 +21,7 @@ public class Editeur {
 	
 	@NotNull
 	@Column(name="editeur_nom")
-	private String nomEditeur;
+	private String name;
 	
 	@OneToMany(mappedBy = "editeur", cascade = CascadeType.ALL, fetch=FetchType.LAZY)
 	@JsonManagedReference("oeuvre_editeur")
@@ -30,8 +30,8 @@ public class Editeur {
 	public Editeur() {	
 	}
 	
-	public Editeur(String nomEditeur,Collection<Livre> livres) {
-		this.nomEditeur = nomEditeur;
+	public Editeur(String name,Collection<Livre> livres) {
+		this.name = name;
 		this.oeuvres = livres;
 	}
 	
@@ -42,10 +42,10 @@ public class Editeur {
 		this.idEditeur = id;
 	}
 	public String getNomEditeur() {
-		return nomEditeur;
+		return name;
 	}
-	public void setNomEditeur(String nomEditeur) {
-		this.nomEditeur = nomEditeur;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	/**
