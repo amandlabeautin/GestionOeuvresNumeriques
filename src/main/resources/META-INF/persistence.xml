@@ -6,7 +6,7 @@
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     
     <class>fr.projectdescartes.domain.Client</class>
-    <class>fr.projectdescartes.domain.Telechargement</class>
+    <class>fr.projectdescartes.domain.Commande</class>
     <class>fr.projectdescartes.domain.Genre</class>
     <class>fr.projectdescartes.domain.Oeuvre</class>
     <class>fr.projectdescartes.domain.Film</class>
@@ -14,6 +14,8 @@
     <class>fr.projectdescartes.domain.Editeur</class>
     <class>fr.projectdescartes.domain.Livre</class>
     <class>fr.projectdescartes.domain.Acteur</class>
+    <class>fr.projectdescartes.domain.User</class>
+    <class>fr.projectdescartes.domain.Role</class>
     
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     

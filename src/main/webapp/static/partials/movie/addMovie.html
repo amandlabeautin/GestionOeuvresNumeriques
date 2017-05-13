@@ -1,14 +1,14 @@
 <div class="container">
     <div ng-include = "'partials/header.view.html'"></div>
 </div>
-<div class="container">
+<div class="container" id="addMovie">
 	<h2>Ajouter un film</h2>
 <br>
   	<form name="addFilmForm" class="well form-horizontal">
   	<fieldset>
 	  <div class="form-group">
 	    <label for="exampleInputEmail1" class="col-sm-4 control-label">Titre</label>
-	    <div class="col-sm-4">
+	    <div class="col-sm-6">
 	    	<div class="input-group">
 			    <span class="input-group-addon"><i class="glyphicon glyphicon-film"></i></span>
 			    <input type="text" class="form-control" id="titre" placeholder="Entrer le titre du film" ng-model="$movie.titre" required>
@@ -20,7 +20,7 @@
 	  </div>
 	  <div class="form-group">
 	    <label for="exampleInputEmail1" class="col-sm-4 control-label">Résumé</label>
-	    <div class="col-sm-4">
+	    <div class="col-sm-6">
 		    <div class="input-group">
 			    <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 			    <textarea class="form-control" rows="5" id="summary" placeholder="Entrer le synopsis du film" ng-model="$movie.summary"></textarea>
@@ -29,7 +29,7 @@
 	  </div>
 	  <div class="form-group">
 	    <label for="exampleInputEmail1" class="col-sm-4 control-label">Date de parution</label>
-	    <div class="col-sm-4">
+	    <div class="col-sm-6">
 		    <div class="input-group">
 			    <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 			    <input type="text" class="form-control" id="DateDeParution" uib-datepicker-popup="{{format}}" placeholder="Entrer la date de parution du film" ng-model="$movie.dateDeParution">
@@ -38,7 +38,7 @@
 	  </div>
 	  <div class="form-group">
 	    <label for="exampleInputEmail1" class="col-sm-4 control-label">Durée du film</label>
-	    <div class="col-sm-4">
+	    <div class="col-sm-6">
 		    <div class="input-group">
 			    <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
 			    <input type="text" class="form-control" id="duree" placeholder="Entrer la durée du film, par exemple 2h 05 min" ng-model="$movie.duree">
@@ -47,7 +47,7 @@
 	  </div>
 	  <div class="form-group">
 	    <label for="exampleInputEmail1" class="col-sm-4 control-label">Lien image officiel</label>
-	    <div class="col-sm-4">
+	    <div class="col-sm-6">
 	    	<div class="input-group">
 			    <span class="input-group-addon"><i class="glyphicon glyphicon-picture"></i></span>
 			    <input type="url" name="imageMovie" class="form-control" id="image" placeholder="Entrer un lien url vers une image du film" ng-model="$movie.image">
@@ -56,7 +56,7 @@
 	  </div>
 	  <div class="form-group">
 	    <label for="exampleInputEmail1" class="col-sm-4 control-label">Lien Bande-annonce</label>
-	    <div class="col-sm-4">
+	    <div class="col-sm-6">
 	    	<div class="input-group">
 			    <span class="input-group-addon"><i class="glyphicon glyphicon-facetime-video"></i></span>
 			    <input type="url" class="form-control" id="annonce" placeholder="Entrer un lien url vers une vidéo du film" ng-model="$movie.bandeAnnonce" >
@@ -65,7 +65,7 @@
 	  </div>
 	  <div class="form-group">
 	    <label for="exampleInputEmail1" class="col-sm-4 control-label">Acteurs</label>
-	    <div class="col-sm-4">
+	    <div class="col-sm-6">
 	    	<div class="input-group">
 			    <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
 			    <select multiple class="form-control" placeholder="Entrer un ou plusieurs genres auquelles le film appartient" ng-options="acteur.name for acteur in listeActeur" ng-model="$movie.acteurSelected"></select>
@@ -74,7 +74,7 @@
 	  </div>
 	  <div class="form-group">
 	    <label for="exampleInputEmail1" class="col-sm-4 control-label">Genre</label>
-	    <div class="col-sm-4">
+	    <div class="col-sm-6">
 	    	<div class="input-group">
 			    <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
 			    <select multiple class="form-control" placeholder="Entrer un ou plusieurs genres auquelles le film appartient" ng-options="genre.name for genre in listeGenre" ng-model="$movie.genreSelected"></select>

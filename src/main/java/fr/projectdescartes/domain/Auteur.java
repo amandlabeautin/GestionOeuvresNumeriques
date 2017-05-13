@@ -21,7 +21,7 @@ public class Auteur {
 	@Id
 	@Column(name="id")
     @GeneratedValue(strategy=GenerationType.AUTO)
-	private Long idAuteur;
+	private Long id;
 	
 	@NotNull
 	@Column(name="auteur_nom")
@@ -32,31 +32,39 @@ public class Auteur {
     private Collection<Livre> oeuvres;
 	
 	
-	public Auteur() {}
+	public Auteur() {
+		super();
+	}
     
     public Auteur(String name,  Collection<Livre> livres) {
+    	super();
 		this.name = name;
 		this.oeuvres = livres;
 	}
 
-	
-	public Long getIdAuteur() {
-		return idAuteur;
-	}
-
-	public void setIdAuteur(Long idAuteur) {
-		this.idAuteur = idAuteur;
+	/**
+	 * @return the idAuteur
+	 */
+	public Long getId() {
+		return id;
 	}
 
 	/**
-	 * @return the nomComplet
+	 * @param idAuteur the idAuteur to set
+	 */
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	/**
+	 * @return the name
 	 */
 	public String getName() {
 		return name;
 	}
 
 	/**
-	 * @param nomComplet the name to set
+	 * @param name the name to set
 	 */
 	public void setName(String name) {
 		this.name = name;
@@ -76,12 +84,11 @@ public class Auteur {
 		this.oeuvres = oeuvres;
 	}
 
-	/**
-	 * @param e
-	 * @return
-	 * @see java.util.Collection#add(java.lang.Object)
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
 	 */
-	public boolean add(Livre e) {
-		return oeuvres.add(e);
+	@Override
+	public String toString() {
+		return "Auteur [idAuteur=" + id + ", name=" + name + ", oeuvres=" + oeuvres + "]";
 	}
 }

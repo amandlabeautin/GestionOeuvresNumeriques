@@ -5,17 +5,11 @@ import java.util.List;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Repository;
 
 import fr.projectdescartes.domain.Commande;
 import fr.projectdescartes.domain.User;
 
-@Repository
-public interface UserRepository extends CrudRepository<User, Long>{
-
-	User findByUsername(String username);
-
-	User findByUsernameAndPassword(String login, String password);
+public interface CommandeRepository extends CrudRepository<Commande, Long>{
 	
 	@Query("select c from Commande c where c.user = :user and c.isvalidate = false")
 	List<Commande> findByUserAndNotValidate(@Param("user")User user);

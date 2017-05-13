@@ -7,7 +7,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -40,19 +40,26 @@ public abstract class Oeuvre {
 	String image;
 	
 	@ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "genre_oeuvre", joinColumns = @JoinColumn(name = "oeuvre_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "genre_id", referencedColumnName = "id"))
+    @JoinTable(
+    		name = "genre_oeuvre", 
+    		joinColumns = @JoinColumn(name = "oeuvre_id", referencedColumnName = "id"), 
+    		inverseJoinColumns = @JoinColumn(name = "genre_id", referencedColumnName = "id"))
 	@JsonBackReference("oeuvre_genre") 
 	Collection<Genre> genres;
 	
 	@ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "oeuvre_download", joinColumns = @JoinColumn(name = "oeuvre_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "download_id", referencedColumnName = "id"))
-	@JsonManagedReference
-	Collection<Telechargement> downloads;
+    @JoinTable(
+    		name = "download_oeuvre", 
+    		joinColumns = @JoinColumn(name = "oeuvre_id", referencedColumnName = "id"), 
+    		inverseJoinColumns = @JoinColumn(name = "download_id", referencedColumnName = "id")
+    		)
+	@JsonBackReference("oeuvre_download") 
+	Collection<Commande> downloads;
 	
     public Oeuvre() {
 	}
     
-	public Oeuvre(Date dateDeParution, String titre, String resume, String image, Collection<Genre> genres, Collection<Telechargement> downloads) {
+	public Oeuvre(Date dateDeParution, String titre, String resume, String image, Collection<Genre> genres, Collection<Commande> downloads) {
 		this.dateDeParution = dateDeParution;
 		this.titre = titre;
 		this.resume = resume;

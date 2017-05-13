@@ -1,13 +1,29 @@
 :root {
   --gestionoeuvresnumeriques-yellow-color: #fecc00;
+  --gestionoeuvresnumeriques-black-color: black;
 }
 
 body{
-	background-color: black;
+	background-color: #262626;
 }
-h1, h2, h3, dl, p {
+
+.container {
+	width: 100%;
+}
+
+h1.media-heading, h2{
+	color: var(--gestionoeuvresnumeriques-yellow-color);
+	font-family: 'Century Gothic', CenturyGothic, AppleGothic, sans-serif;
+}
+
+h3, dl, p {
 	color : white;
 	font-family: 'Century Gothic', CenturyGothic, AppleGothic, sans-serif;
+}
+#adminPage, #menu, #selectMovie, #inscription, #listBook, #addMovie, #shoppingBasket {
+	width: 75%;
+	margin-left: auto;
+  	margin-right: auto;
 }
 
 form {
@@ -20,7 +36,8 @@ form {
 }
 
 nav.navbar.navbar-default{
-	background-color : var(--gestionoeuvresnumeriques-yellow-color);
+	background-color : var(--gestionoeuvresnumeriques-black-color);
+	width: 100%;
 }
 
 nav.navbar.navbar-default a{
@@ -55,4 +72,12 @@ form label{
 
 #adminPage .tab-content, tbody {
 	color: white;
+}
+
+#adminPage input{
+	color: black;
+}
+
+#shoppingBasket thead{
+	color : var(--gestionoeuvresnumeriques-yellow-color);
 }

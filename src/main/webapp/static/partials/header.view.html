@@ -1,3 +1,16 @@
+<div class="media">
+  <div class="media-left media-middle">
+    <a href="#">
+      <img class="media-object" src="ressources/play-button.png" alt="Responsive image">
+    </a>
+  </div>
+  <div class="media-body">
+  <br>
+    <h1 class="media-heading">OeuvresMIAGE</h1>
+  </div>
+</div>
+<br>
+
 <nav class="navbar navbar-default">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
@@ -14,27 +27,31 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="#/gestionOeuvresNumeriques/select-Book">Livres <span class="sr-only">(current)</span></a></li>
+        <li><a href="#/gestionOeuvresNumeriques/select-Book">Livres <span class="sr-only">(current)</span></a></li>
         <li><a href="#/gestionOeuvresNumeriques/select-Film">Films</a></li>
       </ul>
       <form class="navbar-form navbar-left">
         <div class="form-group">
-          <input type="text" class="form-control" placeholder="Recherche titre ou auteur">
+          <input type="text" class="form-control" ng-model="search.oeuvres" placeholder="Recherche titre ou auteur">
         </div>
-        <button type="submit" class="btn btn-default">Submit</button>
+        <button type="submit" class="btn btn-default" ng-click="searchData(search)">Submit</button>
       </form>
-      <ul class="nav navbar-nav">
-        <div ng-if="isUserLoggedIn()">
+       <div ng-if="isUserLoggedIn()">
+          <ul class="nav navbar-nav navbar-right">
+       
           <li><a href="#/gestionOeuvresNumeriques/admin">Administration</a></li>
           <li>
              <a href="#/gestionOeuvresNumeriques/panier">
               <span class="glyphicon glyphicon-download-alt" aria-hidden="true"> Panier
-              </a>
+              </span></a>
           </li>
           <li><a href="" ng-click="logout()">D&eacute;connection</a></li>
         </div>
+        </ul>
         <div ng-if="!isUserLoggedIn()">
+        <ul class="nav navbar-nav navbar-right">
           <li><a href="#/gestionOeuvresNumeriques/login">Inscription / Connexion</a></li>
+          </ul>
         </div>
       </ul>
     </div><!-- /.navbar-collapse -->

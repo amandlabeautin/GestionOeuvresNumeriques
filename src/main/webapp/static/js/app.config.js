@@ -10,11 +10,6 @@ angular
 				controller: 'homeCtrl',
 				access: 'public'
 			}).
-			when('/gestionOeuvresNumeriques/listBook', {
-				templateUrl: 'partials/book/listerLivres.html',
-				controller: 'rentController',
-				access: 'public'
-			}).
 			when('/gestionOeuvresNumeriques/select-Film', {
 				templateUrl: 'partials/movie/selectMovie.html',
 				controller: 'selectMovieController',
@@ -22,11 +17,8 @@ angular
 			}).
 			when('/gestionOeuvresNumeriques/select-Book', {
 				templateUrl: 'partials/book/listBook.html',
-				controller: 'livreController'
-			}).
-			when('/gestionOeuvresNumeriques/modifierFilm', {
-				templateUrl: 'partials/movie/modifierFilm.html',
-				controller: 'modifierControllerFilm'
+				controller: 'livreController',
+				access: 'public'
 			}).
 			when('/gestionOeuvresNumeriques/login', {
 				templateUrl: 'partials/user/subscribe.html',

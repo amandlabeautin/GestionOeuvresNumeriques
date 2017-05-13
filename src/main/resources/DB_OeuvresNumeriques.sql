@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Client :  localhost:8889
--- Généré le :  Lun 01 Mai 2017 à 20:02
+-- Généré le :  Ven 12 Mai 2017 à 00:50
 -- Version du serveur :  5.6.35
 -- Version de PHP :  7.1.1
 
@@ -113,8 +113,32 @@ INSERT INTO `auteur_oeuvre` (`oeuvre_id`, `auteur_id`) VALUES
 
 CREATE TABLE `download` (
   `id` bigint(20) NOT NULL,
-  `date` datetime NOT NULL,
+  `date_de_commande` datetime NOT NULL,
+  `date_de_telechargement` datetime DEFAULT NULL,
+  `isdownload` bit(1) DEFAULT NULL,
+  `isvalidate` bit(1) DEFAULT NULL,
   `user_id` bigint(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Contenu de la table `download`
+--
+
+INSERT INTO `download` (`id`, `date_de_commande`, `date_de_telechargement`, `isdownload`, `isvalidate`, `user_id`) VALUES
+(1, '2017-05-12 00:15:41', NULL, b'0', b'0', 1),
+(2, '2017-05-12 00:24:55', NULL, b'0', b'0', 1),
+(3, '2017-05-12 00:38:33', NULL, b'0', b'0', 1),
+(4, '2017-05-12 00:43:46', NULL, b'0', b'0', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `download_oeuvre`
+--
+
+CREATE TABLE `download_oeuvre` (
+  `oeuvre_id` bigint(20) NOT NULL,
+  `download_id` bigint(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -152,12 +176,12 @@ CREATE TABLE `genre` (
 --
 
 INSERT INTO `genre` (`id`, `genre_nom`) VALUES
-(4, 'Action'),
-(6, 'Comédie'),
 (1, 'Comédie dramatique'),
-(3, 'Erotique'),
 (2, 'Romance'),
-(5, 'Science Fiction');
+(3, 'Erotique'),
+(4, 'Action'),
+(5, 'Science Fiction'),
+(6, 'Comédie');
 
 -- --------------------------------------------------------
 
@@ -215,13 +239,21 @@ INSERT INTO `oeuvre` (`discriminator`, `id`, `date_de_parution`, `image`, `resum
 -- --------------------------------------------------------
 
 --
--- Structure de la table `oeuvre_download`
+-- Structure de la table `roles`
 --
 
-CREATE TABLE `oeuvre_download` (
-  `oeuvre_id` bigint(20) NOT NULL,
-  `download_id` bigint(20) NOT NULL
+CREATE TABLE `roles` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Contenu de la table `roles`
+--
+
+INSERT INTO `roles` (`id`, `name`) VALUES
+(1, 'ROLE_ADMIN'),
+(2, 'ROLE_USER');
 
 -- --------------------------------------------------------
 
@@ -231,16 +263,34 @@ CREATE TABLE `oeuvre_download` (
 
 CREATE TABLE `user` (
   `id` bigint(20) NOT NULL,
-  `user_login` varchar(255) NOT NULL,
-  `user_password` varchar(255) NOT NULL
+  `password` varchar(255) NOT NULL,
+  `username` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Contenu de la table `user`
 --
 
-INSERT INTO `user` (`id`, `user_login`, `user_password`) VALUES
+INSERT INTO `user` (`id`, `password`, `username`) VALUES
 (1, 'test', 'test');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `user_role`
+--
+
+CREATE TABLE `user_role` (
+  `user_id` bigint(20) NOT NULL,
+  `role_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Contenu de la table `user_role`
+--
+
+INSERT INTO `user_role` (`user_id`, `role_id`) VALUES
+(1, 2);
 
 --
 -- Index pour les tables exportées
@@ -280,6 +330,13 @@ ALTER TABLE `download`
   ADD KEY `FKo7cc91sofromqu0551ocgpn96` (`user_id`);
 
 --
+-- Index pour la table `download_oeuvre`
+--
+ALTER TABLE `download_oeuvre`
+  ADD KEY `FK7hggjqt67flmm556g9ob579g7` (`download_id`),
+  ADD KEY `FKpct5bjh8p0aae5fg3mbecbp7i` (`oeuvre_id`);
+
+--
 -- Index pour la table `editeur`
 --
 ALTER TABLE `editeur`
@@ -289,8 +346,7 @@ ALTER TABLE `editeur`
 -- Index pour la table `genre`
 --
 ALTER TABLE `genre`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `genre_nom` (`genre_nom`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Index pour la table `genre_oeuvre`
@@ -307,17 +363,24 @@ ALTER TABLE `oeuvre`
   ADD KEY `FKqkt2b0l1p1yq6tsvjqdwhg5n` (`editeur_id`);
 
 --
--- Index pour la table `oeuvre_download`
+-- Index pour la table `roles`
 --
-ALTER TABLE `oeuvre_download`
-  ADD KEY `FK5kdcfyo1chm8f1kt5ei89696j` (`download_id`),
-  ADD KEY `FK4oms6wpp1l5i2dsee9thnis6m` (`oeuvre_id`);
+ALTER TABLE `roles`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `UK_ofx66keruapi6vyqpv6f2or37` (`name`);
 
 --
 -- Index pour la table `user`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `user_role`
+--
+ALTER TABLE `user_role`
+  ADD KEY `FKt7e7djp752sqn6w22i6ocqy6q` (`role_id`),
+  ADD KEY `FK859n2jvi8ivhui0rl0esws6o` (`user_id`);
 
 --
 -- AUTO_INCREMENT pour les tables exportées
@@ -337,7 +400,7 @@ ALTER TABLE `auteur`
 -- AUTO_INCREMENT pour la table `download`
 --
 ALTER TABLE `download`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT pour la table `editeur`
 --
@@ -353,6 +416,11 @@ ALTER TABLE `genre`
 --
 ALTER TABLE `oeuvre`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+--
+-- AUTO_INCREMENT pour la table `roles`
+--
+ALTER TABLE `roles`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT pour la table `user`
 --
@@ -383,6 +451,13 @@ ALTER TABLE `download`
   ADD CONSTRAINT `FKo7cc91sofromqu0551ocgpn96` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
 
 --
+-- Contraintes pour la table `download_oeuvre`
+--
+ALTER TABLE `download_oeuvre`
+  ADD CONSTRAINT `FK7hggjqt67flmm556g9ob579g7` FOREIGN KEY (`download_id`) REFERENCES `download` (`id`),
+  ADD CONSTRAINT `FKpct5bjh8p0aae5fg3mbecbp7i` FOREIGN KEY (`oeuvre_id`) REFERENCES `oeuvre` (`id`);
+
+--
 -- Contraintes pour la table `genre_oeuvre`
 --
 ALTER TABLE `genre_oeuvre`
@@ -396,8 +471,8 @@ ALTER TABLE `oeuvre`
   ADD CONSTRAINT `FKqkt2b0l1p1yq6tsvjqdwhg5n` FOREIGN KEY (`editeur_id`) REFERENCES `editeur` (`id`);
 
 --
--- Contraintes pour la table `oeuvre_download`
+-- Contraintes pour la table `user_role`
 --
-ALTER TABLE `oeuvre_download`
-  ADD CONSTRAINT `FK4oms6wpp1l5i2dsee9thnis6m` FOREIGN KEY (`oeuvre_id`) REFERENCES `oeuvre` (`id`),
-  ADD CONSTRAINT `FK5kdcfyo1chm8f1kt5ei89696j` FOREIGN KEY (`download_id`) REFERENCES `download` (`id`);
+ALTER TABLE `user_role`
+  ADD CONSTRAINT `FK859n2jvi8ivhui0rl0esws6o` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
+  ADD CONSTRAINT `FKt7e7djp752sqn6w22i6ocqy6q` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`);

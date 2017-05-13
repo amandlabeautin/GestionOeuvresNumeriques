@@ -1,71 +1,29 @@
 angular
     .module('GestionOeuvresNumeriques')
-    .controller('rentController', rentController)
-    .controller('modifierControllerFilm', modifierControllerFilm)
     .controller('homeCtrl', homeCtrl)
     .controller('inscriptionController', inscriptionController)
     .controller('filmController', filmController)
     .controller('livreController', livreController)
     .controller('selectMovieController', selectMovieController)
     .controller('adminController', adminController)
-    .controller('shoppingCart', shoppingCart);
-
-function rentController($scope,$http,$routeParams) {
-	$http.get('http://localhost:8080/oeuvre/allOeuvre',{params: {typeValue: "L"}}).
-	  then(function(response) {
-	  	$scope.listeLivres = response.data;
-	  	$scope.selected = response.data[0];
-	  });
-	
-	$scope.choisirLivre = function(selected) {
-		$http({
-		    method: 'POST',
-		    url: 'http://localhost:8080/oeuvre/allOeuvre',
-		    params: {typeValue: "L"},
-		    data: selected,
-		    headers: {'Content-Type': 'application/json'}
-		});
-	};
-	
-	$scope.convertDate = function(dateParution){
-		dateParution = new Date(dateParution);
-	    var d = dateParution.getDate().toString();
-	    var dd = (d.length === 2) ? d : "0"+d;
-	    var m = (dateParution.getMonth()+1).toString();
-	    var mm = (m.length === 2) ? m : "0"+m;     
-	    
-	    return(dd+"/"+mm+ "/" + (dateParution.getFullYear()).toString());
-	};
-};
-
-function modifierControllerFilm($scope,$http,$routeParams) {
-	$http.get('http://localhost:8080/oeuvre/allOeuvre',{params: {typeValue: "F"}}).
-	  then(function(response) {
-		  $scope.listeFilms = response.data;
-	  });
-	
-	$scope.modifierFilm = function(film) {
-		$http({
-		    method: 'PUT',
-		    url: 'http://localhost:8080/oeuvre/search',
-		    data: film,
-		    headers: {'Content-Type': 'application/json'}
-		});
-	};
-}; 
+    .controller('shoppingBasketController', shoppingBasketController);
 
 function homeCtrl($scope,$http,$routeParams){
-	$http.get('http://localhost:8080/oeuvre/allOeuvre',{params: {typeValue: "F"}}).
+	$http.get('http://localhost:8080/oeuvres/allOeuvre',{params: {typeValue: "F"}}).
 		then(function(responseF) {
 		  	$scope.listeFilms = responseF.data;
 		});
-	$http.get('http://localhost:8080/oeuvre/allOeuvre',{params: {typeValue: "L"}}).
+	$http.get('http://localhost:8080/oeuvres/allOeuvre',{params: {typeValue: "L"}}).
 		then(function(response) {
 			$scope.listeLivres = response.data;
 		  });
 	$scope.decode = function(url) {
 		return window.decodeURIComponent(url);
 	} 
+
+	$scope.searchData = function(search) {
+
+	}
 };
 
 function inscriptionController($scope, $http,$routeParams, $location, $state, UtilService, UserService){
@@ -77,7 +35,7 @@ function inscriptionController($scope, $http,$routeParams, $location, $state, Ut
         	userExist = response.data;
         });
         if (userExist = false) {
-        	$http.get('http://localhost:8080/user/add',{params: {'name': user.login, 'password' : user.password}}).
+        	$http.get('http://localhost:8080/users/add',{params: {'name': user.login, 'password' : user.password}}).
 	            then(function  (response) {
 		            if(response.data == 'SAVED') {
 		            	$location.path('/home');
@@ -142,7 +100,7 @@ function filmController($scope, $http, $routeParams, $filter, $location) {
 		 	genreS.push(movie.genreSelected[i]['idGenre']);
 		 }
 		console.log(movie);
-		var promise = $http.get('http://localhost:8080/film/add',{params: {'titre': movie.titre, 'dateDeParution' : dateParution, 'resume' : movie.summary, 'image' : urlImageEncode, 'filmDuree' : movie.duree, 'filmAnnonce' : urlVideoEncode, 'acteurs' : acteurS, 'genres' : genreS}}).
+		var promise = $http.get('http://localhost:8080/oeuvres/addMovie',{params: {'titre': movie.titre, 'dateDeParution' : dateParution, 'resume' : movie.summary, 'image' : urlImageEncode, 'filmDuree' : movie.duree, 'filmAnnonce' : urlVideoEncode, 'acteurs' : acteurS, 'genres' : genreS}}).
                         then(function  (response) {
             $location.path('/gestionOeuvresNumeriques/admin');
         });
@@ -153,36 +111,29 @@ function filmController($scope, $http, $routeParams, $filter, $location) {
 	$scope.toggle = function() {
         $scope.change = !$scope.change;
     };
-	$scope.modifierMovie = function(movie) {
-		$http({
-		    method: 'PUT',
-		    url: 'http://localhost:8080/oeuvre/search',
-		    data: film,
-		    headers: {'Content-Type': 'application/json'}
-		});
-	};
+
+    $scope.addShoppingBasket = function(data){
+    	console.log(data);
+    }
 };
 
-function livreController($scope, $http, $routeParams, $filter) {
-	$scope.format = 'dd/MM/yyyy';
-
-	$http.get('http://localhost:8080/oeuvre/allOeuvre',{params: {typeValue: "L"}}).
-		then(function(responseF) {
-		  	$scope.listeBooks = responseF.data;
+function livreController($scope, $http, $routeParams, $sce) {
+	$http.get('http://localhost:8080/oeuvres/allOeuvre',{params: {typeValue: "L"}}).
+		then(function(responseL) {
+		  	$scope.listeBooks = responseL.data;
 	});
 
 	$scope.decode = function(url) {
 		var decodeUrl = window.decodeURIComponent(url);
-		console.log($sce.trustAsResourceUrl(decodeUrl));
 		return $sce.trustAsResourceUrl(decodeUrl);
 	}; 
 
-	$scope.showDetailsBooks = function(selected) {
-		$http.get('http://localhost:8080/oeuvre/searchByTitre',{ params: {titre: selected.titre}}).
+	$scope.showDetailsBook = function(selected) {
+		$http.get('http://localhost:8080/oeuvres/searchByTitre',{ params: {titre: selected.titre}}).
 		    then(function(responseSelected) {
 				$scope.selectedBook = responseSelected.data;
 		});
-		$scope.detailsMovie = true;
+		$scope.detailsBook = true;
 	};
 
 	$scope.convertDate = function(dateParution){
@@ -193,58 +144,21 @@ function livreController($scope, $http, $routeParams, $filter) {
 	    var mm = (m.length === 2) ? m : "0"+m;     
 	    
 	    return(dd+"/"+mm+ "/" + (dateParution.getFullYear()).toString());
-	}; 
-	
-	$http.get('http://localhost:8080/genres/all').
-		  then(function(response) {
-		  	$scope.listeGenre = response.data;
-		  });
-	$http.get('http://localhost:8080/auteurs/all').
-	  	then(function(response) {
-		  	$scope.listeAuteur = response.data;
-	  	});
-	$http.get('http://localhost:8080/editeurs/all').
-	  	then(function(response) {
-		  	$scope.listeEditeur = response.data;
-	  	});
-
-	$scope.createBook = function(book, selected){
-		$scope.date = new Date(book.dateDeParution);
-		var dateParution = $filter('date')($scope.date, 'dd/MM/yyyy');
-		var urlImageEncode = window.encodeURIComponent(book.image);
-
-		var auteurS = [];
-		var genreS = [];
-		for (var i = 0; i < book.auteurSelected.length; i++) {
-		 	auteurS.push(book.auteurSelected[i]['idAuteur']);
-		}
-		for (var i = 0; i < book.genreSelected.length; i++) {
-		 	genreS.push(book.genreSelected[i]['idGenre']);
-		}
-		
-		console.log(book);
-		var promise = $http.get('http://localhost:8080/book/add',{params: {'titre': book.titre, 'dateDeParution' : dateParution, 'resume' : book.summary, 'image' : urlImageEncode, 'auteurs' : auteurS, 'genres' : genreS, 'editeur' : book.editeurSelected['id'], 'nbreDePages' : book.nbreDePages}}).
-                        then(function  (response) {
-            return response.data;
-        });
-        return promise;
-	}
+	};
 };
 
-function selectMovieController($scope,$http,$routeParams, $sce){
-	$http.get('http://localhost:8080/oeuvre/allOeuvre',{params: {typeValue: "F"}}).
+function selectMovieController($scope,$http,$routeParams, UserService){
+	$http.get('http://localhost:8080/oeuvres/allOeuvre',{params: {typeValue: "F"}}).
 		then(function(responseF) {
 		  	$scope.listeFilms = responseF.data;
 	});
 
 	$scope.decode = function(url) {
-		var decodeUrl = window.decodeURIComponent(url);
-		console.log($sce.trustAsResourceUrl(decodeUrl));
-		return $sce.trustAsResourceUrl(decodeUrl);
+		return window.decodeURIComponent(url);
 	}; 
 
 	$scope.showDetailsMovie = function(selected) {
-		$http.get('http://localhost:8080/oeuvre/searchByTitre',{ params: {titre: selected.titre}}).
+		$http.get('http://localhost:8080/oeuvres/searchByTitre',{ params: {titre: selected.titre}}).
 		    then(function(responseSelected) {
 				$scope.selectedFilm = responseSelected.data;
 		});
@@ -260,6 +174,31 @@ function selectMovieController($scope,$http,$routeParams, $sce){
 	    
 	    return(dd+"/"+mm+ "/" + (dateParution.getFullYear()).toString());
 	}; 
+
+	$scope.addShoppingBasket = function(selectShopping) {
+		var oeuvreCollection = [];
+
+		$http({
+		    method: 'POST',
+		    url: 'http://localhost:8080/oeuvres/findByTitleForId',
+		    params: {'title': selectShopping.titre},
+		    headers: {'Content-Type': 'application/json'}
+		})
+		.then(function  (response) { 
+			$scope.idOeuvres = response.data;
+			oeuvreCollection.push($scope.idOeuvres);
+			console.log(oeuvreCollection);
+			var responsejson = $http.get('http://localhost:8080/commandes/add',{params : {'user': UserService.getUser().id, 'oeuvre': oeuvreCollection}})
+				.then(function  (response) { 
+					console.log('then = ' + response);
+        		})
+        		.catch(function(response) {
+        			console.log(response);
+				});
+			return responsejson;
+		});
+
+	};
 };
 
 function adminController($scope,$http,$routeParams,$uibModal) {
@@ -289,25 +228,124 @@ function adminController($scope,$http,$routeParams,$uibModal) {
 		$scope.object = object;
 		switch(object){
 			case "acteur":
-				$scope.selectedAllData = $scope.listeActeurs;
+				$scope.selectedAllDatas = $scope.listeActeurs;
 				break;
 			case "auteur":
-				$scope.selectedAllData = $scope.listeAuteurs;
+				$scope.selectedAllDatas = $scope.listeAuteurs;
 				break;
 			case "editeur":
-				$scope.selectedAllData = $scope.listeEditeurs;
+				$scope.selectedAllDatas = $scope.listeEditeurs;
 				break;
 			case "genre":
-				$scope.selectedAllData = $scope.listeGenres;
+				$scope.selectedAllDatas = $scope.listeGenres;
 		};
-		return $scope.selectedAllData;
+		return $scope.selectedAllDatas;
 	};
 
 	$scope.addDataAdmin = function(object) {
 		
 	};
+
+	$scope.editData = function(selectData, object){
+		var urlData;
+		console.log(selectData);
+		console.log("object : " + object);
+
+		switch(object) {
+			case "acteur":
+				urlData = 'http://localhost:8080/acteurs';
+				break;
+			case "auteur":
+				urlData = 'http://localhost:8080/auteurs';
+				break;
+			case "editeur":
+				urlData = 'http://localhost:8080/editeurs';
+				break;
+			case "genre":
+				urlData = 'http://localhost:8080/genres';
+		};
+		$http({
+		    method: 'PUT',
+		    url: urlData,
+		    data: {'id': selectData.id, 'name' : selectData.name},
+		    headers: {'Content-Type': 'application/json'}
+		}).catch(function(data, status) {
+			console.log(status);
+			console.log(data);
+		});
+	}
 };
 
-function shoppingCart($scope){
+function shoppingBasketController($scope, $http, UserService){
+	$http.get('http://localhost:8080/users/allCommandeForUser',{params: {user: UserService.getUser().id}})
+		.then(function(response) {
+		  	$scope.listCommande = response.data;
+		})
+		.catch(function(response) {
+        	console.log(response);
+		});
 
-}
+	function convertDate(dateParution){
+		dateParution = new Date(dateParution);
+	    var d = dateParution.getDate().toString();
+	    var dd = (d.length === 2) ? d : "0"+d;
+	    var m = (dateParution.getMonth()+1).toString();
+	    var mm = (m.length === 2) ? m : "0"+m;     
+	    
+	    return(dd+"/"+mm+ "/" + (dateParution.getFullYear()).toString());
+	};
+
+	function decode(url) {
+		return window.decodeURIComponent(url);
+	}; 
+
+	$scope.createPDF = function(oeuvre){
+		console.log(oeuvre);
+		var lMargin=20; //left margin in mm
+	    var rMargin=20; //right margin in mm
+	    var pdfInMM=210;
+        var dateParution = convertDate(oeuvre.dateDeParution);
+        var urlImage = decode(oeuvre.image);
+
+        var doc = new jsPDF();
+		doc.setFontSize(40);
+		doc.text(35, 25, oeuvre.titre);
+		doc.setLineWidth(1);
+
+		doc.setFontSize(18);
+		doc.setFontType('bold');
+		doc.text(lMargin, 45, 'resume: ');
+		doc.setFontSize(12);
+		doc.setFontType('normal');
+		var lines=doc.splitTextToSize(oeuvre.resume, (pdfInMM-lMargin-rMargin));
+		doc.text(lMargin, 55, lines);
+
+		doc.setFontSize(18);
+		doc.setFontType('bold');
+		doc.text(lMargin, 105, 'Date de parution : ');
+		doc.setFontSize(12);
+		doc.setFontType('normal');
+		doc.text(lMargin, 115, dateParution);
+
+		// If is a movie
+		if(oeuvre.duree){
+			doc.setFontSize(18);
+			doc.setFontType('bold');
+			doc.text(lMargin, 135, 'duree du film : ');
+			doc.setFontSize(12);
+			doc.setFontType('normal');
+			doc.text(lMargin, 145, oeuvre.duree);
+		}
+		else{
+			doc.setFontSize(18);
+			doc.setFontType('bold');
+			doc.text(lMargin, 135, 'nombre de pages : ');
+			doc.setFontSize(12);
+			doc.setFontType('normal');
+			doc.text(lMargin, 145, oeuvre.nbreDePages.toString());
+		}
+
+	      // Save the PDF
+	    doc.save(oeuvre.titre + '.pdf');
+	};
+};

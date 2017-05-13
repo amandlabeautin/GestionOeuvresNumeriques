@@ -1,5 +1,8 @@
 package fr.projectdescartes.web;
 
+import java.util.Collection;
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
@@ -12,12 +15,18 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.http.HttpStatus;
 
+import fr.projectdescartes.domain.Acteur;
+import fr.projectdescartes.domain.Auteur;
+import fr.projectdescartes.domain.Editeur;
+import fr.projectdescartes.domain.Film;
+import fr.projectdescartes.domain.Genre;
+import fr.projectdescartes.domain.Livre;
 import fr.projectdescartes.domain.Oeuvre;
 import fr.projectdescartes.repository.OeuvreRepository;
 
 @Component
 @Controller
-@RequestMapping(path="/oeuvre")
+@RequestMapping(path="/oeuvres")
 public class oeuvreController {
 
 	@Autowired // This means to get the bean called userRepository
@@ -30,10 +39,55 @@ public class oeuvreController {
 		return oeuvreRepository.findAll();
 	}
 	
+	@GetMapping(path= "/addBook") // Map ONLY GET Requests
+	public @ResponseBody String addNewBook (@RequestParam String titre, @RequestParam Date dateDeParution, @RequestParam String resume, @RequestParam String image
+		,@RequestParam Collection<Genre> genres, @RequestParam Collection<Auteur> auteurs, @RequestParam Editeur editeur, @RequestParam Integer nbreDePages) {
+
+		Livre l = new Livre();
+		
+		l.setAuteurs(auteurs);
+		l.setDateDeParution(dateDeParution);
+		l.setEditeur(editeur);
+		l.setGenres(genres);
+		l.setImage(image);
+		l.setNbreDePages(nbreDePages);
+		l.setResume(resume);
+		l.setTitre(titre);
+	
+		oeuvreRepository.save(l);
+		
+		return "SAVED" ;
+	}
+	
+	@GetMapping(path= "/addMovie") // Map ONLY GET Requests
+	public @ResponseBody String addNewFilm (@RequestParam String titre, @RequestParam Date dateDeParution, @RequestParam String resume, @RequestParam String image
+		, @RequestParam String filmDuree, @RequestParam String filmAnnonce, @RequestParam Collection<Acteur> acteurs, @RequestParam Collection<Genre> genres) {
+
+		Film f = new Film();
+		
+		f.setDateDeParution(dateDeParution);
+		f.setDuree(filmDuree);
+		f.setTitre(titre);
+		f.setActeurs(acteurs);
+		f.setBandeAnnonce(filmAnnonce);
+		f.setImage(image);
+		f.setGenres(genres);
+		f.setResume(resume);
+		
+		oeuvreRepository.save(f);
+		
+		return "SAVED" ;
+	}
+	
 	@GetMapping(path="/allOeuvre")
 	public @ResponseBody Iterable<Oeuvre> findByType(@RequestParam String typeValue) {
 	// This returns a JSON or XML with the users
 		return oeuvreRepository.findByType(typeValue);
+	}
+	
+	@RequestMapping(method = RequestMethod.POST, path = "/findByTitleForId")
+	public @ResponseBody int id(@RequestParam String title) {
+ 		return oeuvreRepository.findByTitleForId(title);	
 	}
 
 	@GetMapping(path="/searchByTitre")

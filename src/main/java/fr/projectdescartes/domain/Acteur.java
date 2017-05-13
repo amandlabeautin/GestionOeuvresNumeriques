@@ -13,7 +13,7 @@ public class Acteur {
 	@Id
 	@Column(name="id")
     @GeneratedValue(strategy=GenerationType.AUTO)
-	private Long idActeur;
+	private Long id;
 	
 	@NotNull
 	@Column(name="acteur_nom")
@@ -35,11 +35,11 @@ public class Acteur {
 		this.films = films;
 	}
     
-	public Long getIdActeur() {
-		return idActeur;
+	public Long getId() {
+		return id;
 	}
-	public void setIdActeur(Long id) {
-		this.idActeur = id;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	/**

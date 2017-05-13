@@ -22,7 +22,7 @@ public class Genre {
 	@Id
 	@Column(name="id")
     @GeneratedValue(strategy=GenerationType.AUTO)
-	private long idGenre;
+	private long id;
 	
 	@NotNull
 	@Column(name="genre_nom")
@@ -36,19 +36,19 @@ public class Genre {
 		
 	}
 	
-	public Genre(long idGenre, String name, Collection<Oeuvre> oeuvres) {
+	public Genre(long id, String name, Collection<Oeuvre> oeuvres) {
 		super();
-		this.idGenre = idGenre;
+		this.id = id;
 		this.name = name;
 		this.oeuvres = oeuvres;
 	}
 	
-	public long getIdGenre() {
-		return idGenre;
+	public long getId() {
+		return id;
 	}
 	
-	public void setIdGenre(long idGenre) {
-		this.idGenre = idGenre;
+	public void setId(long id) {
+		this.id = id;
 	}
 	
 	public String getName() {
@@ -78,7 +78,7 @@ public class Genre {
 	 */
 	@Override
 	public String toString() {
-		return "Genre [idGenre=" + idGenre + ", nomGenre=" + name + ", oeuvres=" + oeuvres + "]";
+		return "Genre [idGenre=" + id + ", nomGenre=" + name + ", oeuvres=" + oeuvres + "]";
 	}
 
 	/* (non-Javadoc)
@@ -88,7 +88,7 @@ public class Genre {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + (int) (idGenre ^ (idGenre >>> 32));
+		result = prime * result + (int) (id ^ (id >>> 32));
 		return result;
 	}
 
@@ -104,7 +104,7 @@ public class Genre {
 		if (getClass() != obj.getClass())
 			return false;
 		Genre other = (Genre) obj;
-		if (idGenre != other.idGenre)
+		if (id != other.id)
 			return false;
 		return true;
 	}

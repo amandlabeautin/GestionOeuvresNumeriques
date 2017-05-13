@@ -7,7 +7,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -44,5 +46,11 @@ public class auteurController {
 		// This returns a JSON or XML with the users
 		return auteurRepository.findAll(new Sort(Sort.Direction.ASC, "name"));
 	}
+	
+	@RequestMapping(method= RequestMethod.PUT)  
+	@ResponseBody
+	public String updateAuteur(@RequestBody Auteur auteur) {
+		 return "ok";
+	 }
 	
 }

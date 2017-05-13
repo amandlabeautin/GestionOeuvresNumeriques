@@ -47,7 +47,7 @@ public class Film extends Oeuvre {
 	 * @param acteurs2
 	 */
 	public Film(Date dateDeParution, String titre, String resume, String image, Collection<Genre> genre,
-			Collection<Acteur> acteurs, Collection<Telechargement> downloads, String duree, String bandeAnnonce) {
+			Collection<Acteur> acteurs, Collection<Commande> downloads, String duree, String bandeAnnonce) {
 		super(dateDeParution, titre, resume, image, genre, downloads);
 		this.duree = duree;
 		this.bandeAnnonce = bandeAnnonce;

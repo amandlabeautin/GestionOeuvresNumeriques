@@ -25,7 +25,7 @@ public class User {
 	private String password;
 	
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-	private Collection<Telechargement> downloads;
+	private Collection<Commande> downloads;
 	
 	@ManyToMany(cascade=CascadeType.MERGE, fetch=FetchType.EAGER)
 	@JoinTable(
@@ -35,7 +35,7 @@ public class User {
 	private Collection<Role> roles;
 	
 	public User(String username, String password,
-			Collection<Telechargement> telechargements) {
+			Collection<Commande> telechargements) {
 		super();
 		this.username = username;
 		this.password = password;
@@ -76,26 +76,17 @@ public class User {
         this.password = password;
     }
 
-	@OneToMany(mappedBy="Client")
-	public Collection<Telechargement> getTelechargements() {
-		return downloads;
-	}
-
-	public void setTelechargements(Collection<Telechargement> telechargements) {
-		this.downloads = telechargements;
-	}
-
 	/**
 	 * @return the downloads
 	 */
-	public Collection<Telechargement> getDownloads() {
+	public Collection<Commande> getDownloads() {
 		return downloads;
 	}
 
 	/**
 	 * @param downloads the downloads to set
 	 */
-	public void setDownloads(Collection<Telechargement> downloads) {
+	public void setDownloads(Collection<Commande> downloads) {
 		this.downloads = downloads;
 	}
 

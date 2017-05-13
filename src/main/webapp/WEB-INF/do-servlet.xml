@@ -28,7 +28,7 @@ http://www.springframework.org/schema/security/spring-security.xsd">
 <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
    <property name="messageConverters">
        <list>
-           <ref bean="jsonConverter" />
+           <ref bean="jsonMessageConverter" />
        </list>
    </property>
 </bean>

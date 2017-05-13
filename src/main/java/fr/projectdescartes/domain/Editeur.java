@@ -17,7 +17,7 @@ public class Editeur {
 	@Id
 	@Column(name="id")
     @GeneratedValue(strategy=GenerationType.AUTO)
-	private long idEditeur;
+	private long id;
 	
 	@NotNull
 	@Column(name="editeur_nom")
@@ -36,10 +36,10 @@ public class Editeur {
 	}
 	
 	public long getId() {
-		return idEditeur;
+		return id;
 	}
 	public void setId(long id) {
-		this.idEditeur = id;
+		this.id = id;
 	}
 	public String getNomEditeur() {
 		return name;

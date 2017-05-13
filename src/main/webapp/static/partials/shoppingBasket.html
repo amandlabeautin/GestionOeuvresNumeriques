@@ -1,6 +1,25 @@
 <div class="container">
     <div ng-include = "'partials/header.view.html'"></div>
 </div>
-<div>
-	
+<div id="shoppingBasket">
+	<table class="table">
+	  <thead>
+	  	<tr>
+		  <td>Numero</td>
+		  <td>Type</td>
+		  <td>Article</td>
+		  <td>Actions</td>
+		</tr>
+	  </thead>
+	  <div id="exportthis">
+		  <tbody ng-repeat="listCommande in listCommande">
+		  		<tr ng-repeat="oeuvre in listCommande.oeuvres track by $index">
+				  <td>{{listCommande.id}}</td>
+				  <td>Type</td>
+				  <td >{{oeuvre.titre}}</td>
+				  <td><button class="btn btn-default" type="submit" ng-click="createPDF(oeuvre)">Télécharger</button></td>
+				</tr>
+		  </tbody>
+	  </div>
+	</table>
 </div>
