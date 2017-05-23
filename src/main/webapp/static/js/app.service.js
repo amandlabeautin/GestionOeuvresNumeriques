@@ -1,6 +1,6 @@
 angular
     .module('GestionOeuvresNumeriques')
-	.service('UtilService', UtilService)
+    .service('UtilService', UtilService)
     .service('UserService', UserService);
 
 function UtilService($rootScope, $cookieStore, Notification) {
@@ -25,7 +25,7 @@ function UtilService($rootScope, $cookieStore, Notification) {
      };
 };
 
-function UserService($http, $state, $cookieStore) {
+function UserService($http, $state, $cookieStore, $location) {
     var self = this;
             
     self.setUser = function(aUser){
@@ -39,12 +39,23 @@ function UserService($http, $state, $cookieStore) {
     self.isUserLoggedIn = function() {
         return $cookieStore.get('authenticatedUser') != null;
     };
+
+    self.setAdmin = function(aUser){
+        $cookieStore.put('authenticatedUser', aUser);
+        $cookieStore.put('authenticatedAdmin', aUser);
+    };
+        
+    self.getAdmin = function(){
+        return $cookieStore.get('authenticatedAdmin');
+    };
     
-    self.logout = function() {
+    self.isAdminLoggedIn = function() {
+        return $cookieStore.get('authenticatedAdmin') != null;
+    };
+    
+    self.logoutAdmin = function() {
         $cookieStore.remove('authenticatedUser');
-        $http.post('logout')
-            .success(function(response){
-                console.log('Successfully logged out on server');
-            });
-    };  
+        $cookieStore.remove('authenticatedAdmin');
+        $location.path('/');
+    };   
 };

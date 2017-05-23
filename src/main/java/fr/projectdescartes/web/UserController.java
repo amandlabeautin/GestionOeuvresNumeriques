@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import fr.projectdescartes.domain.Commande;
+import fr.projectdescartes.domain.Download;
 import fr.projectdescartes.domain.User;
 import fr.projectdescartes.repository.UserRepository;
 
@@ -37,13 +37,14 @@ public class UserController {
 	
 	@GetMapping(path= "/add") // Map ONLY GET Requests
 	public @ResponseBody String addNewUser (@RequestParam String name
-		, @RequestParam String password) {
+		, @RequestParam String password, boolean isAdmin) {
 	// @ResponseBody means the returned String is the response, not a view name
 	// @RequestParam means it is a parameter from the GET or POST request
 	
 		User u = new User();
 		u.setUsername(name);
 		u.setPassword(password);
+		u.setIsAdmin(isAdmin);
 		userRepository.save(u);
 		return name ;
 	}
@@ -77,7 +78,7 @@ public class UserController {
 	}
 	
 	@GetMapping(path="/allCommandeForUser")
-	public @ResponseBody List<Commande> login(@RequestParam User user) {
+	public @ResponseBody List<Download> login(@RequestParam User user) {
  		return userRepository.findByUserAndNotValidate(user);	
 	}
 	

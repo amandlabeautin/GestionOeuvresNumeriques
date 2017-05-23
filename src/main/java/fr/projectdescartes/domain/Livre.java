@@ -37,7 +37,7 @@ public class Livre extends Oeuvre {
 	}
 	
     public Livre(String titre, Date dateDeParution, String resume, Integer nbreDePages, String image, Collection<Genre> genre,
-    		Editeur editeur,  Collection<Commande> downloads, Collection<Auteur> auteurs) {
+    		Editeur editeur,  Collection<Download> downloads, Collection<Auteur> auteurs) {
     	super(dateDeParution, titre, resume, image, genre, downloads);
 		this.nbreDePages = nbreDePages;
 		this.editeur = editeur;

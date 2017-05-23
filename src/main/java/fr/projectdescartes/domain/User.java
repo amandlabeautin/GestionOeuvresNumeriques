@@ -25,21 +25,18 @@ public class User {
 	private String password;
 	
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-	private Collection<Commande> downloads;
+	private Collection<Download> downloads;
 	
-	@ManyToMany(cascade=CascadeType.MERGE, fetch=FetchType.EAGER)
-	@JoinTable(
-	      name="user_role",
-	      joinColumns={@JoinColumn(name="user_id", referencedColumnName="id")},
-	      inverseJoinColumns={@JoinColumn(name="role_id", referencedColumnName="id")})
-	private Collection<Role> roles;
+	@NotNull
+	private boolean isAdmin;
 	
 	public User(String username, String password,
-			Collection<Commande> telechargements) {
+			Collection<Download> telechargements, boolean isAdmin) {
 		super();
 		this.username = username;
 		this.password = password;
 		this.downloads = telechargements;
+		this.isAdmin = isAdmin;
 	}
 
 	public User() {
@@ -75,33 +72,27 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
+    
+    public boolean getIsAdmin() {
+        return isAdmin;
+    }
+
+    public void setIsAdmin(boolean isAdmin) {
+        this.isAdmin = isAdmin;
+    }
 
 	/**
 	 * @return the downloads
 	 */
-	public Collection<Commande> getDownloads() {
+	public Collection<Download> getDownloads() {
 		return downloads;
 	}
 
 	/**
 	 * @param downloads the downloads to set
 	 */
-	public void setDownloads(Collection<Commande> downloads) {
+	public void setDownloads(Collection<Download> downloads) {
 		this.downloads = downloads;
-	}
-
-    /**
-	 * @return the roles
-	 */
-	public Collection<Role> getRoles() {
-		return roles;
-	}
-
-	/**
-	 * @param roles the roles to set
-	 */
-	public void setRoles(Collection<Role> roles) {
-		this.roles = roles;
 	}
 
 	/* (non-Javadoc)

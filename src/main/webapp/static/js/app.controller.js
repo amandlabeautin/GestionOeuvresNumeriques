@@ -277,13 +277,16 @@ function adminController($scope,$http,$routeParams,$uibModal) {
 };
 
 function shoppingBasketController($scope, $http, UserService){
+	$scope.button = "Telecharger";
+	var oeuvreCollection = [];
+
 	$http.get('http://localhost:8080/users/allCommandeForUser',{params: {user: UserService.getUser().id}})
 		.then(function(response) {
 		  	$scope.listCommande = response.data;
 		})
 		.catch(function(response) {
         	console.log(response);
-		});
+	});
 
 	function convertDate(dateParution){
 		dateParution = new Date(dateParution);
@@ -299,8 +302,7 @@ function shoppingBasketController($scope, $http, UserService){
 		return window.decodeURIComponent(url);
 	}; 
 
-	$scope.createPDF = function(oeuvre){
-		console.log(oeuvre);
+	function createJsPDF(oeuvre){
 		var lMargin=20; //left margin in mm
 	    var rMargin=20; //right margin in mm
 	    var pdfInMM=210;
@@ -347,5 +349,25 @@ function shoppingBasketController($scope, $http, UserService){
 
 	      // Save the PDF
 	    doc.save(oeuvre.titre + '.pdf');
+	};
+
+	$scope.createPDF = function(oeuvre, idCommande){
+		$http({
+		    method: 'POST', url: 'http://localhost:8080/oeuvres/findByTitleForId', params: {'title': oeuvre.titre},
+		    headers: {'Content-Type': 'application/json'}
+		})
+		.then(function  (response) {
+			$scope.idOeuvre = response.data;
+			$http.get('http://localhost:8080/commandes/update',{params: {'idCommande': idCommande, 'idOeuvre': $scope.idOeuvre}})
+				.then(function(response) {
+					console.log(response);
+			  	createJsPDF(oeuvre);
+			  	$scope.button = "deja telecharger";
+			  	expect(element(by.css('button')).getAttribute('disabled')).toBeTruthy();
+			})
+			.catch(function(response) {
+				console.log('error');
+			});
+		});
 	};
 };

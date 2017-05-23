@@ -7,7 +7,6 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -47,19 +46,13 @@ public abstract class Oeuvre {
 	@JsonBackReference("oeuvre_genre") 
 	Collection<Genre> genres;
 	
-	@ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(
-    		name = "download_oeuvre", 
-    		joinColumns = @JoinColumn(name = "oeuvre_id", referencedColumnName = "id"), 
-    		inverseJoinColumns = @JoinColumn(name = "download_id", referencedColumnName = "id")
-    		)
-	@JsonBackReference("oeuvre_download") 
-	Collection<Commande> downloads;
+	@OneToMany(mappedBy = "oeuvre", cascade = CascadeType.ALL)
+	Collection<Download> downloads;
 	
     public Oeuvre() {
 	}
     
-	public Oeuvre(Date dateDeParution, String titre, String resume, String image, Collection<Genre> genres, Collection<Commande> downloads) {
+	public Oeuvre(Date dateDeParution, String titre, String resume, String image, Collection<Genre> genres, Collection<Download> downloads) {
 		this.dateDeParution = dateDeParution;
 		this.titre = titre;
 		this.resume = resume;

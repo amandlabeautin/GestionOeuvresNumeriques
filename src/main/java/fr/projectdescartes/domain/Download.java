@@ -5,12 +5,11 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 
 @Entity
 @Table(name="download")
-public class Commande {
+public class Download {
 
 	@Id
 	@Column(name="id")
@@ -37,12 +36,12 @@ public class Commande {
 	private User user;
 
 	@NotNull
-	@ManyToMany(mappedBy = "downloads")
-	@JsonManagedReference("oeuvre_download")
-	private Collection<Oeuvre> oeuvres;
+	@ManyToOne
+    @JoinColumn(name = "oeuvre_id")
+	private Oeuvre oeuvre;
 	
 	
-	public Commande() {
+	public Download() {
 	}
 
 	/**
@@ -54,15 +53,15 @@ public class Commande {
 	 * @param user
 	 * @param oeuvres
 	 */
-	public Commande(long id, Date dateDeCommande, boolean isvalidate, boolean isdownload, Date dateDeTelechargement,
-			User user, Collection<Oeuvre> oeuvres) {
+	public Download(long id, Date dateDeCommande, boolean isvalidate, boolean isdownload, Date dateDeTelechargement,
+			User user, Oeuvre oeuvres) {
 		this.id = id;
 		this.dateDeCommande = dateDeCommande;
 		this.isvalidate = isvalidate;
 		this.isdownload = isdownload;
 		this.dateDeTelechargement = dateDeTelechargement;
 		this.user = user;
-		this.oeuvres = oeuvres;
+		this.oeuvre = oeuvres;
 	}
 
 
@@ -84,26 +83,17 @@ public class Commande {
 	}
 
 	/**
-	 * @param e
-	 * @return
-	 * @see java.util.Collection#add(java.lang.Object)
-	 */
-	public boolean add(Oeuvre e) {
-		return oeuvres.add(e);
-	}
-
-	/**
 	 * @return the oeuvres
 	 */
-	public Collection<Oeuvre> getOeuvres() {
-		return oeuvres;
+	public Oeuvre getOeuvres() {
+		return oeuvre;
 	}
 
 	/**
 	 * @param oeuvres the oeuvres to set
 	 */
-	public void setOeuvres(Collection<Oeuvre> oeuvres) {
-		this.oeuvres = oeuvres;
+	public void setOeuvres(Oeuvre oeuvre) {
+		this.oeuvre = oeuvre;
 	}
 
 	/**
