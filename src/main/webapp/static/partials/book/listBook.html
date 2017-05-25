@@ -2,6 +2,7 @@
     <div ng-include = "'partials/header.view.html'"></div>
 </div>
 <div id="listBook">
+	<div uib-alert ng-repeat="alertBook in alertsBook" ng-class="alertBook.type" close="closeAlert($index)" dismiss-on-timeout="5000">{{alertBook.msg}}</div>
 	<div class="row">
 		<div class="col-xs-12 col-sm-6 col-md-8"><h2>LIVRES</h2></div>
 	</div>
