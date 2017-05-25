@@ -12,7 +12,7 @@ angular
 			.state('select-Film', {
 				url: '/select-Film',
 				templateUrl: 'partials/movie/selectMovie.html',
-				controller: 'selectMovieController',
+				controller: 'filmController',
 				access: 'public'
 			})
 			.state('select-Book', {

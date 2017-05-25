@@ -2,6 +2,7 @@
     <div ng-include = "'partials/header.view.html'"></div>
 </div>
 <div id="shoppingBasket">
+	<div uib-alert ng-repeat="alert in alerts" ng-class="alert.type" close="closeAlert($index)" dismiss-on-timeout="5000">{{alert.msg}}</div>
 	<table class="table">
 	  <thead>
 	  	<tr>
@@ -11,15 +12,13 @@
 		  <td>Actions</td>
 		</tr>
 	  </thead>
-	  <div id="exportthis">
-		  <tbody ng-repeat="listCommande in listCommande">
-		  		<tr ng-repeat="oeuvre in listCommande.oeuvres track by $index">
-				  <td>{{listCommande.id}}</td>
-				  <td>Type</td>
-				  <td >{{oeuvre.titre}}</td>
-				  <td><button class="btn btn-default" ng-model="button" type="submit" ng-click="createPDF(oeuvre, listCommande.id)">{{button}}</button></td>
-				</tr>
-		  </tbody>
-	  </div>
+	  <tbody ng-repeat="commande in listCommande" id="exportthis">
+  		<tr>
+			  <td>{{commande.id}}</td>
+			  <td>Type</td>
+			  <td >{{commande.oeuvres.titre}}</td>
+			  <td><button class="btn btn-default" ng-model="button" type="submit" ng-click="createPDF(oeuvre, commande.id)">{{button}}</button></td>
+		</tr>
+	  </tbody>
 	</table>
 </div>

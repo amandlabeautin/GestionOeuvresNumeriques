@@ -1,46 +1,43 @@
 <div class="container">
     <div ng-include = "'partials/header.view.html'"></div>
 </div>
-<div ng-controller="livreController" id="listBook">
+<div id="listBook">
 	<div class="row">
 		<div class="col-xs-12 col-sm-6 col-md-8"><h2>LIVRES</h2></div>
-		<div>
-			<button type="button" class="btn btn-default" ng-click="addShoppingBasket(selectedBook)">
-                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Ajouter au panier
-             </button>
-		</div>
 	</div>
 	<div class="row">	
 		<form>
 			<div ng-repeat="book in listeBooks ">
-				<div class="gallery_product col-lg-3 col-md-3 col-sm-3 col-xs-5 filter hdpe">
-		            <img src={{decode(book.image)}} class="img-responsive" width="200" ng-click="showDetailsBook(book)">
-		            <div show-when-connected>
-			            <div class="checkbox">
-						    <label>
-						      <input type="checkbox"> Ajouter au panier
-						    </label>
-					  	</div>
-					</div>
-		        </div>
-			</div>
+					<div class="gallery_product col-lg-3 col-md-3 col-sm-3 col-xs-5 filter hdpe">
+			            <img src={{decode(book.image)}} class="img-responsive" width="200" ng-click="showDetailsBook(book)">
+			        </div>	
+		    </div>
 		</form>
 	</div>
 
 	<div class="row">
-	  	<div uib-collapse="detailsBook" ng-repeat="selectedBook in selectedBooks">
-	  		<dl>
-	  			<dt>Auteur</dt>
-			  	<dd>{{selectedBook.auteurs[0].name}}</dd><br>
-			  <dt>Date de parution</dt>
-			  	<dd>{{convertDate(selectedBook.dateDeParution)}}</dd><br>
-			  <dt>Titre</dt>
-			  	<dd>{{selectedBook.titre}}</dd><br>
-			  <dt>R&eacute;sum&eacute;</dt>
-			  	<dd>{{selectedBook.resume}}</dd><br>
-			  <dt>Nombre de pages</dt>
-			  	<dd>{{selectedBook.nbreDePages}}</dd><br>
-			</dl>
-	  </div>
+	  	<div ng-repeat="selectedBook in selectedBooks" ng-hide="IsHiddenBook">
+	  		<div class="row">
+	  			<div class="col-md-8">
+			  		<dl>
+			  			<dt>Auteur</dt>
+					  	<dd>{{selectedBook.auteurs[0].name}}</dd><br>
+					  <dt>Date de parution</dt>
+					  	<dd>{{convertDate(selectedBook.dateDeParution)}}</dd><br>
+					  <dt>Titre</dt>
+					  	<dd>{{selectedBook.titre}}</dd><br>
+					  <dt>R&eacute;sum&eacute;</dt>
+					  	<dd>{{selectedBook.resume}}</dd><br>
+					  <dt>Nombre de pages</dt>
+					  	<dd>{{selectedBook.nbreDePages}}</dd><br>
+					</dl>
+				</div>
+				<div class="col-md-4">
+	  				<button type="button" class="btn btn-default" ng-click="addShoppingBasket(selectedBook)">
+			            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Ajouter au panier
+			        </button>
+	  			</div>	
+			</div>
+	  	</div>
 	</div>
 </div>

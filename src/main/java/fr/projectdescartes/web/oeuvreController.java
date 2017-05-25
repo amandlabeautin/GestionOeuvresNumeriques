@@ -102,4 +102,22 @@ public class oeuvreController {
 		System.out.println("modifierVoiture: " + oeuvre);
 	}
 	
+	@RequestMapping(value = "/edit",method = {RequestMethod.PUT})
+	@ResponseStatus(HttpStatus.OK)
+	public String editOeuvre(@RequestParam Long id, @RequestParam String title, @RequestParam String url, @RequestParam String type){
+	
+		if(type == "F") {
+			Film f = new Film();
+			f.setTitre(title);
+			f.setImage(url);
+			oeuvreRepository.save(f);
+		} else {
+			Livre l = new Livre();
+			l.setTitre(title);
+			l.setImage(url);
+			oeuvreRepository.save(l);
+		}
+		return "SAVED" ;
+	}
+	
 }

@@ -1,7 +1,7 @@
 <div class="container">
     <div ng-include = "'partials/header.view.html'"></div>
 </div>
-<div ng-controller="selectMovieController" id="selectMovie">
+<div id="selectMovie">
 	<div class="row">
 		<div class="col-xs-12 col-sm-6 col-md-8"><h2>FILMS</h2></div>
 	</div>
@@ -16,7 +16,7 @@
 	</div>
 
 	<div class="row">
-	  	<div uib-collapse=="detailsMovie" ng-repeat="selectedFilm in selectedFilm">
+	  	<div ng-repeat="selectedFilm in selectedFilms" ng-hide = "IsHidden">
 	  		<div class="row">
 	  			<div class="col-md-8">
 	  				<dl>
