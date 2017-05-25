@@ -62,6 +62,7 @@ public class DownloadController {
  		c.setIsvalidate(true);
  		c.setDateDeTelechargement(new Date());
  		
+ 		repo.save(c);
  		return c;
 	}
 }

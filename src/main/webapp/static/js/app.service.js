@@ -40,6 +40,11 @@ function UserService($http, $state, $cookieStore, $location) {
         return $cookieStore.get('authenticatedUser') != null;
     };
 
+    self.logoutAdmin = function() {
+        $cookieStore.remove('authenticatedUser');
+        $location.path('/');
+    };  
+
     self.setAdmin = function(aUser){
         $cookieStore.put('authenticatedUser', aUser);
         $cookieStore.put('authenticatedAdmin', aUser);

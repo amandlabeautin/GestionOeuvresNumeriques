@@ -17,7 +17,7 @@
 			  <td>{{commande.id}}</td>
 			  <td>Type</td>
 			  <td >{{commande.oeuvres.titre}}</td>
-			  <td><button class="btn btn-default" ng-model="button" type="submit" ng-click="createPDF(oeuvre, commande.id)">{{button}}</button></td>
+			  <td><button class="btn btn-default" ng-model="button" id="button{{commande.id}}" type="submit" ng-click="createPDF(commande.oeuvres, commande.id)" ng-disabled="isDisabled">{{button}}</button></td>
 		</tr>
 	  </tbody>
 	</table>
