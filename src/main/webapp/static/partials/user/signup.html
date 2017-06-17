@@ -18,15 +18,15 @@
 
 	  	<div class="form-group" ng-class="{'has-error' : inscriptionForm.checkPassword.$invalid && !inscriptionForm.checkPassword.$pristine }">
 		    <label for="exampleInputPassword1">V&eacute;rification du mot de passe</label>
-		    <input type="password" name="checkPassword" class="form-control" id="checkPassword" placeholder="Retapez votre mot de passe" ng-model="user.checkPassword" data-equalsTo="inscriptionForm.password" required>
+		    <input type="password" name="checkPassword" class="form-control" id="checkPassword" placeholder="Retapez votre mot de passe" ng-model="user.checkPassword" valid-password-check="user.password" required>
 		    <p ng-show="inscriptionForm.checkPassword.$invalid && !inscriptionForm.checkPassword.$pristine" class="help-block">Ce champ est obligatoire</p>
-		    <p ng-show="!!inscriptionForm.password.$error.noMatch">Passwords don't match.</span>
+		    <p ng-show="inscriptionForm.checkPassword.$error.noMatch" class="help-block">Mot de passe</p>
 	  	</div>
 
 	  <br>
 	  <br>
 
 	  	<button type="submit" ng-click="createUser(user)" class="btn btn-warning" ng-disabled="inscriptionForm.$invalid">Envoyer</button>
-	  	<p ng-show="inscriptionForm.$error.userExist" class="help-block">Le login est déjà utilisé.</span>
+	  	<p ng-show="inscriptionForm.$error.userExist" class="help-block">Le login est déjà utilisé.</p>
 
 	</form>

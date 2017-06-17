@@ -2,25 +2,11 @@
     <div ng-include = "'partials/header.view.html'"></div>
 </div>
 
-<div ng-controller="homeCtrl" id="menu">
-	<h2>FILMS</h2>
-	<div class="row">	
-		<div ng-repeat="film in listeFilms ">
-			<div class="gallery_product col-lg-3 col-md-3 col-sm-3 col-xs-5 filter hdpe">
-	            <img src={{decode(film.image)}} class="img-responsive" width="200">
-	        </div>
-		</div>
-		<a href="#/select-Film">voir plus</a>
+<div id="menu">
+	<div class="col-md-6">
+		<img src={{decode(wonder.image)}} class="img-responsive">
 	</div>
-	<br>
-	<br>
-	<h2>LIVRES</h2>
-	<div class="row">	
-		<div ng-repeat="livre in listeLivres ">
-			<div class="gallery_product col-lg-3 col-md-3 col-sm-3 col-xs-5 filter hdpe">
-	            <img src={{decode(livre.image)}} class="img-responsive" width="200">
-	        </div>
-		</div>
-		<a href="#/select-Book">voir plus</a>
+	<div class="col-md-6">
+		<img src={{decode(reasonsWhy.image)}} class="img-responsive">
 	</div>
 </div>

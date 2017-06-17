@@ -24,7 +24,7 @@ public interface OeuvreRepository extends CrudRepository<Oeuvre, Long>{
 	List<Oeuvre> findByTypeAndTitle(@Param("typeValue")String typeValue, @Param("titre")String titre);
 	
 	@Query("select o from Oeuvre o where o.titre = :titre")
-	List<Oeuvre> findByTitre(@Param("titre")String titre);
+	Oeuvre findByTitre(@Param("titre")String titre);
 
 	@Query("select id from Oeuvre where titre = :titre")
 	int findByTitleForId(@Param("titre")String title);

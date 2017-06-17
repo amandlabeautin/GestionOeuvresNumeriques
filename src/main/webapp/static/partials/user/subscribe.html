@@ -4,7 +4,8 @@
 <br>
 <br>
 <div>
-	<div class="row" id="inscription">	  
+	<div class="row" id="inscription">	
+		<div uib-alert ng-repeat="alert in alerts" ng-class="alert.type" close="closeAlert($index)" dismiss-on-timeout="500">{{alert.msg}}</div>  
 		<div class="col-md-6">
 			<div ng-include = "'partials/user/signin.html'"></div>
 		</div>

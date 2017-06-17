@@ -17,7 +17,7 @@
 	</div>
 
 	<div class="row">
-	  	<div ng-repeat="selectedFilm in selectedFilms" ng-hide = "IsHidden">
+	  	<div ng-hide = "IsHidden">
 	  		<div class="row">
 	  			<div class="col-md-8">
 	  				<dl>
@@ -37,7 +37,7 @@
 					  	</dd><br>
 					</dl>
 	  			</div>
-	  			<div class="col-md-4">
+	  			<div class="col-md-4" ng-if="isUserLoggedIn()">
 	  				<button type="button" class="btn btn-default" ng-click="addShoppingBasket(selectedFilm)">
 			            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Ajouter au panier
 			        </button>

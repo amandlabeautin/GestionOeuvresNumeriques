@@ -1,13 +1,32 @@
 angular
     .module('GestionOeuvresNumeriques')
     .controller('homeCtrl', homeCtrl)
+    .controller('homeShowCtrl', homeShowCtrl)
     .controller('inscriptionController', inscriptionController)
     .controller('filmController', filmController)
     .controller('livreController', livreController)
     .controller('adminController', adminController)
     .controller('shoppingBasketController', shoppingBasketController);
 
-function homeCtrl($scope,$http,$routeParams, $sce){
+function homeCtrl($scope, $sce, $http, UserService){
+	console.log(UserService.getAll());
+
+	$http.get('http://localhost:8080/oeuvres/searchByTitre',{params: {titre: "Wonder Woman"}}).
+        then(function  (response) {
+		  	$scope.wonder = response.data;
+        });
+    $http.get('http://localhost:8080/oeuvres/searchByTitre',{params: {titre: "13 Reasons Why"}}).
+        then(function  (response) {
+		  	$scope.reasonsWhy = response.data;
+        });
+
+	$scope.decode = function(url) {
+		var decodeUrl = window.decodeURIComponent(url);
+		return $sce.trustAsResourceUrl(decodeUrl);
+	};
+};
+
+function homeShowCtrl($scope,$http,$routeParams, $sce, UserService){
 	$http.get('http://localhost:8080/oeuvres/allOeuvre',{params: {typeValue: "F"}}).
 		then(function(responseF) {
 		  	$scope.listeFilms = responseF.data;
@@ -15,41 +34,32 @@ function homeCtrl($scope,$http,$routeParams, $sce){
 	$http.get('http://localhost:8080/oeuvres/allOeuvre',{params: {typeValue: "L"}}).
 		then(function(response) {
 			$scope.listeLivres = response.data;
-		  });
-
-	$scope.decode = function(url) {
-		var decodeUrl = window.decodeURIComponent(url);
-		return $sce.trustAsResourceUrl(decodeUrl);
-	} 
-
-	$scope.searchData = function(search) {
-
-	}
+		});
 };
 
-function inscriptionController($scope, $http,$routeParams, $location, $state, UtilService, UserService){
+function inscriptionController($scope, $http,$routeParams, $state, UtilService, UserService){
 	$scope.loginUser = {};
+	$scope.alerts = [];
 	
  	$scope.createUser = function(user){
-		var userExist = $http.get('http://localhost:8080/user/checkUserExists',{params: {'login': user.login}}).
-        then(function  (response) { 
+		var userExist; 
+		$http.get('http://localhost:8080/users/checkUserExists',{params: {'login': user.login}}).
+        then(function  (response) {
         	userExist = response.data;
-        });
-        if (userExist = false) {
-        	$http.get('http://localhost:8080/users/add',{params: {'name': user.login, 'password' : user.password, 'isAdmin' : false}}).
-	            then(function  (response) {
-		            if(response.data == 'SAVED') {
-		            	alert('Merci pour votre inscription ! ');
-		            	$location.path('/home');
-		            }})
-				.catch(function(response, status) {
-					console.error('Gists error', response.status, response.data);
+        	if (userExist == false) {
+	        	$http.get('http://localhost:8080/users/add',{params: {'name': user.login, 'password' : user.password, 'isAdmin' : false}}).
+		            then(function  (response) {
+			            alert('Merci pour votre inscription !');
+			            addAlert('alert-success','Vous pouvez maintenant vous connecter');
+			       	})
+					.catch(function(response, status) {
+						console.error('Gists error', response.status, response.data);
 						$scope.loginFailed = true;
-        			UtilService.notifyError('Invalid Login Credentials');
-			});
-        } else {
-        	$scope.inscriptionForm.$error.userExist = true;
-        }
+	        			UtilService.notifyError('Invalid Login Credentials');
+					});
+	        };
+        });
+        
  	};
 
  	$scope.connectUser = function(user){
@@ -60,23 +70,36 @@ function inscriptionController($scope, $http,$routeParams, $location, $state, Ut
 		    headers: {'Content-Type': 'application/json'}
 		})
 		.then(function  (response) { 
-			if (response.data.isAdmin == false) {
-            	UserService.setUser(response.data);
-	        } else {
-	            UserService.setAdmin(response.data);
-	        }
-	        alert('Vous êtes connecté !');
-	        $location.path('/')
+			if (response.data == ""){
+				addAlert('alert-danger','Le mot de passe ou le login sont incorrectes  !');
+			}
+			else {
+				if (response.data.isAdmin == false) {
+            		UserService.set('role', 'user');
+            		UserService.set('id', response.data.id);
+            		UserService.set('username', response.data.username);
+		        } else {
+            		UserService.set('role', 'admin');
+            		UserService.set('id', response.data.id);
+            		UserService.set('username', response.data.username);
+		        }
+		        addAlert('alert-success','Vous êtes connecté !');
+		        $state.go('gestionOeuvresNumeriques',{},{reload: true});
+			}
         },function(response) {
-        	console.log(response)
-				console.log('Login failed');
-				$scope.loginFailed = true;
 	        	UtilService.notifyError('Invalid Login Credentials');
 		});
     };
+
+    function addAlert(type, msg){
+		$scope.alerts.push({
+			type : type,
+			msg : msg
+		});
+	};
 };
 
-function filmController($scope, $http, $routeParams, $sce, $filter, $location, UserService) {
+function filmController($scope, $http, $routeParams, $sce, $filter, $state, UserService) {
 	$scope.format = 'dd/MM/yyyy';
 	$scope.alerts = [];
 	$scope.change = true;
@@ -84,24 +107,16 @@ function filmController($scope, $http, $routeParams, $sce, $filter, $location, U
 
 	$http.get('http://localhost:8080/oeuvres/allOeuvre',{params: {typeValue: "F"}}).
 		then(function(responseF) {
-			console.log(responseF);
 		  	$scope.listeFilms = responseF.data;
 	});
-	
 	$http.get('http://localhost:8080/genres/all').
-		  then(function(response) {
+		then(function(response) {
 		  	$scope.listeGenre = response.data;
-		  	console.log(response.data);
-		  });
+	});
 	$http.get('http://localhost:8080/acteurs/all').
 	  	then(function(response) {
 		  	$scope.listeActeur = response.data;
-	  	});
-
-	$scope.decode = function(url) {
-		var decodeUrl = window.decodeURIComponent(url);
-		return $sce.trustAsResourceUrl(decodeUrl);
-	};
+	});
 
 	$scope.createMovie = function(movie, selected){
 		$scope.date = new Date(movie.dateDeParution);
@@ -120,10 +135,10 @@ function filmController($scope, $http, $routeParams, $sce, $filter, $location, U
 		console.log(movie);
 		var promise = $http.get('http://localhost:8080/oeuvres/addMovie',{params: {'titre': movie.titre, 'dateDeParution' : dateParution, 'resume' : movie.summary, 'image' : urlImageEncode, 'filmDuree' : movie.duree, 'filmAnnonce' : urlVideoEncode, 'acteurs' : acteurS, 'genres' : genreS}})
 			.then(function  (response) {
-            	$location.path('/admin');
+				addAlert('alert-success','Le film a bien été ajouté à la base de données.');
+				$state.go('admin');
         	})
         	.catch(function(response) {
-    			console.log(response);
 			});
         return promise;
 	}
@@ -144,15 +159,13 @@ function filmController($scope, $http, $routeParams, $sce, $filter, $location, U
 		.then(function  (response) { 
 			$scope.idOeuvres = response.data;
 			oeuvreCollection.push($scope.idOeuvres);
-			console.log(oeuvreCollection);
-			var responsejson = $http.get('http://localhost:8080/commandes/add',{params : {'user': UserService.getUser().id, 'oeuvre': oeuvreCollection}})
+			var responsejson = $http.get('http://localhost:8080/commandes/add',{params : {'user': UserService.get('id'), 'oeuvre': oeuvreCollection}})
 				.then(function  (response) { 
 					console.log('then = ' + response);
 					addAlert('alert-success','Le livre a été ajouté à votre panier !');
         		})
         		.catch(function(response) {
         			addAlert('alert-danger','Erreur : console.log');
-        			console.log(response);
 				});
 			return responsejson;
 		});
@@ -161,19 +174,9 @@ function filmController($scope, $http, $routeParams, $sce, $filter, $location, U
     $scope.showDetailsMovie = function(selected) {
 		$http.get('http://localhost:8080/oeuvres/searchByTitre',{ params: {titre: selected.titre}}).
 		    then(function(responseSelected) {
-				$scope.selectedFilms = responseSelected.data;
+				$scope.selectedFilm = responseSelected.data;
 		});
 		$scope.IsHidden = false;
-	};
-
-	$scope.convertDate = function(dateParution){
-		dateParution = new Date(dateParution);
-	    var d = dateParution.getDate().toString();
-	    var dd = (d.length === 2) ? d : "0"+d;
-	    var m = (dateParution.getMonth()+1).toString();
-	    var mm = (m.length === 2) ? m : "0"+m;     
-	    
-	    return(dd+"/"+mm+ "/" + (dateParution.getFullYear()).toString());
 	};
 
 	function addAlert(type, msg){
@@ -188,7 +191,7 @@ function filmController($scope, $http, $routeParams, $sce, $filter, $location, U
 	};
 };
 
-function livreController($scope, $http, $routeParams, $sce, UserService) {
+function livreController($scope, $http, $routeParams, $sce, UserService, $filter, $state) {
 	$scope.IsHiddenBook = true;
 	$scope.alertsBook = [];
 	$http.get('http://localhost:8080/oeuvres/allOeuvre',{params: {typeValue: "L"}}).
@@ -196,17 +199,11 @@ function livreController($scope, $http, $routeParams, $sce, UserService) {
 		  	$scope.listeBooks = responseL.data;
 	});
 
-	$scope.decode = function(url) {
-		var decodeUrl = window.decodeURIComponent(url);
-		return $sce.trustAsResourceUrl(decodeUrl);
-	}; 
-
 	$scope.showDetailsBook = function(selected) {
 		$http.get('http://localhost:8080/oeuvres/searchByTitre',{ params: {titre: selected.titre}}).
 		    then(function(responseSelected) {
-				$scope.selectedBooks = responseSelected.data;
+				$scope.selectedBook = responseSelected.data;
 				$scope.IsHiddenBook = false;
-				console.log($scope.selectedBooks);
 		});
 	};
 
@@ -220,6 +217,45 @@ function livreController($scope, $http, $routeParams, $sce, UserService) {
 	    return(dd+"/"+mm+ "/" + (dateParution.getFullYear()).toString());
 	};
 
+	$scope.createBook = function(book, selected){
+		$http.get('http://localhost:8080/auteurs/all').
+			then(function(response) {
+			  	$scope.listeAuteur = response.data;
+		});
+		$http.get('http://localhost:8080/editeurs/all').
+			then(function(response) {
+			  	$scope.listeEditeurs = response.data;
+		});
+		$http.get('http://localhost:8080/genres/all').
+			then(function(response) {
+			  	$scope.listeGenre = response.data;
+		});
+
+		$scope.date = new Date(book.dateDeParution);
+		var dateParution = $filter('date')($scope.date, 'dd/MM/yyyy');
+		var urlImageEncode = window.encodeURIComponent(book.image);
+		var urlVideoEncode = window.encodeURIComponent(book.bandeAnnonce);
+
+		var auteurS = [];
+		var genreS = [];
+		 for (var i = 0; i < book.auteurSelected.length; i++) {
+		 	auteurS.push(book.auteurSelected[i]['id']);
+		 }
+		  for (var i = 0; i < book.genreSelected.length; i++) {
+		 	genreS.push(book.genreSelected[i]['id']);
+		 }
+
+		var promise = $http.get('http://localhost:8080/oeuvres/addBook',{params: {'editeur': book.editeurSelected.id,'titre': book.titre, 'dateDeParution' : dateParution, 'resume' : book.summary, 'image' : urlImageEncode, 'nbreDePages' : book.nbreDePages, 'auteurs' : auteurS, 'genres' : genreS}})
+			.then(function  (response) {
+				addAlert('alert-success','Le livre a bien été ajouté à la base de données.');
+            	$state.go('/admin');
+        	})
+        	.catch(function(response) {
+
+			});
+        return promise;
+	}
+
 	$scope.addShoppingBasket = function(selectShopping){
     	var oeuvreCollection = [];
 
@@ -232,14 +268,12 @@ function livreController($scope, $http, $routeParams, $sce, UserService) {
 		.then(function  (response) { 
 			$scope.idOeuvres = response.data;
 			oeuvreCollection.push($scope.idOeuvres);
-			console.log(oeuvreCollection);
-			var responsejson = $http.get('http://localhost:8080/commandes/add',{params : {'user': UserService.getUser().id, 'oeuvre': oeuvreCollection}})
+			var responsejson = $http.get('http://localhost:8080/commandes/add',{params : {'user': UserService.get('id'), 'oeuvre': oeuvreCollection}})
 				.then(function  (response) { 
 					addAlert('alert-success','Le livre a été ajouté à votre panier !');
         		})
         		.catch(function(response) {
         			addAlert('alert-danger','Erreur : console.log');
-        			console.log(response);
 				});
 			return responsejson;
 		});
@@ -285,7 +319,6 @@ function adminController($scope,$http,$routeParams,$uibModal) {
 
 	$http.get('http://localhost:8080/oeuvres/all').
 		then(function(response) {
-			console.log(response);
 			$scope.listeOeuvres = response.data;
 			for (var i = 0; i < response.data.length; i++) {
 				$scope.listeOeuvres[i].name = response.data[i].titre;
@@ -319,8 +352,6 @@ function adminController($scope,$http,$routeParams,$uibModal) {
 
 	$scope.editData = function(selectData, object){
 		var urlData, urlEncode;
-		console.log(selectData);
-		console.log("object : " + object);
 
 		switch(object) {
 			case "acteur":
@@ -340,15 +371,14 @@ function adminController($scope,$http,$routeParams,$uibModal) {
 		};
 
 		urlEncode = window.encodeURIComponent(selectData.image);
-		console.log('urlEncode : ' + urlData);
+
 		$http({
 		    method: 'PUT',
 		    url: urlData,
 		    data: {'id': selectData.id, 'name' : selectData.name, 'image' : urlEncode},
 		    headers: {'Content-Type': 'application/json'}
 		}).catch(function(data, status) {
-			console.log(status);
-			console.log(data);
+
 		});
 	}
 };
@@ -359,9 +389,8 @@ function shoppingBasketController($scope, $http, UserService){
 	$scope.button = "Telecharger";
 	var oeuvreCollection = [];
 
-	$http.get('http://localhost:8080/users/allCommandeForUser',{params: {user: UserService.getUser().id}})
+	$http.get('http://localhost:8080/users/allCommandeForUser',{params: {user: UserService.get('id')}})
 		.then(function(response) {
-			console.log(response);
 		  	$scope.listCommande = response.data;
 		  	var dateCommande = new Date($scope.listCommande[0].dateDeCommande);
 		  	var d = new Date();
@@ -371,25 +400,15 @@ function shoppingBasketController($scope, $http, UserService){
 		  	} else {
 		  		addAlert('alert-danger','Attention ! Votre panier va expirée !');
 		  	}
+
+		  	if(response.data == 0) {
+		  		alert('PAS DE COMMANDE');
+		  	}
 		  	
 		})
 		.catch(function(response) {
         	console.log(response);
 	});
-
-	function convertDate(dateParution){
-		dateParution = new Date(dateParution);
-	    var d = dateParution.getDate().toString();
-	    var dd = (d.length === 2) ? d : "0"+d;
-	    var m = (dateParution.getMonth()+1).toString();
-	    var mm = (m.length === 2) ? m : "0"+m;     
-	    
-	    return(dd+"/"+mm+ "/" + (dateParution.getFullYear()).toString());
-	};
-
-	function decode(url) {
-		return window.decodeURIComponent(url);
-	}; 
 
 	function createJsPDF(oeuvre){
 		var lMargin=20; //left margin in mm

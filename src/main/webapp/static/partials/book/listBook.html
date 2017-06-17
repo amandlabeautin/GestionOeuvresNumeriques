@@ -17,7 +17,7 @@
 	</div>
 
 	<div class="row">
-	  	<div ng-repeat="selectedBook in selectedBooks" ng-hide="IsHiddenBook">
+	  	<div ng-hide="IsHiddenBook">
 	  		<div class="row">
 	  			<div class="col-md-8">
 			  		<dl>
@@ -33,7 +33,7 @@
 					  	<dd>{{selectedBook.nbreDePages}}</dd><br>
 					</dl>
 				</div>
-				<div class="col-md-4">
+				<div class="col-md-4" ng-if="isUserLoggedIn()">
 	  				<button type="button" class="btn btn-default" ng-click="addShoppingBasket(selectedBook)">
 			            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Ajouter au panier
 			        </button>

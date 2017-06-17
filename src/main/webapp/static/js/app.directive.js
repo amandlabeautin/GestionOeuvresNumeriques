@@ -1,59 +1,78 @@
 angular
-    .module('GestionOeuvresNumeriques')
-    .directive('equalsTo', equalsTo)
-    .directive('showWhenConnected', showWhenConnected)
-    .directive('hideWhenConnected', hideWhenConnected);
+	.module('GestionOeuvresNumeriques')
+	.directive('validPasswordCheck', validPasswordCheck)
+	.directive('showWhenConnected', showWhenConnected)
+	.directive('hideWhenConnected', hideWhenConnected)
+	.directive('backImg',backImg);
 
-function equalsTo() {
-       /*
-       * <input type="password" ng-model="Password" />
-       * <input type="password" ng-model="ConfirmPassword" equals-to="Password" />
-       */
+function validPasswordCheck() {
+
 	return {
-        require: 'ngModel',
-        link: function (scope, elm, attrs, ctrl) {
-            ctrl.$parsers.unshift(function (viewValue, $scope) {
-                var noMatch = viewValue != scope.inscriptionForm.password.$viewValue
-                ctrl.$setValidity('noMatch', !noMatch)
-                scope.passwordCGood = !noMatch
-            })
-        }
-   };
+		require: 'ngModel',
+		scope: {
+
+		  reference: '=validPasswordCheck'
+
+		},
+		link: function(scope, elm, attrs, ctrl) {
+		  ctrl.$parsers.unshift(function(viewValue, $scope) {
+
+			var noMatch = viewValue != scope.reference
+			ctrl.$setValidity('noMatch', !noMatch);
+			return (noMatch)?noMatch:!noMatch;
+		  });
+
+		  scope.$watch("reference", function(value) {;
+			ctrl.$setValidity('noMatch', value === ctrl.$viewValue);
+
+		  });
+		}
+	}
 };
 
 function showWhenConnected(userService) {
-    return {
-        restrict: 'A',
-        link: function (scope, element, attrs) {
-            var showIfConnected = function() {
-                if(userService.isConnected()) {
-                    element.removeClass("ng-hide");
-                } else {
-                  console.log(element);
-                    element.addClass("ng-hide");
-                }
-            };
+	return {
+		restrict: 'A',
+		link: function (scope, element, attrs) {
+			var showIfConnected = function() {
+				if(userService.isConnected()) {
+					element.removeClass("ng-hide");
+				} else {
+				  console.log(element);
+					element.addClass("ng-hide");
+				}
+			};
  
-            showIfConnected();
-            scope.$on("connectionStateChanged", showIfConnected);
-        }
-    };
+			showIfConnected();
+			scope.$on("connectionStateChanged", showIfConnected);
+		}
+	};
 };
 
 function hideWhenConnected(userService) {
-    return {
-        restrict: 'A',
-        link: function (scope, element, attrs) {
-            var hideIfConnected = function() {
-                if(userService.isConnected()) {
-                    element.addClass("ng-hide");
-                } else {
-                    element.removeClass("ng-hide");
-                }
-            };
+	return {
+		restrict: 'A',
+		link: function (scope, element, attrs) {
+			var hideIfConnected = function() {
+				if(userService.isConnected()) {
+					element.addClass("ng-hide");
+				} else {
+					element.removeClass("ng-hide");
+				}
+			};
  
-            hideIfConnected();
-            scope.$on("connectionStateChanged", hideIfConnected);
-        }
-    };
+			hideIfConnected();
+			scope.$on("connectionStateChanged", hideIfConnected);
+		}
+	};
+};
+
+function backImg() {
+	return function(scope, element, attrs) {
+		var url = attrs.backImg;
+        element.css({
+            'background-image': 'url(' + url +')',
+            'background-size' : 'cover'
+        });
+	};
 };

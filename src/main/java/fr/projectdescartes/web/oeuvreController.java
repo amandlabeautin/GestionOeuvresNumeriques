@@ -60,7 +60,7 @@ public class oeuvreController {
 	}
 	
 	@GetMapping(path= "/addMovie") // Map ONLY GET Requests
-	public @ResponseBody String addNewFilm (@RequestParam String titre, @RequestParam Date dateDeParution, @RequestParam String resume, @RequestParam String image
+	public @ResponseBody Film addNewFilm (@RequestParam String titre, @RequestParam Date dateDeParution, @RequestParam String resume, @RequestParam String image
 		, @RequestParam String filmDuree, @RequestParam String filmAnnonce, @RequestParam Collection<Acteur> acteurs, @RequestParam Collection<Genre> genres) {
 
 		Film f = new Film();
@@ -76,7 +76,7 @@ public class oeuvreController {
 		
 		oeuvreRepository.save(f);
 		
-		return "SAVED" ;
+		return f ;
 	}
 	
 	@GetMapping(path="/allOeuvre")
@@ -91,7 +91,7 @@ public class oeuvreController {
 	}
 
 	@GetMapping(path="/searchByTitre")
-	public @ResponseBody Iterable<Oeuvre> findByTitre(@RequestParam String titre) {
+	public @ResponseBody Oeuvre findByTitre(@RequestParam String titre) {
 	// This returns a JSON or XML with the users
 		return oeuvreRepository.findByTitre(titre);
 	};
