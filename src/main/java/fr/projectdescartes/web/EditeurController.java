@@ -27,7 +27,7 @@ public class EditeurController {
 	private EditeurRepository editeurRepository;
 
 	@GetMapping(path="/add") // Map ONLY GET Requests
-	public @ResponseBody String addNewUser (@RequestParam String name, @RequestParam Collection<Livre> livres) {
+	public @ResponseBody String addNewUser (@RequestParam String name, @RequestParam(value="livres", required=false) Collection<Livre> livres) {
 		// @ResponseBody means the returned String is the response, not a view name
 		// @RequestParam means it is a parameter from the GET or POST request
 

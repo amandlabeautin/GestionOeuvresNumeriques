@@ -27,7 +27,7 @@ public class ActeurController {
 	private ActeurRepository acteurRepository;
 
 	@GetMapping(path="/add") // Map ONLY GET Requests
-	public @ResponseBody String addNewUser (@RequestParam String name, @RequestParam String image, @RequestParam Collection<Film> films) {
+	public @ResponseBody String addNewUser (@RequestParam String name, @RequestParam(value="image", required=false) String image, @RequestParam(value="films", required=false) Collection<Film> films) {
 		// @ResponseBody means the returned String is the response, not a view name
 		// @RequestParam means it is a parameter from the GET or POST request
 		

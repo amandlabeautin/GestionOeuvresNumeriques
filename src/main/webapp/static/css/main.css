@@ -81,3 +81,7 @@ form label{
 #shoppingBasket thead{
 	color : var(--gestionoeuvresnumeriques-yellow-color);
 }
+
+#addDataAdmin {
+	width: 100%;
+}

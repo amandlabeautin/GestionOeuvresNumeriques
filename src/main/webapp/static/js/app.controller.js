@@ -291,7 +291,7 @@ function livreController($scope, $http, $routeParams, $sce, UserService, $filter
 	};
 };
 
-function adminController($scope,$http,$routeParams,$uibModal) {
+function adminController($scope,$http,$routeParams,$uibModal, $log) {
 
 	$http.get('http://localhost:8080/acteurs/all').
 		then(function(response) {
@@ -346,8 +346,66 @@ function adminController($scope,$http,$routeParams,$uibModal) {
 		return $scope.selectedAllDatas;
 	};
 
-	$scope.addDataAdmin = function(object) {
-		
+    var modalAddData = function($scope) {
+      return $scope.modalInstance = $uibModal.open({
+          templateUrl: 'partials/admin/addDataAdmin.html',
+          size:'lg',
+          scope: $scope
+        });
+    };
+
+	$scope.openModal = function(object) {
+		$scope.subject = object;
+		modalAddData($scope).result
+	        .then(function (data) {
+	            $scope.handleSuccess(data);
+	        })
+	        .then(null, function (reason) {
+	            $scope.handleDismiss(reason);
+	        });
+	};
+
+	$scope.saveDataAdmin = function(form, subject){
+		switch(subject){
+			case "acteur":
+				$scope.urlSpring = 'http://localhost:8080/acteurs/add';
+				$scope.params = {'name': form.name};
+				break;
+			case "auteur":
+				$scope.urlSpring = 'http://localhost:8080/auteurs/add';
+				$scope.params = {'name': form.name, 'livre': {}};
+				break;
+			case "editeur":
+				$scope.urlSpring = 'http://localhost:8080/editeurs/add';
+				$scope.params = {'name': form.name, 'livre': {}};
+				break;
+			case "genre":
+				$scope.urlSpring = 'http://localhost:8080/genres/add';
+				$scope.params = {'name': form.name};
+				break;
+		}
+		$http.get($scope.urlSpring,{params: $scope.params})
+			.then(function(response) {
+				$scope.modalInstance.dismiss('No Button Clicked');
+				addAlert('alert-success', 'Le ou la '+subject+ ' a été enregistré(e).')
+			  	
+			})
+			.catch(function(response) {
+	        	console.log(response);
+		});
+	};
+    
+    $scope.cancel = function () {
+        $scope.modalInstance.dismiss('No Button Clicked');
+    };
+	        // Log Success message
+	$scope.handleSuccess = function (data) {
+		$log.info('Modal closed: ' + data);
+	};
+
+	// Log Dismiss message
+	$scope.handleDismiss = function (reason) {
+		$log.info('Modal dismissed: ' + reason);
 	};
 
 	$scope.editData = function(selectData, object){

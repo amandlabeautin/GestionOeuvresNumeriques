@@ -2,6 +2,7 @@ package fr.projectdescartes.web;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -60,8 +61,8 @@ public class oeuvreController {
 	}
 	
 	@GetMapping(path= "/addMovie") // Map ONLY GET Requests
-	public @ResponseBody Film addNewFilm (@RequestParam String titre, @RequestParam Date dateDeParution, @RequestParam String resume, @RequestParam String image
-		, @RequestParam String filmDuree, @RequestParam String filmAnnonce, @RequestParam Collection<Acteur> acteurs, @RequestParam Collection<Genre> genres) {
+	public @ResponseBody Film addNewFilm (@RequestParam String titre, @RequestParam(value="dateDeParution", required=false) Date dateDeParution, @RequestParam(value="resume", required=false) String resume, @RequestParam String image
+		, @RequestParam(value="filmDuree", required=false) String filmDuree, @RequestParam(value="filmAnnonce", required=false) String filmAnnonce, @RequestParam(value="acteurs", required=false) Collection<Acteur> acteurs, @RequestParam(value="genres", required=false) Collection<Genre> genres) {
 
 		Film f = new Film();
 		
@@ -120,4 +121,9 @@ public class oeuvreController {
 		return "SAVED" ;
 	}
 	
+	@GetMapping(path="/allOeuvreByAuthor")
+	public @ResponseBody List<Livre> findByAuthor(@RequestParam String author) {
+	// This returns a JSON or XML with the users
+		return oeuvreRepository.findByAuteurs_Name(author);
+	}
 }
