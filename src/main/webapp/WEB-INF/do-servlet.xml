@@ -35,7 +35,7 @@ http://www.springframework.org/schema/security/spring-security.xsd">
 
 <bean id="jsonConverter" 
             class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">
-   <property name="supportedMediaTypes" value="application/json" />
+   <property name="supportedMediaTypes" value="application/json;charset=UTF-8" />
 </bean>
 
 

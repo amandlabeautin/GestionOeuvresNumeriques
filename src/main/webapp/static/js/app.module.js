@@ -1,6 +1,6 @@
 angular
    .module('GestionOeuvresNumeriques', [
-   		'ui.bootstrap','ui.bootstrap.modal','ui.router','ngResource','ngCookies','ngSanitize','ui-notification','ngRoute'
+   		'ui.bootstrap','ui.bootstrap.modal','ui.router','ngResource','ngCookies','ngSanitize','ui-notification','ngRoute', 'angular-md5'
 	])
    .run(['$rootScope', '$state', '$timeout','UserService','UtilService','$transitions', '$trace',
 	function ($rootScope, $state, $timeout, UserService, UtilService, $transitions, $trace) {

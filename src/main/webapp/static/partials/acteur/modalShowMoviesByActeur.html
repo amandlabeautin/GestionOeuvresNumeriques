@@ -1,0 +1,36 @@
+<div ng-controller="acteurController" id="showMoviesByActeur">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <h4 class="modal-title">{{acteur.name}} </h4>
+  </div>
+  
+  <div class="modal-body">
+  		<div ng-repeat="movie in movies ">
+  			<div class="row">
+  				<div class="col-md-4">
+  					<img ng-src={{decode(movie.image)}} class="img-responsive" width="200">
+  				</div>
+  				<div class="col-md-8" style="color: black">
+  					<dl>
+					  <dt>Date de parution</dt>
+					  	<dd>{{convertDate(movie.dateDeParution)}}</dd><br>
+					  <dt>Titre</dt>
+					  	<dd>{{movie.titre}}</dd><br>
+					  <dt>R&eacute;sum&eacute;</dt>
+					  	<dd>{{movie.resume}}</dd><br>
+					  <dt>dur&eacute;e</dt>
+					  	<dd>{{movie.duree}}</dd><br>
+					  <dt>bande annonce</dt>
+					  	<dd>
+					  		<div class="embed-responsive embed-responsive-16by9">
+					  			<iframe class="embed-responsive-item" ng-src={{decode(movie.bandeAnnonce)}}></iframe>
+					  		</div>
+					  	</dd><br>
+					</dl>
+  				</div>
+  			</div>
+  		</div>
+  </div>
+
+  <div class="modal-footer"></div>
+</div>

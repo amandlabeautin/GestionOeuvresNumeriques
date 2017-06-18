@@ -7,7 +7,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -47,9 +46,10 @@ public class EditeurController {
 		return editeurRepository.findAll(new Sort(Sort.Direction.ASC, "name"));
 	}
 	
-	@RequestMapping(method= RequestMethod.PUT)  
-	  public void putEditeur(@RequestBody Editeur e) {
-		System.out.println("modifierEditeur : " + e);
-	  }
+	@RequestMapping(value = "/edit",method = {RequestMethod.PUT}) 
+	public void editGenre(@RequestParam Editeur editeur) {
+		editeurRepository.save(editeur);
+		System.out.println("modifier : " + editeur);
+	}
 	
 }

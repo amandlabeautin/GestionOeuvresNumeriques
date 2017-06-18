@@ -103,6 +103,14 @@ public class oeuvreController {
 		System.out.println("modifierVoiture: " + oeuvre);
 	}
 	
+	@RequestMapping(value = "/editAdmin",method = {RequestMethod.PUT})
+	@ResponseStatus(HttpStatus.OK)
+	public void editAdminOeuvre(@RequestParam Oeuvre oeuvre){
+	
+		oeuvreRepository.save(oeuvre);
+		System.out.println("modifierVoiture: " + oeuvre);
+	}
+	
 	@RequestMapping(value = "/edit",method = {RequestMethod.PUT})
 	@ResponseStatus(HttpStatus.OK)
 	public String editOeuvre(@RequestParam Long id, @RequestParam String title, @RequestParam String url, @RequestParam String type){

@@ -6,7 +6,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -41,8 +40,9 @@ public class genreController {
 		return genreRepository.findAll(new Sort(Sort.Direction.ASC, "name"));
 	}
 	
-	@RequestMapping(method= RequestMethod.PUT)  
-	 public void putGenre(@RequestBody Genre genre) {
+	@RequestMapping(value = "/edit",method = {RequestMethod.PUT}) 
+	 public void editGenre(@RequestParam Genre genre) {
+		genreRepository.save(genre);
 		System.out.println("modifierGenre : " + genre);
 	 }
 	

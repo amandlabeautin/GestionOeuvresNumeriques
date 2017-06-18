@@ -9,7 +9,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 
 import javax.persistence.GeneratedValue ; 
 import javax.persistence.GenerationType ;
@@ -17,6 +18,7 @@ import javax.persistence.GenerationType ;
 
 @Entity
 @Table(name="genre")
+@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
 public class Genre {
 
 	@Id
@@ -29,7 +31,6 @@ public class Genre {
 	private String name;
 
 	@ManyToMany(mappedBy = "genres")
-	@JsonManagedReference("oeuvre_genre")
 	private Collection<Oeuvre> oeuvres;
 	
 	public Genre() {

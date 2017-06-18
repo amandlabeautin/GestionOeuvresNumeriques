@@ -1,0 +1,16 @@
+<div class="container">
+    <div ng-include = "'partials/header.view.html'"></div>
+</div>
+<div id="selectOthers">
+	<div uib-alert ng-repeat="alert in alerts" ng-class="alert.type" close="closeAlert($index)" dismiss-on-timeout="5000">{{alert.msg}}</div>
+	<div class="row">
+		<div class="col-xs-12 col-sm-6 col-md-8"><h2>ACTEUR</h2></div>
+	</div>
+	<div class="row">
+		<div ng-repeat="acteur in listeActeurs " class="group">
+            <img ng-src={{decode(acteur.photo)}} class="img-responsive img-thumbnail" width="200px" ng-click="showDetailsActeur(acteur)"><br />
+            <span ng-click="" style=" color: white; font-family: 'Century Gothic'; font-size: large">{{acteur.name}}</span>
+            <br>
+		</div>
+	</div>
+</div>

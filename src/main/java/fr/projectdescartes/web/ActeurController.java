@@ -1,9 +1,9 @@
 package fr.projectdescartes.web;
 
 import java.util.Collection;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -48,9 +48,16 @@ public class ActeurController {
 		return acteurRepository.findAll(new Sort(Sort.Direction.ASC, "name"));
 	}
 	
-	@RequestMapping(method= RequestMethod.PUT)  
-	 public void putActeur(@RequestBody Acteur acteur) {
-		System.out.println("modifierActeur : " + acteur);
-	 }
+	@GetMapping(path="/listMoviesByActeur")
+	public @ResponseBody Iterable<Film> getAllFilmsByActeur(@RequestParam String acteur) {
+		// This returns a JSON or XML with the users
+		return acteurRepository.findByName(acteur);
+	}
+	
+	@RequestMapping(value = "/edit",method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE) 
+	public @ResponseBody void editGenre(@RequestBody Acteur acteur) {
+		acteurRepository.save(acteur);
+		System.out.println("modifier : " + acteur);
+	}
 	
 }

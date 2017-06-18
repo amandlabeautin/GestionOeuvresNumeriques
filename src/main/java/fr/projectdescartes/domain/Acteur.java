@@ -5,6 +5,8 @@ import java.util.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 
 @Entity
 @Table(name="acteur")
@@ -22,6 +24,7 @@ public class Acteur {
 	@Column(name="acteur_photo")
 	private String photo;
 	
+	@JsonBackReference
 	@ManyToMany(mappedBy = "acteurs")
 	private Collection<Film> films;
 	

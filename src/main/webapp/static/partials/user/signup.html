@@ -20,7 +20,7 @@
 		    <label for="exampleInputPassword1">V&eacute;rification du mot de passe</label>
 		    <input type="password" name="checkPassword" class="form-control" id="checkPassword" placeholder="Retapez votre mot de passe" ng-model="user.checkPassword" valid-password-check="user.password" required>
 		    <p ng-show="inscriptionForm.checkPassword.$invalid && !inscriptionForm.checkPassword.$pristine" class="help-block">Ce champ est obligatoire</p>
-		    <p ng-show="inscriptionForm.checkPassword.$error.noMatch" class="help-block">Mot de passe</p>
+		    <p ng-show="inscriptionForm.checkPassword.$error.noMatch" class="help-block">Les mots de passe ne sont pas identiques.</p>
 	  	</div>
 
 	  <br>

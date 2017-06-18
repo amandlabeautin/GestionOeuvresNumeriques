@@ -36,7 +36,7 @@ public class UserController {
 	}
 	
 	@GetMapping(path= "/add") // Map ONLY GET Requests
-	public @ResponseBody String addNewUser (@RequestParam String name
+	public @ResponseBody boolean addNewUser (@RequestParam String name
 		, @RequestParam String password, boolean isAdmin) {
 	// @ResponseBody means the returned String is the response, not a view name
 	// @RequestParam means it is a parameter from the GET or POST request
@@ -46,7 +46,7 @@ public class UserController {
 		u.setPassword(password);
 		u.setIsAdmin(isAdmin);
 		userRepository.save(u);
-		return name ;
+		return true ;
 	}
 	
 	@GetMapping(path="/all")

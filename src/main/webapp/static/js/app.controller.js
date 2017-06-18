@@ -1,16 +1,14 @@
 angular
     .module('GestionOeuvresNumeriques')
     .controller('homeCtrl', homeCtrl)
-    .controller('homeShowCtrl', homeShowCtrl)
     .controller('inscriptionController', inscriptionController)
     .controller('filmController', filmController)
     .controller('livreController', livreController)
     .controller('adminController', adminController)
+    .controller('acteurController', acteurController)
     .controller('shoppingBasketController', shoppingBasketController);
 
 function homeCtrl($scope, $sce, $http, UserService){
-	console.log(UserService.getAll());
-
 	$http.get('http://localhost:8080/oeuvres/searchByTitre',{params: {titre: "Wonder Woman"}}).
         then(function  (response) {
 		  	$scope.wonder = response.data;
@@ -26,31 +24,73 @@ function homeCtrl($scope, $sce, $http, UserService){
 	};
 };
 
-function homeShowCtrl($scope,$http,$routeParams, $sce, UserService){
-	$http.get('http://localhost:8080/oeuvres/allOeuvre',{params: {typeValue: "F"}}).
-		then(function(responseF) {
-		  	$scope.listeFilms = responseF.data;
-		});
-	$http.get('http://localhost:8080/oeuvres/allOeuvre',{params: {typeValue: "L"}}).
+function acteurController($scope,$http, $uibModal){
+	$http.get('http://localhost:8080/acteurs/all').
 		then(function(response) {
-			$scope.listeLivres = response.data;
+			$scope.listeActeurs = response.data;
+			for (var i = 0; i < $scope.listeActeurs.length; i++) {
+				if($scope.listeActeurs[i].photo == null){
+					$scope.listeActeurs[i].photo = 'https%3A%2F%2Fs-media-cache-ak0.pinimg.com%2Foriginals%2Fcc%2Fbb%2Fc5%2Fccbbc5690e2e63c8672f1fc4cbc28342.jpg';
+				}
+			}
 		});
+	$scope.showDetailsActeur = function(acteur){
+		$http.get('http://localhost:8080/acteurs/listMoviesByActeur',{params: {acteur: acteur.name}}).
+		then(function(response) {
+		  	$scope.listeMovies = response.data;
+		  	openModal(acteur, $scope.listeMovies);
+		});
+	};
+
+	var openModal = function(acteur, movies) {
+		$scope.acteur = acteur;
+		$scope.movies = movies;
+		modalShowDetailMovie($scope).result
+	        .then(function (data) {
+	            $scope.handleSuccess(data);
+	        })
+	        .then(null, function (reason) {
+	            $scope.handleDismiss(reason);
+	        });
+	};
+
+	var modalShowDetailMovie = function($scope) {
+      return $scope.modalInstance = $uibModal.open({
+          templateUrl: 'partials/acteur/modalShowMoviesByActeur.html',
+          size:'lg',
+          scope: $scope
+        });
+    };
+
+    $scope.cancel = function () {
+        $scope.modalInstance.dismiss('No Button Clicked');
+    };
+
+    $scope.convertDate = function(dateParution){
+		dateParution = new Date(dateParution);
+	    var d = dateParution.getDate().toString();
+	    var dd = (d.length === 2) ? d : "0"+d;
+	    var m = (dateParution.getMonth()+1).toString();
+	    var mm = (m.length === 2) ? m : "0"+m;     
+	    
+	    return(dd+"/"+mm+ "/" + (dateParution.getFullYear()).toString());
+	};
 };
 
-function inscriptionController($scope, $http,$routeParams, $state, UtilService, UserService){
+function inscriptionController($scope, $http,$routeParams, $state, UtilService, UserService, md5){
 	$scope.loginUser = {};
 	$scope.alerts = [];
 	
  	$scope.createUser = function(user){
-		var userExist; 
+ 		var userExist; 
 		$http.get('http://localhost:8080/users/checkUserExists',{params: {'login': user.login}}).
         then(function  (response) {
         	userExist = response.data;
         	if (userExist == false) {
+        		user.password = md5.createHash(user.password || '');
 	        	$http.get('http://localhost:8080/users/add',{params: {'name': user.login, 'password' : user.password, 'isAdmin' : false}}).
 		            then(function  (response) {
-			            alert('Merci pour votre inscription !');
-			            addAlert('alert-success','Vous pouvez maintenant vous connecter');
+			            addAlert('alert-success','Vous pouvez maintenant vous connecter dans la partie gauche de la page.');
 			       	})
 					.catch(function(response, status) {
 						console.error('Gists error', response.status, response.data);
@@ -59,10 +99,10 @@ function inscriptionController($scope, $http,$routeParams, $state, UtilService, 
 					});
 	        };
         });
-        
  	};
 
  	$scope.connectUser = function(user){
+ 		user.password = md5.createHash(user.password || '');
  		$http({
 		    method: 'POST',
 		    url: 'http://localhost:8080/users/login',
@@ -96,6 +136,10 @@ function inscriptionController($scope, $http,$routeParams, $state, UtilService, 
 			type : type,
 			msg : msg
 		});
+	};
+
+	$scope.closeAlert = function(index) {
+	    $scope.alerts.splice(index, 1);
 	};
 };
 
@@ -292,6 +336,8 @@ function livreController($scope, $http, $routeParams, $sce, UserService, $filter
 };
 
 function adminController($scope,$http,$routeParams,$uibModal, $log) {
+	$scope.isPaginate = true;
+	$scope.alerts = [];
 
 	$http.get('http://localhost:8080/acteurs/all').
 		then(function(response) {
@@ -325,6 +371,19 @@ function adminController($scope,$http,$routeParams,$uibModal, $log) {
 			}
 	});
 
+	$scope.setPage = function (pageNo) {
+	    $scope.currentPage = pageNo;
+	};
+
+	$scope.pageChanged = function() {
+		console.log('Page changed to: ' + $scope.currentPage);
+	};
+
+	$scope.setItemsPerPage = function(num) {
+	  	$scope.itemsPerPage = num;
+	  	$scope.currentPage = 1; //reset to first paghe
+	};
+
 	$scope.selectedDataType = function(object) {
 		$scope.object = object;
 		switch(object){
@@ -343,6 +402,13 @@ function adminController($scope,$http,$routeParams,$uibModal, $log) {
 			case "oeuvre":
 				$scope.selectedAllDatas = $scope.listeOeuvres;
 		};
+
+		$scope.viewby = 10;
+	  	$scope.totalItems = $scope.selectedAllData.length;
+	  	$scope.currentPage = 4;
+	  	$scope.itemsPerPage = $scope.viewby;
+	  	$scope.maxSize = 5; //Number of pager buttons to show
+	  	$scope.isPaginate = false;
 		return $scope.selectedAllDatas;
 	};
 
@@ -354,7 +420,27 @@ function adminController($scope,$http,$routeParams,$uibModal, $log) {
         });
     };
 
-	$scope.openModal = function(object) {
+    var modalEditData = function($scope) {
+      return $scope.modalInstance = $uibModal.open({
+          templateUrl: 'partials/admin/editDataAdmin.html',
+          size:'lg',
+          scope: $scope
+        });
+    };
+
+    $scope.openEditModal = function(data, object) {
+		$scope.subject = object;
+		$scope.data = data;
+		modalEditData($scope).result
+	        .then(function (data) {
+	            $scope.handleSuccess(data);
+	        })
+	        .then(null, function (reason) {
+	            $scope.handleDismiss(reason);
+	        });
+	};
+
+	$scope.openAddModal = function(object) {
 		$scope.subject = object;
 		modalAddData($scope).result
 	        .then(function (data) {
@@ -365,26 +451,62 @@ function adminController($scope,$http,$routeParams,$uibModal, $log) {
 	        });
 	};
 
+	$scope.editDataAdmin = function(dataAdmin, subject){
+		switch(subject){
+			case "acteur":
+				$scope.urlSpring = 'http://localhost:8080/acteurs/edit';
+				break;
+			case "auteur":
+				$scope.urlSpring = 'http://localhost:8080/auteurs/edit';
+				break;
+			case "editeur":
+				$scope.urlSpring = 'http://localhost:8080/editeurs/edit';
+				break;
+			case "genre":
+				$scope.urlSpring = 'http://localhost:8080/genres/edit';
+				break;
+			case "oeuvre":
+				$scope.urlSpring = 'http://localhost:8080/oeuvres/editAdmin';
+				break;
+		}
+
+		if("image" in dataAdmin){
+			dataAdmin.image = window.encodeURIComponent(dataAdmin.image);
+		}
+		if("photo" in dataAdmin){
+			dataAdmin.photo = window.encodeURIComponent(dataAdmin.photo);
+		}
+		
+		$http({
+		    method: 'PUT',
+		    url: $scope.urlSpring,
+		    data: dataAdmin,
+		    headers: {'Content-Type': 'application/json'}
+		}).then(function(response) {
+			console.log('success :' + response);
+			$scope.modalInstance.dismiss('No Button Clicked');
+			addAlert('alert-success', 'Les modifications ont été enregistrées.');			  	
+		}).catch(function(response) {
+	        console.log('error :' + response);
+		});
+	};
+
 	$scope.saveDataAdmin = function(form, subject){
 		switch(subject){
 			case "acteur":
 				$scope.urlSpring = 'http://localhost:8080/acteurs/add';
-				$scope.params = {'name': form.name};
 				break;
 			case "auteur":
 				$scope.urlSpring = 'http://localhost:8080/auteurs/add';
-				$scope.params = {'name': form.name, 'livre': {}};
 				break;
 			case "editeur":
 				$scope.urlSpring = 'http://localhost:8080/editeurs/add';
-				$scope.params = {'name': form.name, 'livre': {}};
 				break;
 			case "genre":
 				$scope.urlSpring = 'http://localhost:8080/genres/add';
-				$scope.params = {'name': form.name};
 				break;
 		}
-		$http.get($scope.urlSpring,{params: $scope.params})
+		$http.get($scope.urlSpring,{params: {'name': form.name}})
 			.then(function(response) {
 				$scope.modalInstance.dismiss('No Button Clicked');
 				addAlert('alert-success', 'Le ou la '+subject+ ' a été enregistré(e).')
@@ -408,37 +530,17 @@ function adminController($scope,$http,$routeParams,$uibModal, $log) {
 		$log.info('Modal dismissed: ' + reason);
 	};
 
-	$scope.editData = function(selectData, object){
-		var urlData, urlEncode;
-
-		switch(object) {
-			case "acteur":
-				urlData = 'http://localhost:8080/acteurs/edit';
-				break;
-			case "auteur":
-				urlData = 'http://localhost:8080/auteurs/edit';
-				break;
-			case "editeur":
-				urlData = 'http://localhost:8080/editeurs/edit';
-				break;
-			case "genre":
-				urlData = 'http://localhost:8080/genres/edit';
-				break;
-			case "oeuvre":
-				urlData = 'http://localhost:8080/oeuvres/edit';
-		};
-
-		urlEncode = window.encodeURIComponent(selectData.image);
-
-		$http({
-		    method: 'PUT',
-		    url: urlData,
-		    data: {'id': selectData.id, 'name' : selectData.name, 'image' : urlEncode},
-		    headers: {'Content-Type': 'application/json'}
-		}).catch(function(data, status) {
-
+	function addAlert(type, msg){
+		$scope.alerts.push({
+			type : type,
+			msg : msg
 		});
-	}
+	};
+
+	$scope.closeAlert = function(index) {
+	    $scope.alerts.splice(index, 1);
+	};
+
 };
 
 function shoppingBasketController($scope, $http, UserService){

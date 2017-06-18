@@ -20,6 +20,12 @@ angular
 				controller: 'livreController',
 				access: 'public'
 			})
+			.state('select-acteurs', {
+				url : '/select-acteurs',
+				templateUrl: 'partials/selectActeurs.html',
+				controller: 'acteurController',
+				access: 'public'
+			})
 			.state('login', {
 				url : '/login',
 				templateUrl: 'partials/user/subscribe.html',
