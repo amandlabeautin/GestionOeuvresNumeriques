@@ -20,7 +20,7 @@ h1.media-heading, h2{
 	font-family: 'Century Gothic', CenturyGothic, AppleGothic, sans-serif;
 }
 
-h3, dl, p {
+h3, p {
 	color : white;
 	font-family: 'Century Gothic', CenturyGothic, AppleGothic, sans-serif;
 }
@@ -65,8 +65,12 @@ li.active{
 form label{
 	color : var(--gestionoeuvresnumeriques-yellow-color);
 }
-.showMoviesByActeur, dd, dt {
+
+#showMoviesByActeur {
 	color: black;
+}
+#selectMovie, #listBook {
+	color: white;
 }
 
 #adminPage .admin a {

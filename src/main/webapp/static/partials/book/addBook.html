@@ -1,7 +1,7 @@
 <div class="container">
     <div ng-include = "'partials/header.view.html'"></div>
 </div>
-<div class="container">
+<div class="container" ng-controller="livreController">
 	<h2>Ajouter un livre</h2>
 <br>
   	<form name="addBookForm" class="well form-horizontal">
@@ -32,7 +32,7 @@
 	    <div class="col-sm-4">
 		    <div class="input-group">
 			    <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
-			    <input type="text" class="form-control" id="DateDeParution" uib-datepicker-popup="{{format}}" placeholder="Entrer la date de parution du livre" ng-model="$book.dateDeParution">
+			    <input type="text" class="form-control" id="DateDeParution" uib-datepicker-popup="{{format}}" placeholder="dd/MM/AAAA" ng-model="$book.dateDeParution">
 		    </div>
 	    </div>
 	  </div>

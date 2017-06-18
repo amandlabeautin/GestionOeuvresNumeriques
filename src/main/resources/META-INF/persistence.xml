@@ -15,7 +15,6 @@
     <class>fr.projectdescartes.domain.Livre</class>
     <class>fr.projectdescartes.domain.Acteur</class>
     <class>fr.projectdescartes.domain.User</class>
-    <class>fr.projectdescartes.domain.Role</class>
     
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     
